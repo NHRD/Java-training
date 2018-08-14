@@ -4,8 +4,8 @@ class HelloWorld{
 		String message = "Hello World!!";
 
 		message = message.concat(" Lovely day, isn't it??");
-
-		message = message.toLowerCase();
+		
+		message = message.toUpperCase();
 
 		System.out.println(message);
 	}
