@@ -5,6 +5,8 @@ class HelloWorld{
 
 		message = message.concat(" Lovely day, isn't it??");
 
+		message = message.toLowerCase();
+
 		System.out.println(message);
 	}
 }
