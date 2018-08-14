@@ -1,5 +1,10 @@
 class HelloWorld{
 	public static void main(String[] args){
-		System.out.println("Hello World!");
+
+		String message = "Hello World!!";
+
+		message = message.concat(" Lovely day, isn't it?");
+
+		System.out.println(message);
 	}
 }
