@@ -1,4 +1,6 @@
-public boolean canBalance(int[] nums) {
+class Numssum{
+
+  public boolean canBalance(int[] nums) {
     Boolean result = true;
     float sum = 0;
     int var = 0;
@@ -19,5 +21,8 @@ public boolean canBalance(int[] nums) {
         result = false;
         }
       }
+      System.out.print(result);
     return result;
+
   }
+}
