@@ -3,9 +3,11 @@ public class Percolation{
     private int size;
     private int width;
     private int[] open;
+    private int topid;
     private WeightedQuickUnionUF uf;
 
     public Percolation(int n){
+        topid = 0;
         size = n * n;
         width = n;
         opst = new int[size];
@@ -22,7 +24,7 @@ public class Percolation{
     public makeconnection(int row, int col){
         if(col == 1){
             int id = rc2id(row, 1);
-            uf.union(id , 0);
+            uf.union(id , topid);
         }else if(col == width){
             int id = rc2id(row, width);
             uf.union(id, size + 2);
@@ -50,9 +52,25 @@ public class Percolation{
         int num = rc2id(row, col);
         return (open[num] == 1);
     }
+    
+    public boolean isFull(int row, int col){
+        int num = rc2id(row, col);
+        return (uf.connected(topid, num));
+    }
+    
+    public int numberOfOpenSites(){
+        int num = 0;
+        for(int i = 0; i < open.length; I++){
+                if(open[i] == 1){
+                    num = num + 1;
+                }
+        }
+        return num;
+    }
+    
+    public boolean percolates() {
+        return uf.connected(topid, size + 1);
+    }
     /*
-    public boolean isFull(int row, int col)
-    public int numberOfOpenSites()
-    public boolean percolates() 
     public static void main(String args)*/
 }

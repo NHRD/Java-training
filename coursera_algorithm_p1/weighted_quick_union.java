@@ -18,7 +18,7 @@ public class WeightedQuickUnionUF{
         }
     }
 
-    private boolean connected(int p, int q){
+    public boolean connected(int p, int q){
         return root(p) == root(q);
     }
 
