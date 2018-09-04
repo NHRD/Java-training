@@ -79,7 +79,7 @@ public class Percolation{
     }
 
     private void boundarycheck(int row, int col) {
-        if (row <= 0 || col > width) {
+        if (row <= 0 || row > width) {
           throw new java.lang.IllegalArgumentException("row index row is out of bounds");
         }
         if (col <= 0 || col > width) {
@@ -90,14 +90,6 @@ public class Percolation{
     public static void main(String[] args) {
         Percolation perc = new Percolation(3);
         perc.open(1, 2);
-        perc.open(2, 2);
-        perc.open(2, 3);
-        perc.open(3, 3);
         boolean c = perc.isFull(1, 1);
-        //boolean c1 = perc.uf.connected(perc.ijTo1D(1, 1), perc.ijTo1D(2, 1));
-        //boolean c2 = perc.percolates();
-        System.out.println(c);
-        //StdOut.println(c1);
-        //StdOut.println(c2);
     }
 }
