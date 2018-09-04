@@ -91,5 +91,6 @@ public class Percolation{
         Percolation perc = new Percolation(3);
         perc.open(1, 2);
         boolean c = perc.isFull(1, 1);
+        System.out.println(c);
     }
 }
