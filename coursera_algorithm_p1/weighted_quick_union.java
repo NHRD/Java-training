@@ -22,7 +22,7 @@ public class WeightedQuickUnionUF{
         return root(p) == root(q);
     }
 
-    private void union(int p, int q){
+    public void union(int p, int q){
         int i = root(p);
         int j = root(q);
         if(i == j){
