@@ -19,7 +19,6 @@ public class PercolationStats {
             }
             thresholds[i] = count;
         }
-
     }   
     
     public double mean(){
