@@ -1,4 +1,4 @@
-public class QuickUnionUF{
+public class WeightedQuickUnionUF{
     private int[] id;
     private int[] sz;
 
