@@ -54,6 +54,14 @@ public class PercolationStats {
     }            
 
     public static void main(String[] args){
-        
+        PercolationStats result = new PercolationStats(args[1],args[2]);
+        double mean = result.mean();
+        double stdev = result.stddev();
+        double[] confidence = new double[2];
+        confidence[0] = result.confidenceLo();
+        confidence[1] = result.confidenceHi();
+        System.out.println(mean);
+        System.out.println(stdev);
+        System.out.println(confidence);
     }
  }
