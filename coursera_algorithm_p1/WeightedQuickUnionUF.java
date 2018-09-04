@@ -2,7 +2,7 @@ public class WeightedQuickUnionUF{
     private int[] id;
     private int[] sz;
 
-    public QuickFindUF(int N){
+    public WeightedQuickUnionUF(int N){
         id = new int[N];
         sz = new int[N];
         for(int i = 0; i < N; i++){
@@ -14,8 +14,8 @@ public class WeightedQuickUnionUF{
     private int root(int i){
         while(i != id[i]){
             i = id[i];
-            return i;
         }
+        return i;
     }
 
     public boolean connected(int p, int q){

@@ -10,18 +10,20 @@ public class Percolation{
         topid = 0;
         size = n * n;
         width = n;
-        opst = new int[size];
-        uf = new WeightedQuickUnionUF(size + 2);
+        open = new int[size];
+        uf = new WeightedQuickUnionUF(size+2);
 
     }
 
     public void open(int row, int col){
-
+        boundarycheck(row, col);
         int num = rc2id(row, col);
-        open[num] = 1;
+        open[num-1] = 1;
+        makeconnection(row, col);
     }
-
-    public makeconnection(int row, int col){
+    
+    private void makeconnection(int row, int col){
+        boundarycheck(row, col);
         if(col == 1){
             int id = rc2id(row, 1);
             uf.union(id , topid);
@@ -38,7 +40,8 @@ public class Percolation{
     }
 
     public int rc2id(int row, int col){
-        num = (col - 1) * n + row;
+        boundarycheck(row, col);
+        int num = (col - 1) * width + row;
         return num;
     }
 
@@ -49,16 +52,19 @@ public class Percolation{
     }
 
     public boolean isOpen(int row, int col){
+        boundarycheck(row, col);
         int num = rc2id(row, col);
-        return (open[num] == 1);
+        return (open[num-1] == 1);
     }
     
     public boolean isFull(int row, int col){
+        boundarycheck(row, col);
         int num = rc2id(row, col);
         return (uf.connected(topid, num));
     }
     
     public int numberOfOpenSites(){
+        boundarycheck(row, col);
         int num = 0;
         for(int i = 0; i < open.length; I++){
                 if(open[i] == 1){
@@ -70,5 +76,28 @@ public class Percolation{
     
     public boolean percolates() {
         return uf.connected(topid, size + 1);
+    }
+
+    private void boundarycheck(int row, int col) {
+        if (row <= 0 || col > width) {
+          throw new java.lang.IllegalArgumentException("row index row is out of bounds");
+        }
+        if (col <= 0 || col > width) {
+          throw new java.lang.IllegalArgumentException("colum index col is out of bounds");
+        }
+      }
+
+    public static void main(String[] args) {
+        Percolation perc = new Percolation(3);
+        perc.open(1, 2);
+        perc.open(2, 2);
+        perc.open(2, 3);
+        perc.open(3, 3);
+        boolean c = perc.isFull(1, 1);
+        //boolean c1 = perc.uf.connected(perc.ijTo1D(1, 1), perc.ijTo1D(2, 1));
+        //boolean c2 = perc.percolates();
+        System.out.println(c);
+        //StdOut.println(c1);
+        //StdOut.println(c2);
     }
 }
