@@ -1,4 +1,4 @@
-_public class QuickUnionUF{
+public class QuickUnionUF{
     private int[] id;
     private int[] sz;
 
