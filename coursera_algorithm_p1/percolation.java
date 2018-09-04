@@ -71,6 +71,4 @@ public class Percolation{
     public boolean percolates() {
         return uf.connected(topid, size + 1);
     }
-    /*
-    public static void main(String args)*/
 }
