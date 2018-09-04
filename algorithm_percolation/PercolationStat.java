@@ -23,11 +23,37 @@ public class PercolationStats {
     }   
     
     public double mean(){
-        for(int i=0;i<)
+        double sum = 0;
+        double mean = 0;
+        for(int i=0;i < thresholds.length; i++){
+            sum = sum + threshold[i];
+        }
+        mean = sum / threshold.length;
+        return mean;
     }
-    /*public double stddev()                        // sample standard deviation of percolation threshold
-    public double confidenceLo()                  // low  endpoint of 95% confidence interval
-    public double confidenceHi()                  // high endpoint of 95% confidence interval
- 
-    public static void main(String[] args)        // test client (described below)*/
+    
+    public double stddev(){
+        double sumsq = 0;
+        double stdev = 0;
+        for(int i=0;i < thresholds.length; i++){
+            sumsq = sumsq + (threshold[i] - mean())^2;
+        }
+        stdev = sumsq / (threshold.length - 1);
+    }
+    
+    public double confidenceLo(){
+        double conLo = 0;
+        conLo = mean() - (1.96 * stddev()^(1/2)/(threshold.length)^(1/2));
+        return conLo;
+    } 
+
+    public double confidenceHi(){
+        double conHi = 0;
+        conLo = mean() + (1.96 * stddev()^(1/2)/(threshold.length)^(1/2));
+        return conHi;        
+    }            
+
+    public static void main(String[] args){
+        
+    }
  }
