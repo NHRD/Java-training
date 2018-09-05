@@ -1,6 +1,6 @@
 public class PercolationStats {
 
-    private double thresholds;
+    private double[] thresholds;
     private int size;
     private int t;
     
@@ -34,11 +34,11 @@ public class PercolationStats {
     }
     
     public double confidenceLo(){
-        return mean() - (1.96 * stddev()^(1/2)/(t)^(1/2));
+        return mean() - (1.96 * Math.pow(stddev() , 1/2))/Math.pow(t,1/2);
     } 
 
     public double confidenceHi(){
-        return mean() + (1.96 * stddev()^(1/2)/(t)^(1/2));      
+        return mean() + (1.96 * Math.pow(stddev() , 1/2))/Math.pow(t,1/2);     
     }            
 
     public static void main(String[] args){

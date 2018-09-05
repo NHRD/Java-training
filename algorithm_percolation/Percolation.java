@@ -26,7 +26,7 @@ public class Percolation{
         boundarycheck(row, col);
         if(col == 1){
             int id = rc2id(row, 1);
-            int idl = rc2id(row, 2)
+            int idl = rc2id(row, 2);
             uf.union(id , topid);
             uf.union(id, idl);
         }else if(col == width){
@@ -43,11 +43,11 @@ public class Percolation{
         }
         if(row == 1){
             int id = rc2id(1, col);
-            int idr = rc2id(2 , col)
+            int idr = rc2id(2 , col);
             uf.union(id , idr);
         }else if(row == width){
             int id = rc2id(row, width);
-            int idl = rc2id(row, width - 1)
+            int idl = rc2id(row, width - 1);
             uf.union(id, idl);
         }else{
             int id = rc2id(row, width);
