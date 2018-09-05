@@ -52,11 +52,13 @@ public class PercolationStats {
         PercolationStats result = new PercolationStats(N, T);
         double mean = result.mean();
         double stdev = result.stddev();
-        double[] confidence = new double[2];
-        confidence[0] = result.confidenceLo();
-        confidence[1] = result.confidenceHi();
-        System.out.println(mean);
-        System.out.println(stdev);
-        System.out.println(confidence);
+        double confidenceLo = result.confidenceLo();
+        double confidenceHi = result.confidenceHi();
+        //System.out.println(mean);
+        //System.out.println(stdev);
+        //System.out.println(confidenceLo, confidenceHi);
+        System.out.printf("mean                    = %f\n", mean);
+        System.out.printf("stddev                  = %f\n", stdev);
+        System.out.printf("95%% confidence interval = %f, %f\n", confidenceLo, confidenceHi);
     }
- }
+ } 
