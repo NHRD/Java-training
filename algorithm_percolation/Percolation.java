@@ -105,11 +105,4 @@ public class Percolation{
           throw new java.lang.IllegalArgumentException("colum index col is out of bounds");
         }
       }
-
-    public static void main(String[] args) {
-        Percolation perc = new Percolation(3);
-        perc.open(1, 2);
-        boolean c = perc.isFull(1, 1);
-        System.out.println(c);
-    }
 }
