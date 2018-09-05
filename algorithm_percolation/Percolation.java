@@ -1,9 +1,6 @@
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation{
-
     private int size;
     private int width;
     private int[] open;
@@ -16,7 +13,6 @@ public class Percolation{
         width = n;
         open = new int[size];
         uf = new WeightedQuickUnionUF(size + 2);
-
     }
 
     public void open(int row, int col){
@@ -33,12 +29,14 @@ public class Percolation{
             int idl = rc2id(row, 2);
             uf.union(id , topid);
             uf.union(id, idl);
-        }else if(col == width){
+        }
+        else if(col == width){
             int id = rc2id(row, width);
             int idu = rc2id(row, width - 1);
             uf.union(id, size + 2);
             uf.union(id, idu);
-        }else{
+        }
+        else{
             int id = rc2id(row, col);
             int idu = rc2id(row, col - 1);
             int idl = rc2id(row, col + 1);
@@ -49,11 +47,13 @@ public class Percolation{
             int id = rc2id(1, col);
             int idr = rc2id(2 , col);
             uf.union(id , idr);
-        }else if(row == width){
+        }
+        else if(row == width){
             int id = rc2id(row, width);
             int idl = rc2id(row, width - 1);
             uf.union(id, idl);
-        }else{
+        }
+        else{
             int id = rc2id(row, width);
             int idl = rc2id(row - 1, col);
             int idr = rc2id(row + 1, col);
