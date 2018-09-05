@@ -87,9 +87,8 @@ public class Percolation{
     }
     
     public int numberOfOpenSites(){
-        boundarycheck(row, col);
         int num = 0;
-        for(int i = 0; i < open.length; I++){
+        for(int i = 0; i < open.length; i++){
                 if(open[i] == 1){
                     num = num + 1;
                 }
