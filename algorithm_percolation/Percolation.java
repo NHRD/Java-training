@@ -62,13 +62,13 @@ public class Percolation{
         }
     }
 
-    public int rc2id(int row, int col){
+    private int rc2id(int row, int col){
         boundarycheck(row, col);
         int num = (col - 1) * width + row;
         return num;
     }
 
-    public void attemptunion(int i, int j){
+    private void attemptunion(int i, int j){
         if(isOpen(i , j) == true){
             uf.union(i , j);
         }
