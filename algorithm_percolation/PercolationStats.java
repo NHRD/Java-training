@@ -24,7 +24,7 @@ public class PercolationStats {
                 result.open(row, col);
                 count++;
             }
-            thresholds[i] = count / (size * size) ;
+            thresholds[i] = (double)count / (double)(size * size) ;
         }
     }   
     
