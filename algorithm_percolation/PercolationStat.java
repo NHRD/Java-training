@@ -1,9 +1,13 @@
 public class PercolationStats {
+
+    private double thresholds;
+    private int size;
+    private int t;
     
     public PercolationStats(int n, int trials) {
         size = n;
         t = trials;
-        double[] thresholds = new double[t];
+        thresholds = new double[t];
 
         for(int i = 0; i<t; i++){
             Percolation result = new Percolation(size);
@@ -17,43 +21,30 @@ public class PercolationStats {
                 result.open(row, col);
                 count++;
             }
-            thresholds[i] = count;
+            thresholds[i] = count / (size * size) ;
         }
     }   
     
     public double mean(){
-        double sum = 0;
-        double mean = 0;
-        for(int i=0;i < thresholds.length; i++){
-            sum = sum + threshold[i];
-        }
-        mean = sum / threshold.length;
-        return mean;
+        return StdStats.mean(thresholds);
     }
     
     public double stddev(){
-        double sumsq = 0;
-        double stdev = 0;
-        for(int i=0;i < thresholds.length; i++){
-            sumsq = sumsq + (threshold[i] - mean())^2;
-        }
-        stdev = sumsq / (threshold.length - 1);
+        return StdStats.stddev(thresholds);
     }
     
     public double confidenceLo(){
-        double conLo = 0;
-        conLo = mean() - (1.96 * stddev()^(1/2)/(threshold.length)^(1/2));
-        return conLo;
+        return mean() - (1.96 * stddev()^(1/2)/(t)^(1/2));
     } 
 
     public double confidenceHi(){
-        double conHi = 0;
-        conLo = mean() + (1.96 * stddev()^(1/2)/(threshold.length)^(1/2));
-        return conHi;        
+        return mean() + (1.96 * stddev()^(1/2)/(t)^(1/2));      
     }            
 
     public static void main(String[] args){
-        PercolationStats result = new PercolationStats(args[1],args[2]);
+        int N = Integer.parseInt(args[0]);
+        int T = Integer.parseInt(args[1]);
+        PercolationStats result = new PercolationStats(N, T);
         double mean = result.mean();
         double stdev = result.stddev();
         double[] confidence = new double[2];
