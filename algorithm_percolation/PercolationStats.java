@@ -57,8 +57,8 @@ public class PercolationStats {
         //System.out.println(mean);
         //System.out.println(stdev);
         //System.out.println(confidenceLo, confidenceHi);
-        System.out.printf("mean                    = %f\n", mean);
-        System.out.printf("stddev                  = %f\n", stdev);
+        System.out.printf("mean                     = %f\n", mean);
+        System.out.printf("stddev                   = %f\n", stdev);
         System.out.printf("95%% confidence interval = %f, %f\n", confidenceLo, confidenceHi);
     }
  } 
