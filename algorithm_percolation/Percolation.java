@@ -11,7 +11,7 @@ public class Percolation{
         size = n * n;
         width = n;
         open = new int[size];
-        uf = new WeightedQuickUnionUF(size+2);
+        uf = new WeightedQuickUnionUF(size + 2);
 
     }
 
@@ -26,16 +26,35 @@ public class Percolation{
         boundarycheck(row, col);
         if(col == 1){
             int id = rc2id(row, 1);
+            int idl = rc2id(row, 2)
             uf.union(id , topid);
+            uf.union(id, idl);
         }else if(col == width){
             int id = rc2id(row, width);
+            int idu = rc2id(row, width - 1);
             uf.union(id, size + 2);
+            uf.union(id, idu);
         }else{
             int id = rc2id(row, col);
             int idu = rc2id(row, col - 1);
             int idl = rc2id(row, col + 1);
             attemptunion(id, idu);
             attemptunion(id, idl);
+        }
+        if(row == 1){
+            int id = rc2id(1, col);
+            int idr = rc2id(2 , col)
+            uf.union(id , idr);
+        }else if(row == width){
+            int id = rc2id(row, width);
+            int idl = rc2id(row, width - 1)
+            uf.union(id, idl);
+        }else{
+            int id = rc2id(row, width);
+            int idl = rc2id(row - 1, col);
+            int idr = rc2id(row + 1, col);
+            attemptunion(id, idl);
+            attemptunion(id, idr);
         }
     }
 
