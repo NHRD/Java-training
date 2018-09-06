@@ -1,95 +1,94 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
-public class Percolation{
+public class Percolation {
     private int size;
     private int width;
-    private int[] open;
-    private int topid;
+    private boolean[] open;
+    private int topid = 0;
     private WeightedQuickUnionUF uf;
 
-    public Percolation(int n){
-        topid = 0;
-        size = n * n;
+    public Percolation(int n) {
         width = n;
-        open = new int[size];
+        size = n * n;
+        open = new boolean[size];
         uf = new WeightedQuickUnionUF(size + 2);
     }
 
-    public void open(int row, int col){
+    public void open(int row, int col) {
         boundarycheck(row, col);
         int num = rc2id(row, col);
-        open[num-1] = 1;
+        open[num-1] = true;
         makeconnection(row, col);
     }
     
-    private void makeconnection(int row, int col){
+    private void makeconnection(int row, int col) {
         boundarycheck(row, col);
-        if(col == 1){
+        if (col == 1) {
             int id = rc2id(row, 1);
             int idl = rc2id(row, 2);
-            uf.union(id , topid);
-            uf.union(id, idl);
-        }
-        else if(col == width){
+            attemptunion(id, topid);
+            attemptunion(id, idl);
+            }
+        else if (col == width) {
             int id = rc2id(row, width);
             int idu = rc2id(row, width - 1);
-            uf.union(id, size + 2);
-            uf.union(id, idu);
-        }
-        else{
+            attemptunion(id, size + 1);
+            attemptunion(id, idu);
+            }
+        else {
             int id = rc2id(row, col);
             int idu = rc2id(row, col - 1);
             int idl = rc2id(row, col + 1);
             attemptunion(id, idu);
             attemptunion(id, idl);
-        }
-        if(row == 1){
+            }
+        if (row == 1) {
             int id = rc2id(1, col);
-            int idr = rc2id(2 , col);
-            uf.union(id , idr);
-        }
-        else if(row == width){
-            int id = rc2id(row, width);
-            int idl = rc2id(row, width - 1);
-            uf.union(id, idl);
-        }
-        else{
-            int id = rc2id(row, width);
+            int idr = rc2id(2, col);
+            attemptunion(id, idr);
+            }
+        else if (row == width) {
+            int id = rc2id(width, col);
+            int idl = rc2id(width, col - 1);
+            attemptunion(id, idl);
+            }
+        else {
+            int id = rc2id(row, col);
             int idl = rc2id(row - 1, col);
             int idr = rc2id(row + 1, col);
             attemptunion(id, idl);
             attemptunion(id, idr);
-        }
+            }
     }
 
-    private int rc2id(int row, int col){
+    private int rc2id(int row, int col) {
         boundarycheck(row, col);
         int num = (col - 1) * width + row;
         return num;
     }
 
-    private void attemptunion(int i, int j){
-        if(isOpen(i , j) == true){
-            uf.union(i , j);
+    private void attemptunion(int i, int j) {
+        if (!(uf.connected(i, j))) {
+            uf.union(i, j);
         }
     }
 
-    public boolean isOpen(int row, int col){
+    public boolean isOpen(int row, int col) {
         boundarycheck(row, col);
         int num = rc2id(row, col);
-        return (open[num-1] == 1);
+        return open[num-1];
     }
     
-    public boolean isFull(int row, int col){
+    public boolean isFull(int row, int col) {
         boundarycheck(row, col);
         int num = rc2id(row, col);
         return (uf.connected(topid, num));
     }
     
-    public int numberOfOpenSites(){
+    public int numberOfOpenSites() {
         int num = 0;
-        for(int i = 0; i < open.length; i++){
-                if(open[i] == 1){
+        for (int i = 0; i < open.length; i++) {
+                if (open[i]) {
                     num = num + 1;
                 }
         }
