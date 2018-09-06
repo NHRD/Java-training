@@ -6,22 +6,22 @@ Compilation:  PASSED
 API:          PASSED
 
 Spotbugs:     PASSED
-PMD:          FAILED (7 warnings)
-Checkstyle:   FAILED (0 errors, 4 warnings)
+PMD:          FAILED (9 warnings)
+Checkstyle:   PASSED
 
 Correctness:  16/30 tests passed
-Memory:       4/8 tests passed
-Timing:       3/20 tests passed
+Memory:       5/8 tests passed
+Timing:       9/20 tests passed
 
-Aggregate score: 50.00%
+Aggregate score: 57.25%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.0K Sep  6 12:00 Percolation.java
-2.0K Sep  6 12:00 PercolationStats.java
+3.0K Sep  6 12:50 Percolation.java
+2.0K Sep  6 12:50 PercolationStats.java
 
 
 ********************************************************************************
@@ -64,12 +64,14 @@ PercolationStats:
 *-----------------------------------------------------------
 Percolation.java:4: The private instance (or static) variable 'size' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 Percolation.java:5: The private instance (or static) variable 'width' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+Percolation.java:7: The private instance (or static) variable 'topid' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 Percolation.java:8: The private instance (or static) variable 'uf' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 PercolationStats.java:5: The private instance (or static) variable 'thresholds' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 PercolationStats.java:6: Can you replace the instance (or static) variable 'size' with a local variable? [SingularField]
 PercolationStats.java:6: The private instance (or static) variable 'size' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 PercolationStats.java:7: The private instance (or static) variable 't' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
-PMD ends with 7 warnings.
+PercolationStats.java:8: The private instance (or static) variable 'base' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PMD ends with 9 warnings.
 
 
 ================================================================
@@ -77,20 +79,13 @@ PMD ends with 7 warnings.
 
 % checkstyle *.java
 *-----------------------------------------------------------
-[WARN] Percolation.java:7:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-[WARN] PercolationStats.java:8:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-Checkstyle ends with 0 errors and 2 warnings.
 
 % custom checkstyle checks for Percolation.java
 *-----------------------------------------------------------
 [INFO] Percolation.java:90: Using a loop in this method might be a performance bug. [Performance]
-[WARN] Percolation.java:1: Declaring 1 non-final static variables ('topid') suggests poor design in this class. [StaticVariableCount]
-Checkstyle ends with 0 errors and 1 warning.
 
 % custom checkstyle checks for PercolationStats.java
 *-----------------------------------------------------------
-[WARN] PercolationStats.java:1: Declaring 1 non-final static variables ('base') suggests poor design in this class. [StaticVariableCount]
-Checkstyle ends with 0 errors and 1 warning.
 
 
 ================================================================
@@ -113,183 +108,81 @@ Tests 13 through 15 test backwash.
 
 Test 1: open predetermined list of sites using file inputs
   * filename = input6.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:571)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 5) = true
+    - student isOpen(1, 5) = false
+    - by definition, a full site is open
   * filename = input8.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:572)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = input8-no.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:573)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 5) = true
+    - student isOpen(1, 5) = false
+    - by definition, a full site is open
   * filename = input10-no.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:574)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 5 sites opened
+    - student isFull(1, 3) = true
+    - student isOpen(1, 3) = false
+    - by definition, a full site is open
   * filename = greeting57.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:575)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = heart25.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test1(TestPercolation.java:576)
-    TestPercolation.main(TestPercolation.java:788)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 6) = true
+    - student isOpen(1, 6) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 2: open random sites until just before system percolates
   * n = 3
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:585)
-    TestPercolation.main(TestPercolation.java:791)
-
   * n = 5
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:586)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 4 sites opened
+    - student isFull(1, 3) = true
+    - student isOpen(1, 3) = false
+    - by definition, a full site is open
   * n = 10
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:587)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 5 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * n = 10
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:588)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 7 sites opened
+    - student isFull(1, 7) = true
+    - student isOpen(1, 7) = false
+    - by definition, a full site is open
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:589)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 31 sites opened
+    - student isFull(1, 10) = true
+    - student isOpen(1, 10) = false
+    - by definition, a full site is open
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:590)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 25 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:591)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 13 sites opened
+    - student isFull(1, 37) = true
+    - student isOpen(1, 37) = false
+    - by definition, a full site is open
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandom(TestPercolation.java:247)
-    TestPercolation.test2(TestPercolation.java:592)
-    TestPercolation.main(TestPercolation.java:791)
-
+    - isFull() and isOpen() are inconsistent after 53 sites opened
+    - student isFull(1, 9) = true
+    - student isOpen(1, 9) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 3: open predetermined sites for n = 1 and n = 2 (corner case test)
   * filename = input1.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
+    java.lang.IllegalArgumentException: row index row is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.boundarycheck(Percolation.java:104)
     Percolation.rc2id(Percolation.java:65)
     Percolation.makeconnection(Percolation.java:28)
     Percolation.open(Percolation.java:21)
@@ -299,171 +192,80 @@ Test 3: open predetermined sites for n = 1 and n = 2 (corner case test)
 
   * filename = input1-no.txt
   * filename = input2.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test3(TestPercolation.java:603)
-    TestPercolation.main(TestPercolation.java:794)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = input2-no.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test3(TestPercolation.java:604)
-    TestPercolation.main(TestPercolation.java:794)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 4: check predetermined sites with long percolating path
   * filename = snake13.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test4(TestPercolation.java:613)
-    TestPercolation.main(TestPercolation.java:797)
-
+    - isFull() and isOpen() are inconsistent after 85 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = snake101.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test4(TestPercolation.java:614)
-    TestPercolation.main(TestPercolation.java:797)
-
+    - isFull() and isOpen() are inconsistent after 5101 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 5: open every site
   * filename = input5.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test5(TestPercolation.java:621)
-    TestPercolation.main(TestPercolation.java:800)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 6: open random sites until just before system percolates,
         allowing open() to be called on a site more than once
   * n = 3
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:631)
-    TestPercolation.main(TestPercolation.java:803)
+    - percolates() returns wrong value after 3 sites opened
+    - student   percolates() = true
+    - reference percolates() = false
 
   * n = 5
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:632)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 3 sites opened
+    - student isFull(1, 4) = true
+    - student isOpen(1, 4) = false
+    - by definition, a full site is open
   * n = 10
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:633)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 14 sites opened
+    - student isFull(1, 7) = true
+    - student isOpen(1, 7) = false
+    - by definition, a full site is open
   * n = 10
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:634)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 4 sites opened
+    - student isFull(1, 6) = true
+    - student isOpen(1, 6) = false
+    - by definition, a full site is open
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:635)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 11 sites opened
+    - student isFull(1, 4) = true
+    - student isOpen(1, 4) = false
+    - by definition, a full site is open
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:636)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 24 sites opened
+    - student isFull(1, 10) = true
+    - student isOpen(1, 10) = false
+    - by definition, a full site is open
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:637)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 13 sites opened
+    - student isFull(1, 10) = true
+    - student isOpen(1, 10) = false
+    - by definition, a full site is open
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomAllowDuplicateSites(TestPercolation.java:271)
-    TestPercolation.test6(TestPercolation.java:638)
-    TestPercolation.main(TestPercolation.java:803)
-
+    - isFull() and isOpen() are inconsistent after 151 sites opened
+    - student isFull(1, 21) = true
+    - student isOpen(1, 21) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 7: call methods with invalid arguments
@@ -494,34 +296,25 @@ Test 8: call constructor with invalid argument
 
 Test 9: create multiple Percolation objects at the same time
         (to make sure you didn't store data in static variables)
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
-    TestPercolation.checkTwoPercolationObjects(TestPercolation.java:394)
+    TestPercolation.checkTwoPercolationObjects(TestPercolation.java:396)
     TestPercolation.test9(TestPercolation.java:673)
     TestPercolation.main(TestPercolation.java:812)
 
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    - isFull() and isOpen() are inconsistent after 5 sites opened
+    - student isFull(1, 1) = true
+    - student isOpen(1, 1) = false
+    - by definition, a full site is open
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkTwoPercolationObjects(TestPercolation.java:394)
-    TestPercolation.test9(TestPercolation.java:674)
-    TestPercolation.main(TestPercolation.java:812)
-
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkTwoPercolationObjects(TestPercolation.java:394)
     TestPercolation.test9(TestPercolation.java:675)
@@ -532,346 +325,166 @@ Test 9: create multiple Percolation objects at the same time
 Test 10: open predetermined list of sites using file inputs,
          but permute the order in which methods are called
   * filename = input8.txt;  order =     isFull(),     isOpen(), percolates()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:685)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
   * filename = input8.txt;  order =     isFull(), percolates(),     isOpen()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:686)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
   * filename = input8.txt;  order =     isOpen(),     isFull(), percolates()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:687)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
   * filename = input8.txt;  order =     isOpen(), percolates(),     isFull()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:688)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
   * filename = input8.txt;  order = percolates(),     isOpen(),     isFull()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:689)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
   * filename = input8.txt;  order = percolates(),     isFull(),     isOpen()
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:215)
-    TestPercolation.test10(TestPercolation.java:690)
-    TestPercolation.main(TestPercolation.java:815)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
 ==> FAILED
 
 Test 11: call all methods in random order until just before system percolates
   * n = 3
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:699)
-    TestPercolation.main(TestPercolation.java:818)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 1) = true
+    - reference isFull(1, 1) = false
+    - failed on trial 1 of 40
     - sequence of operations was:
-         percolation.percolates()
+         percolation.open(1, 2)
          percolation.isOpen(row, col) for each row and col
+         percolation.isFull(row, col) for each row and col
 
   * n = 5
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:700)
-    TestPercolation.main(TestPercolation.java:818)
-
-    - sequence of operations was:
-         percolation.isOpen(row, col) for each row and col
+    - isFull() returns wrong value after 7 sites opened
+    - student   isFull(1, 4) = true
+    - reference isFull(1, 4) = false
+    - failed on trial 1 of 20
 
   * n = 7
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:701)
-    TestPercolation.main(TestPercolation.java:818)
-
-    - sequence of operations was:
+    - isFull() returns wrong value after 18 sites opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
+    - failed on trial 1 of 10
 
   * n = 10
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 7) = true
+    - reference isFull(1, 7) = false
+    - failed on trial 1 of 5
+
+  * n = 20
     java.lang.IllegalArgumentException: colum index col is out of bounds
 
     Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:702)
-    TestPercolation.main(TestPercolation.java:818)
-
-    - sequence of operations was:
-
-  * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
     TestPercolation.test11(TestPercolation.java:703)
     TestPercolation.main(TestPercolation.java:818)
 
-    - sequence of operations was:
-         percolation.numberOfOpenSites()
 
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:704)
-    TestPercolation.main(TestPercolation.java:818)
-
-    - sequence of operations was:
-         percolation.numberOfOpenSites()
-         percolation.isOpen(row, col) for each row and col
-         percolation.numberOfOpenSites()
-         percolation.isFull(row, col) for each row and col
+    - isFull() returns wrong value after 117 sites opened
+    - student   isFull(1, 30) = true
+    - reference isFull(1, 30) = false
+    - failed on trial 1 of 1
 
 ==> FAILED
 
 Test 12: call all methods in random order until almost all sites are open,
          but with inputs not prone to backwash
   * n = 3
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:714)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 2 sites opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
+    - failed on trial 1 of 40
 
   * n = 5
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:715)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 4) = true
+    - reference isFull(1, 4) = false
+    - failed on trial 1 of 20
 
   * n = 7
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:716)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 1) = true
+    - reference isFull(1, 1) = false
+    - failed on trial 1 of 10
 
   * n = 10
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:717)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 4) = true
+    - reference isFull(1, 4) = false
+    - failed on trial 1 of 5
 
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:718)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 4 sites opened
+    - student   isFull(1, 12) = true
+    - reference isFull(1, 12) = false
+    - failed on trial 1 of 2
 
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsNoBackwash(TestPercolation.java:502)
-    TestPercolation.test12(TestPercolation.java:719)
-    TestPercolation.main(TestPercolation.java:821)
+    - isFull() returns wrong value after 100 sites opened
+    - student   isFull(1, 15) = true
+    - reference isFull(1, 15) = false
+    - failed on trial 1 of 1
 
 ==> FAILED
 
 Test 13: check for backwash with predetermined sites
   * filename = input20.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:728)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 6 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = input10.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:729)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 5 sites opened
+    - student isFull(1, 3) = true
+    - student isOpen(1, 3) = false
+    - by definition, a full site is open
   * filename = input50.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:730)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 6 sites opened
+    - student isFull(1, 26) = true
+    - student isOpen(1, 26) = false
+    - by definition, a full site is open
   * filename = jerry47.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:731)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 42) = true
+    - student isOpen(1, 42) = false
+    - by definition, a full site is open
   * filename = sedgewick60.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:732)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 3 sites opened
+    - student isFull(1, 46) = true
+    - student isOpen(1, 46) = false
+    - by definition, a full site is open
   * filename = wayne98.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test13(TestPercolation.java:733)
-    TestPercolation.main(TestPercolation.java:824)
-
+    - isFull() and isOpen() are inconsistent after 9 sites opened
+    - student isFull(1, 65) = true
+    - student isOpen(1, 65) = false
+    - by definition, a full site is open
 ==> FAILED
 
 Test 14: check for backwash with predetermined sites that have
          multiple percolating paths
   * filename = input3.txt
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:35)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test14(TestPercolation.java:743)
-    TestPercolation.main(TestPercolation.java:827)
-
+    - isFull() and isOpen() are inconsistent after 1 site opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * filename = input4.txt
     java.lang.IllegalArgumentException: colum index col is out of bounds
 
     Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkFile(TestPercolation.java:183)
     TestPercolation.test14(TestPercolation.java:744)
@@ -881,9 +494,8 @@ Test 14: check for backwash with predetermined sites that have
     java.lang.IllegalArgumentException: colum index col is out of bounds
 
     Percolation.boundarycheck(Percolation.java:107)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:29)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkFile(TestPercolation.java:183)
     TestPercolation.test14(TestPercolation.java:745)
@@ -895,76 +507,55 @@ Test 15: call all methods in random order until all sites are open,
          allowing isOpen() to be called on a site more than once
          (these inputs are prone to backwash)
   * n = 3
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkRandomCalls(TestPercolation.java:543)
     TestPercolation.test15(TestPercolation.java:756)
     TestPercolation.main(TestPercolation.java:830)
 
   * n = 5
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:757)
-    TestPercolation.main(TestPercolation.java:830)
+    - isFull() returns wrong value after 8 sites opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
+    - failed on trial 1 of 20
 
   * n = 7
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkRandomCalls(TestPercolation.java:543)
     TestPercolation.test15(TestPercolation.java:758)
     TestPercolation.main(TestPercolation.java:830)
 
   * n = 10
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkRandomCalls(TestPercolation.java:543)
     TestPercolation.test15(TestPercolation.java:759)
     TestPercolation.main(TestPercolation.java:830)
 
   * n = 20
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:760)
-    TestPercolation.main(TestPercolation.java:830)
+    - isFull() returns wrong value after 6 sites opened
+    - student   isFull(1, 12) = true
+    - reference isFull(1, 12) = false
+    - failed on trial 1 of 2
 
   * n = 50
-    java.lang.IllegalArgumentException: row index row is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:761)
-    TestPercolation.main(TestPercolation.java:830)
+    - isFull() returns wrong value after 13 sites opened
+    - student   isFull(1, 40) = true
+    - reference isFull(1, 40) = false
+    - failed on trial 1 of 1
 
 ==> FAILED
 
@@ -1109,14 +700,14 @@ Test 1a-1d: check memory usage as a function of T trials for n = 100
 
                  T        bytes
 --------------------------------------------
-=> passed       16          184         
-=> passed       32          312         
-=> passed       64          568         
-=> passed      128         1080         
+=> passed       16          192         
+=> passed       32          320         
+=> passed       64          576         
+=> passed      128         1088         
 ==> 4/4 tests passed
 
 
-Estimated student memory = 8.00 T + 56.00   (R^2 = 1.000)
+Estimated student memory = 8.00 T + 64.00   (R^2 = 1.000)
 
 Total: 4/4 tests passed!
 
@@ -1192,11 +783,12 @@ Test 4: Call PercolationStats methods with trials = 3 and values of n that go up
 
          n  seconds log ratio
      ------------------------
-       724     0.23       2.7
-      1024     0.53       2.4
-      1448     1.42       2.8
-      2048     3.37       2.5
-      2896     8.56       2.7
+       512     0.11       2.5
+       724     0.23       2.3
+      1024     0.60       2.7
+      1448     1.60       2.9
+      2048     3.69       2.4
+      2896     9.68       2.8
 ==> passed
 
 
@@ -1219,17 +811,17 @@ Test 1a-1d: check that total memory <= 17 n^2 + 128 n + 1024 bytes
 
                  n        bytes
 --------------------------------------------
-    java.lang.IllegalArgumentException: row index row is out of bounds
+=> passed       64        37040         
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     MemoryOfPercolation.main(MemoryOfPercolation.java:164)
 
 
-Total: 0/4 tests passed!
+Total: 1/4 tests passed!
 
 ================================================================
 
@@ -1250,18 +842,22 @@ Test 1a-1e: Creates an n-by-n percolation system; open sites at random until
                                        2 * connected()
                  n       union()              + find()        constructor
 -----------------------------------------------------------------------------------
-    java.lang.IllegalArgumentException: row index row is out of bounds
+=> passed       16          212                   744                   1         
+=> passed       32          815                  2956                   1         
+=> passed       64         3277                 11528                   1         
+=> passed      128        13067                 46668                   1         
+=> passed      256        52305                185812                   1         
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TimePercolation.timeCoreSubsetOfMethods(TimePercolation.java:64)
     TimePercolation.test1(TimePercolation.java:339)
     TimePercolation.main(TimePercolation.java:521)
 
-==> 0/7 tests passed
+==> 5/7 tests passed
 
 
 If one of the values in the table violates the performance limits
@@ -1278,18 +874,18 @@ Tests 2a-2f: Check whether the number of calls to union(), connected(), and find
 
                  n     per open()      per isOpen()    per isFull()    per percolates() 
 ---------------------------------------------------------------------------------------------
-    java.lang.IllegalArgumentException: row index row is out of bounds
+=> passed       16        4               0               1               1         
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TimePercolation.countMaxOperations(TimePercolation.java:137)
     TimePercolation.test2(TimePercolation.java:399)
     TimePercolation.main(TimePercolation.java:524)
 
-==> 0/7 tests passed
+==> 1/7 tests passed
 
 
 
@@ -1305,12 +901,11 @@ Test 3: Create an n-by-n percolation system; interleave calls to percolates()
                         log   union-find     log
          n  seconds   ratio   operations   ratio
      -------------------------------------------
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TimePercolation.timeCoreSubsetOfMethods(TimePercolation.java:64)
     TimePercolation.test3(TimePercolation.java:435)
@@ -1328,12 +923,11 @@ Test 4: Create an n-by-n percolation system; interleave calls to open(),
                         log   union-find     log
          n  seconds   ratio   operations   ratio
      -------------------------------------------
-    java.lang.IllegalArgumentException: row index row is out of bounds
+    java.lang.IllegalArgumentException: colum index col is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.isOpen(Percolation.java:77)
-    Percolation.attemptunion(Percolation.java:71)
-    Percolation.makeconnection(Percolation.java:42)
+    Percolation.boundarycheck(Percolation.java:107)
+    Percolation.rc2id(Percolation.java:65)
+    Percolation.makeconnection(Percolation.java:34)
     Percolation.open(Percolation.java:21)
     TimePercolation.timeAllMethods(TimePercolation.java:94)
     TimePercolation.test4(TimePercolation.java:484)
@@ -1342,7 +936,7 @@ Test 4: Create an n-by-n percolation system; interleave calls to open(),
 ==> FAILED
 
 
-Total: 0/16 tests passed!
+Total: 6/16 tests passed!
 
 
 ================================================================

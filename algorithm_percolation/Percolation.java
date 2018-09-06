@@ -23,39 +23,39 @@ public class Percolation {
     
     private void makeconnection(int row, int col) {
         boundarycheck(row, col);
-        if (col == 1) {
-            int id = rc2id(row, 1);
-            int idl = rc2id(row, 2);
+        if (row == 1) {
+            int id = rc2id(1, col);
+            int idl = rc2id(2, col);
             attemptunion(id, topid);
             attemptunion(id, idl);
             }
-        else if (col == width) {
-            int id = rc2id(row, width);
-            int idu = rc2id(row, width - 1);
+        else if (row == width) {
+            int id = rc2id(width, col);
+            int idu = rc2id(width, col - 1);
             attemptunion(id, size + 1);
             attemptunion(id, idu);
             }
         else {
             int id = rc2id(row, col);
-            int idu = rc2id(row, col - 1);
-            int idl = rc2id(row, col + 1);
+            int idu = rc2id(row - 1, col);
+            int idl = rc2id(row + 1, col);
             attemptunion(id, idu);
             attemptunion(id, idl);
             }
-        if (row == 1) {
-            int id = rc2id(1, col);
-            int idr = rc2id(2, col);
+        if (col == 1) {
+            int id = rc2id(row, 1);
+            int idr = rc2id(row, 2);
             attemptunion(id, idr);
             }
-        else if (row == width) {
-            int id = rc2id(width, col);
-            int idl = rc2id(width, col - 1);
+        else if (col == width) {
+            int id = rc2id(row, width);
+            int idl = rc2id(row, width - 1);
             attemptunion(id, idl);
             }
         else {
             int id = rc2id(row, col);
-            int idl = rc2id(row - 1, col);
-            int idr = rc2id(row + 1, col);
+            int idl = rc2id(row, col - 1);
+            int idr = rc2id(row, col + 1);
             attemptunion(id, idl);
             attemptunion(id, idr);
             }
@@ -63,7 +63,7 @@ public class Percolation {
 
     private int rc2id(int row, int col) {
         boundarycheck(row, col);
-        int num = (col - 1) * width + row;
+        int num = (row - 1) * width + col;
         return num;
     }
 
