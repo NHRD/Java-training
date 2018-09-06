@@ -11,7 +11,7 @@ public class Percolation {
         width = n;
         size = n * n;
         open = new boolean[size];
-        uf = new WeightedQuickUnionUF(size + 1);
+        uf = new WeightedQuickUnionUF(size + 2);
     }
 
     public void open(int row, int col) {
@@ -31,7 +31,8 @@ public class Percolation {
             }
         else if (row == width) {
             int id = rc2id(width, col);
-            int idu = rc2id(width - 1, col);
+            int idu = rc2id(width, col - 1);
+            attemptunion(id, size + 1);
             attemptunion(id, idu);
             }
         else {
@@ -81,19 +82,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         boundarycheck(row, col);
         int num = rc2id(row, col);
-        return ((uf.connected(topid, num)) && !(bottomcn(row, col)));
-    }
-
-    private boolean bottomcn(int row, int col) {
-        boolean boc = true;
-        int num = rc2id(row, col);
-        for (int i = 0; i < width; i++) {
-            if (uf.connected(num, size - i)) {
-                boc = false;
-                break;
-            }
-        }
-        return boc;
+        return (uf.connected(topid, num));
     }
     
     public int numberOfOpenSites() {
@@ -107,7 +96,7 @@ public class Percolation {
     }
     
     public boolean percolates() {
-        return uf.connected(topid, size);
+        return uf.connected(topid, size + 1);
     }
 
     private void boundarycheck(int row, int col) {
