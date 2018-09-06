@@ -10,18 +10,18 @@ PMD:          FAILED (9 warnings)
 Checkstyle:   PASSED
 
 Correctness:  16/30 tests passed
-Memory:       5/8 tests passed
-Timing:       9/20 tests passed
+Memory:       8/8 tests passed
+Timing:       12/20 tests passed
 
-Aggregate score: 57.25%
+Aggregate score: 64.00%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.0K Sep  6 12:50 Percolation.java
-2.0K Sep  6 12:50 PercolationStats.java
+3.3K Sep  6 23:25 Percolation.java
+2.0K Sep  6 23:25 PercolationStats.java
 
 
 ********************************************************************************
@@ -82,7 +82,7 @@ PMD ends with 9 warnings.
 
 % custom checkstyle checks for Percolation.java
 *-----------------------------------------------------------
-[INFO] Percolation.java:90: Using a loop in this method might be a performance bug. [Performance]
+[INFO] Percolation.java:101: Using a loop in this method might be a performance bug. [Performance]
 
 % custom checkstyle checks for PercolationStats.java
 *-----------------------------------------------------------
@@ -108,82 +108,70 @@ Tests 13 through 15 test backwash.
 
 Test 1: open predetermined list of sites using file inputs
   * filename = input6.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 5) = true
-    - student isOpen(1, 5) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 6) = false
+    - reference isFull(1, 6) = true
   * filename = input8.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8-no.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 5) = true
-    - student isOpen(1, 5) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 6) = false
+    - reference isFull(1, 6) = true
   * filename = input10-no.txt
-    - isFull() and isOpen() are inconsistent after 5 sites opened
-    - student isFull(1, 3) = true
-    - student isOpen(1, 3) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 4) = false
+    - reference isFull(1, 4) = true
   * filename = greeting57.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
   * filename = heart25.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 6) = true
-    - student isOpen(1, 6) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 7) = false
+    - reference isFull(1, 7) = true
 ==> FAILED
 
 Test 2: open random sites until just before system percolates
   * n = 3
   * n = 5
-    - isFull() and isOpen() are inconsistent after 4 sites opened
-    - student isFull(1, 3) = true
-    - student isOpen(1, 3) = false
-    - by definition, a full site is open
-  * n = 10
-    - isFull() and isOpen() are inconsistent after 5 sites opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
-  * n = 10
     - isFull() and isOpen() are inconsistent after 7 sites opened
-    - student isFull(1, 7) = true
-    - student isOpen(1, 7) = false
+    - student isFull(1, 1) = true
+    - student isOpen(1, 1) = false
     - by definition, a full site is open
+  * n = 10
+    - isFull() returns wrong value after 2 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
+  * n = 10
+    - isFull() returns wrong value after 16 sites opened
+    - student   isFull(1, 9) = false
+    - reference isFull(1, 9) = true
   * n = 20
-    - isFull() and isOpen() are inconsistent after 31 sites opened
-    - student isFull(1, 10) = true
-    - student isOpen(1, 10) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 6 sites opened
+    - student   isFull(1, 4) = false
+    - reference isFull(1, 4) = true
   * n = 20
-    - isFull() and isOpen() are inconsistent after 25 sites opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 65 sites opened
+    - student   isFull(1, 11) = false
+    - reference isFull(1, 11) = true
   * n = 50
-    - isFull() and isOpen() are inconsistent after 13 sites opened
-    - student isFull(1, 37) = true
-    - student isOpen(1, 37) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 50) = false
+    - reference isFull(1, 50) = true
   * n = 50
-    - isFull() and isOpen() are inconsistent after 53 sites opened
-    - student isFull(1, 9) = true
-    - student isOpen(1, 9) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 62 sites opened
+    - student   isFull(1, 39) = false
+    - reference isFull(1, 39) = true
 ==> FAILED
 
 Test 3: open predetermined sites for n = 1 and n = 2 (corner case test)
   * filename = input1.txt
     java.lang.IllegalArgumentException: row index row is out of bounds
 
-    Percolation.boundarycheck(Percolation.java:104)
-    Percolation.rc2id(Percolation.java:65)
+    Percolation.boundarycheck(Percolation.java:115)
+    Percolation.rc2id(Percolation.java:64)
     Percolation.makeconnection(Percolation.java:28)
     Percolation.open(Percolation.java:21)
     TestPercolation.checkFile(TestPercolation.java:183)
@@ -218,54 +206,47 @@ Test 4: check predetermined sites with long percolating path
 
 Test 5: open every site
   * filename = input5.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
 ==> FAILED
 
 Test 6: open random sites until just before system percolates,
         allowing open() to be called on a site more than once
   * n = 3
-    - percolates() returns wrong value after 3 sites opened
-    - student   percolates() = true
-    - reference percolates() = false
-
+    - isFull() and isOpen() are inconsistent after 2 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
+    - by definition, a full site is open
   * n = 5
-    - isFull() and isOpen() are inconsistent after 3 sites opened
-    - student isFull(1, 4) = true
-    - student isOpen(1, 4) = false
+    - isFull() and isOpen() are inconsistent after 5 sites opened
+    - student isFull(1, 2) = true
+    - student isOpen(1, 2) = false
     - by definition, a full site is open
   * n = 10
-    - isFull() and isOpen() are inconsistent after 14 sites opened
-    - student isFull(1, 7) = true
-    - student isOpen(1, 7) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 7 sites opened
+    - student   isFull(1, 9) = false
+    - reference isFull(1, 9) = true
   * n = 10
-    - isFull() and isOpen() are inconsistent after 4 sites opened
-    - student isFull(1, 6) = true
-    - student isOpen(1, 6) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 9 sites opened
+    - student   isFull(1, 6) = false
+    - reference isFull(1, 6) = true
   * n = 20
-    - isFull() and isOpen() are inconsistent after 11 sites opened
-    - student isFull(1, 4) = true
-    - student isOpen(1, 4) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 20 sites opened
+    - student   isFull(1, 17) = false
+    - reference isFull(1, 17) = true
   * n = 20
-    - isFull() and isOpen() are inconsistent after 24 sites opened
-    - student isFull(1, 10) = true
-    - student isOpen(1, 10) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 11 sites opened
+    - student   isFull(1, 10) = false
+    - reference isFull(1, 10) = true
   * n = 50
-    - isFull() and isOpen() are inconsistent after 13 sites opened
-    - student isFull(1, 10) = true
-    - student isOpen(1, 10) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 48 sites opened
+    - student   isFull(1, 44) = false
+    - reference isFull(1, 44) = true
   * n = 50
-    - isFull() and isOpen() are inconsistent after 151 sites opened
-    - student isFull(1, 21) = true
-    - student isOpen(1, 21) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 26 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
 ==> FAILED
 
 Test 7: call methods with invalid arguments
@@ -296,105 +277,80 @@ Test 8: call constructor with invalid argument
 
 Test 9: create multiple Percolation objects at the same time
         (to make sure you didn't store data in static variables)
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkTwoPercolationObjects(TestPercolation.java:396)
-    TestPercolation.test9(TestPercolation.java:673)
-    TestPercolation.main(TestPercolation.java:812)
-
-    - isFull() and isOpen() are inconsistent after 5 sites opened
-    - student isFull(1, 1) = true
-    - student isOpen(1, 1) = false
-    - by definition, a full site is open
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkTwoPercolationObjects(TestPercolation.java:394)
-    TestPercolation.test9(TestPercolation.java:675)
-    TestPercolation.main(TestPercolation.java:812)
-
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 5) = false
+    - reference isFull(1, 5) = true
+    - isFull() returns wrong value after 13 sites opened
+    - student   isFull(1, 7) = false
+    - reference isFull(1, 7) = true
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 4) = false
+    - reference isFull(1, 4) = true
 ==> FAILED
 
 Test 10: open predetermined list of sites using file inputs,
          but permute the order in which methods are called
   * filename = input8.txt;  order =     isFull(),     isOpen(), percolates()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8.txt;  order =     isFull(), percolates(),     isOpen()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8.txt;  order =     isOpen(),     isFull(), percolates()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8.txt;  order =     isOpen(), percolates(),     isFull()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8.txt;  order = percolates(),     isOpen(),     isFull()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input8.txt;  order = percolates(),     isFull(),     isOpen()
     - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
 ==> FAILED
 
 Test 11: call all methods in random order until just before system percolates
   * n = 3
-    - isFull() returns wrong value after 1 site opened
-    - student   isFull(1, 1) = true
-    - reference isFull(1, 1) = false
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 2) = true
+    - reference isFull(1, 2) = false
     - failed on trial 1 of 40
-    - sequence of operations was:
-         percolation.open(1, 2)
-         percolation.isOpen(row, col) for each row and col
-         percolation.isFull(row, col) for each row and col
 
   * n = 5
-    - isFull() returns wrong value after 7 sites opened
-    - student   isFull(1, 4) = true
-    - reference isFull(1, 4) = false
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
     - failed on trial 1 of 20
 
   * n = 7
-    - isFull() returns wrong value after 18 sites opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - isFull() returns wrong value after 11 sites opened
+    - student   isFull(1, 7) = false
+    - reference isFull(1, 7) = true
     - failed on trial 1 of 10
 
   * n = 10
-    - isFull() returns wrong value after 5 sites opened
-    - student   isFull(1, 7) = true
-    - reference isFull(1, 7) = false
+    - isFull() returns wrong value after 16 sites opened
+    - student   isFull(1, 10) = false
+    - reference isFull(1, 10) = true
     - failed on trial 1 of 5
 
   * n = 20
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCallsUntilPercolation(TestPercolation.java:437)
-    TestPercolation.test11(TestPercolation.java:703)
-    TestPercolation.main(TestPercolation.java:818)
-
+    - isFull() returns wrong value after 13 sites opened
+    - student   isFull(1, 16) = false
+    - reference isFull(1, 16) = true
+    - failed on trial 1 of 2
 
   * n = 50
-    - isFull() returns wrong value after 117 sites opened
-    - student   isFull(1, 30) = true
-    - reference isFull(1, 30) = false
+    - isFull() returns wrong value after 26 sites opened
+    - student   isFull(1, 44) = false
+    - reference isFull(1, 44) = true
     - failed on trial 1 of 1
 
 ==> FAILED
@@ -402,159 +358,125 @@ Test 11: call all methods in random order until just before system percolates
 Test 12: call all methods in random order until almost all sites are open,
          but with inputs not prone to backwash
   * n = 3
-    - isFull() returns wrong value after 2 sites opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
     - failed on trial 1 of 40
 
   * n = 5
-    - isFull() returns wrong value after 3 sites opened
-    - student   isFull(1, 4) = true
-    - reference isFull(1, 4) = false
+    - isFull() returns wrong value after 6 sites opened
+    - student   isFull(1, 1) = true
+    - reference isFull(1, 1) = false
     - failed on trial 1 of 20
 
   * n = 7
-    - isFull() returns wrong value after 3 sites opened
-    - student   isFull(1, 1) = true
-    - reference isFull(1, 1) = false
+    - isFull() returns wrong value after 4 sites opened
+    - student   isFull(1, 5) = false
+    - reference isFull(1, 5) = true
     - failed on trial 1 of 10
 
   * n = 10
-    - isFull() returns wrong value after 5 sites opened
-    - student   isFull(1, 4) = true
-    - reference isFull(1, 4) = false
+    - isFull() returns wrong value after 12 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
     - failed on trial 1 of 5
 
   * n = 20
-    - isFull() returns wrong value after 4 sites opened
-    - student   isFull(1, 12) = true
-    - reference isFull(1, 12) = false
+    - isFull() returns wrong value after 36 sites opened
+    - student   isFull(1, 2) = false
+    - reference isFull(1, 2) = true
     - failed on trial 1 of 2
 
   * n = 50
-    - isFull() returns wrong value after 100 sites opened
-    - student   isFull(1, 15) = true
-    - reference isFull(1, 15) = false
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 5) = false
+    - reference isFull(1, 5) = true
     - failed on trial 1 of 1
 
 ==> FAILED
 
 Test 13: check for backwash with predetermined sites
   * filename = input20.txt
-    - isFull() and isOpen() are inconsistent after 6 sites opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 6 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
   * filename = input10.txt
-    - isFull() and isOpen() are inconsistent after 5 sites opened
-    - student isFull(1, 3) = true
-    - student isOpen(1, 3) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 4) = false
+    - reference isFull(1, 4) = true
   * filename = input50.txt
-    - isFull() and isOpen() are inconsistent after 6 sites opened
-    - student isFull(1, 26) = true
-    - student isOpen(1, 26) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 6 sites opened
+    - student   isFull(1, 27) = false
+    - reference isFull(1, 27) = true
   * filename = jerry47.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 42) = true
-    - student isOpen(1, 42) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 43) = false
+    - reference isFull(1, 43) = true
   * filename = sedgewick60.txt
-    - isFull() and isOpen() are inconsistent after 3 sites opened
-    - student isFull(1, 46) = true
-    - student isOpen(1, 46) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 47) = false
+    - reference isFull(1, 47) = true
   * filename = wayne98.txt
-    - isFull() and isOpen() are inconsistent after 9 sites opened
-    - student isFull(1, 65) = true
-    - student isOpen(1, 65) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 9 sites opened
+    - student   isFull(1, 66) = false
+    - reference isFull(1, 66) = true
 ==> FAILED
 
 Test 14: check for backwash with predetermined sites that have
          multiple percolating paths
   * filename = input3.txt
-    - isFull() and isOpen() are inconsistent after 1 site opened
-    - student isFull(1, 2) = true
-    - student isOpen(1, 2) = false
-    - by definition, a full site is open
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 3) = false
+    - reference isFull(1, 3) = true
   * filename = input4.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test14(TestPercolation.java:744)
-    TestPercolation.main(TestPercolation.java:827)
+    - percolates() returns wrong value after 4 sites opened
+    - student   percolates() = false
+    - reference percolates() = true
 
   * filename = input7.txt
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkFile(TestPercolation.java:183)
-    TestPercolation.test14(TestPercolation.java:745)
-    TestPercolation.main(TestPercolation.java:827)
-
+    - isFull() returns wrong value after 5 sites opened
+    - student   isFull(1, 1) = false
+    - reference isFull(1, 1) = true
 ==> FAILED
 
 Test 15: call all methods in random order until all sites are open,
          allowing isOpen() to be called on a site more than once
          (these inputs are prone to backwash)
   * n = 3
-    java.lang.IllegalArgumentException: colum index col is out of bounds
+    - percolates() returns wrong value after 5 sites opened
+    - student   percolates() = true
+    - reference percolates() = false
 
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:756)
-    TestPercolation.main(TestPercolation.java:830)
+    - failed on trial 1 of 40
 
   * n = 5
-    - isFull() returns wrong value after 8 sites opened
-    - student   isFull(1, 2) = true
-    - reference isFull(1, 2) = false
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 5) = false
+    - reference isFull(1, 5) = true
     - failed on trial 1 of 20
 
   * n = 7
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:758)
-    TestPercolation.main(TestPercolation.java:830)
+    - isFull() returns wrong value after 3 sites opened
+    - student   isFull(1, 7) = false
+    - reference isFull(1, 7) = true
+    - failed on trial 1 of 10
 
   * n = 10
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TestPercolation.checkRandomCalls(TestPercolation.java:543)
-    TestPercolation.test15(TestPercolation.java:759)
-    TestPercolation.main(TestPercolation.java:830)
+    - isFull() returns wrong value after 9 sites opened
+    - student   isFull(1, 6) = false
+    - reference isFull(1, 6) = true
+    - failed on trial 1 of 5
 
   * n = 20
     - isFull() returns wrong value after 6 sites opened
-    - student   isFull(1, 12) = true
-    - reference isFull(1, 12) = false
+    - student   isFull(1, 2) = false
+    - reference isFull(1, 2) = true
     - failed on trial 1 of 2
 
   * n = 50
-    - isFull() returns wrong value after 13 sites opened
-    - student   isFull(1, 40) = true
-    - reference isFull(1, 40) = false
+    - isFull() returns wrong value after 1 site opened
+    - student   isFull(1, 8) = false
+    - reference isFull(1, 8) = true
     - failed on trial 1 of 1
 
 ==> FAILED
@@ -783,12 +705,11 @@ Test 4: Call PercolationStats methods with trials = 3 and values of n that go up
 
          n  seconds log ratio
      ------------------------
-       512     0.11       2.5
-       724     0.23       2.3
-      1024     0.60       2.7
-      1448     1.60       2.9
-      2048     3.69       2.4
-      2896     9.68       2.8
+       724     0.22       2.4
+      1024     0.50       2.4
+      1448     1.31       2.8
+      2048     3.49       2.8
+      2896     8.92       2.7
 ==> passed
 
 
@@ -812,16 +733,21 @@ Test 1a-1d: check that total memory <= 17 n^2 + 128 n + 1024 bytes
                  n        bytes
 --------------------------------------------
 => passed       64        37040         
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    MemoryOfPercolation.main(MemoryOfPercolation.java:164)
+=> passed      256       590000         
+=> passed      512      2359472         
+=> passed     1024      9437360         
+==> 4/4 tests passed
 
 
-Total: 1/4 tests passed!
+Estimated student memory = 9.00 n^2 + 0.00 n + 176.00   (R^2 = 1.000)
+
+
+Test 2 (bonus): check that total memory <= 11 n^2 + 128 n + 1024 bytes
+   -  bonus available only if solution passes backwash correctness test
+==> FAILED
+
+
+Total: 4/4 tests passed!
 
 ================================================================
 
@@ -842,22 +768,14 @@ Test 1a-1e: Creates an n-by-n percolation system; open sites at random until
                                        2 * connected()
                  n       union()              + find()        constructor
 -----------------------------------------------------------------------------------
-=> passed       16          212                   744                   1         
-=> passed       32          815                  2956                   1         
-=> passed       64         3277                 11528                   1         
-=> passed      128        13067                 46668                   1         
-=> passed      256        52305                185812                   1         
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TimePercolation.timeCoreSubsetOfMethods(TimePercolation.java:64)
-    TimePercolation.test1(TimePercolation.java:339)
-    TimePercolation.main(TimePercolation.java:521)
-
-==> 5/7 tests passed
+=> passed       16          243                  1208                   1         
+=> passed       32          775                  2644                   1         
+=> passed       64         3950                 19898                   1         
+=> passed      128        16131                 90448                   1         
+=> passed      256        65390                465694                   1         
+=> passed      512       212839                767876                   1         
+=> passed     1024       872463               3214986                   1         
+==> 7/7 tests passed
 
 
 If one of the values in the table violates the performance limits
@@ -874,17 +792,13 @@ Tests 2a-2f: Check whether the number of calls to union(), connected(), and find
 
                  n     per open()      per isOpen()    per isFull()    per percolates() 
 ---------------------------------------------------------------------------------------------
-=> passed       16        4               0               1               1         
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TimePercolation.countMaxOperations(TimePercolation.java:137)
-    TimePercolation.test2(TimePercolation.java:399)
-    TimePercolation.main(TimePercolation.java:524)
-
+=> passed       16        4               0              17               1         
+=> FAILED       32        4               0              33   (1.4x)      1         
+=> FAILED       64        4               0              65   (2.7x)      1         
+=> FAILED      128        4               0             129   (5.4x)      1         
+=> FAILED      256        4               0             257  (10.7x)      1         
+=> FAILED      512        4               0             513  (21.4x)      1         
+=> FAILED     1024        4               0            1025  (42.7x)      1         
 ==> 1/7 tests passed
 
 
@@ -901,17 +815,12 @@ Test 3: Create an n-by-n percolation system; interleave calls to percolates()
                         log   union-find     log
          n  seconds   ratio   operations   ratio
      -------------------------------------------
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TimePercolation.timeCoreSubsetOfMethods(TimePercolation.java:64)
-    TimePercolation.test3(TimePercolation.java:435)
-    TimePercolation.main(TimePercolation.java:531)
-
-==> FAILED
+      1024     0.12     1.4      6264282     1.4
+      1448     0.23     2.0      9604174     1.2
+      2048     0.70     3.2     23262148     2.6
+      2896     2.49     3.7     59785002     2.7
+      4096     5.48     2.3    109919034     1.8
+==> passed
 
 
 
@@ -923,20 +832,16 @@ Test 4: Create an n-by-n percolation system; interleave calls to open(),
                         log   union-find     log
          n  seconds   ratio   operations   ratio
      -------------------------------------------
-    java.lang.IllegalArgumentException: colum index col is out of bounds
-
-    Percolation.boundarycheck(Percolation.java:107)
-    Percolation.rc2id(Percolation.java:65)
-    Percolation.makeconnection(Percolation.java:34)
-    Percolation.open(Percolation.java:21)
-    TimePercolation.timeAllMethods(TimePercolation.java:94)
-    TimePercolation.test4(TimePercolation.java:484)
-    TimePercolation.main(TimePercolation.java:534)
+       128     0.45     9.2       237556     3.4
+       181     0.50     0.3       326204     0.9
+       256     2.23     4.3       612758     1.8
+       362    21.78     6.6      2062152     3.5
+     [ exceeded the time limit of 10.0 seconds ]
 
 ==> FAILED
 
 
-Total: 6/16 tests passed!
+Total: 9/16 tests passed!
 
 
 ================================================================
