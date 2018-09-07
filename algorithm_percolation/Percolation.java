@@ -82,23 +82,11 @@ public class Percolation {
         boundarycheck(row, col);
         int num = rc2id(row, col);
         if (open[num - 1]) {
-            return (num % width == 0 || num % width == 1);
+            return (uf.connected(topid, num));
         }
         else {
             return false;
         }
-    }
-
-    private boolean bottomcn(int row, int col) {
-        boolean boc = true;
-        int num = rc2id(row, col);
-        for (int i = 0; i < width; i++) {
-            if (uf.connected(num, size - i)) {
-                boc = false;
-                break;
-            }
-        }
-        return boc;
     }
     
     public int numberOfOpenSites() {
