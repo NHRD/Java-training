@@ -81,7 +81,12 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         boundarycheck(row, col);
         int num = rc2id(row, col);
-        return ((uf.connected(topid, num)) && !(bottomcn(row, col)));
+        if (open[num - 1]) {
+            return (num % width == 0 || num % width == 1);
+        }
+        else {
+            return false;
+        }
     }
 
     private boolean bottomcn(int row, int col) {
