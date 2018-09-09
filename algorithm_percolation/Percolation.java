@@ -27,37 +27,53 @@ public class Percolation {
             int id = rc2id(1, col);
             int idl = rc2id(2, col);
             attemptunion(id, topid);
-            attemptunion(id, idl);
+            if (isOpen(2, col)) {
+                attemptunion(id, idl);
+                }
             }
         else if (row == width) {
             int id = rc2id(width, col);
             int idu = rc2id(width - 1, col);
-            attemptunion(id, idu);
+            if (isOpen(width - 1, col)) {
+                attemptunion(id, idu);
+                }
             }
         else {
             int id = rc2id(row, col);
             int idu = rc2id(row - 1, col);
             int idl = rc2id(row + 1, col);
-            attemptunion(id, idu);
-            attemptunion(id, idl);
+            if (isOpen(row - 1, col)) {
+                attemptunion(id, idu);
+                }
+            if (isOpen(row + 1, col)) {
+                attemptunion(id, idl);
+                }
             }
         if (col == 1) {
             int id = rc2id(row, 1);
             int idr = rc2id(row, 2);
-            attemptunion(id, idr);
+            if (isOpen(row, 2)) {
+                attemptunion(id, idr);
+                }
             }
         else if (col == width) {
             int id = rc2id(row, width);
             int idl = rc2id(row, width - 1);
-            attemptunion(id, idl);
+            if (isOpen(row, width -1)) {
+                attemptunion(id, idl);
+                }
             }
         else {
             int id = rc2id(row, col);
             int idl = rc2id(row, col - 1);
             int idr = rc2id(row, col + 1);
-            attemptunion(id, idl);
-            attemptunion(id, idr);
+            if (isOpen(row, col - 1)) {
+                attemptunion(id, idl);
             }
+            if (isOpen(row, col + 1)) {
+                attemptunion(id, idr);
+            }
+        }
     }
 
     private int rc2id(int row, int col) {
