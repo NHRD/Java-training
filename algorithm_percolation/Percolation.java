@@ -11,7 +11,7 @@ public class Percolation {
         width = n;
         size = n * n;
         open = new boolean[size];
-        uf = new WeightedQuickUnionUF(size + 1);
+        uf = new WeightedQuickUnionUF(size + 2);
     }
 
     public void open(int row, int col) {
@@ -34,6 +34,7 @@ public class Percolation {
         else if (row == width) {
             int id = rc2id(width, col);
             int idu = rc2id(width - 1, col);
+            attemptunion(id, size + 1);
             if (isOpen(width - 1, col)) {
                 attemptunion(id, idu);
                 }
@@ -116,7 +117,7 @@ public class Percolation {
     }
     
     public boolean percolates() {
-        return uf.connected(topid, size);
+        return uf.connected(topid, size + 1);
     }
 
     private void boundarycheck(int row, int col) {
