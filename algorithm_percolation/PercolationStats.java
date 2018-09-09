@@ -51,12 +51,8 @@ public class PercolationStats {
         int nu = Integer.parseInt(args[0]);
         int tr = Integer.parseInt(args[1]);
         PercolationStats result = new PercolationStats(nu, tr);
-        double mean = result.mean();
-        double stdev = result.stddev();
-        double confidenceLo = result.confidenceLo();
-        double confidenceHi = result.confidenceHi();
-        System.out.printf("mean                     = %f\n", mean);
-        System.out.printf("stddev                   = %f\n", stdev);
-        System.out.printf("95%% confidence interval = %f, %f\n", confidenceLo, confidenceHi);
+        System.out.printf("mean                     = %f\n", result.mean());
+        System.out.printf("stddev                   = %f\n", result.stddev());
+        System.out.printf("95%% confidence interval = %f, %f\n", result.confidenceLo(), result.confidenceHi());
     }
  } 
