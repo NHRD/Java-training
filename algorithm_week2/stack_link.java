@@ -12,7 +12,7 @@ public class LinkedStackOfStrings {
     }
 
     public void push(String item) {
-        Node oldfirst  first;
+        Node oldfirst = first;
         first = new Node();
         first.item = item;
         first.next = oldfirst;
