@@ -1,33 +1,33 @@
-public class ResizingArrayStackOfStrings() {
+public class ResizingArrayStackOfStrings<Item> {
     
-    private String[] s;
+    private Item[] s;
     private int N = 0;
 
     public ResizingArrayStackOfStrings() {
-        s = new String[1];
+        s = (Item[]) new Object[1];
     }
 
     public boolean isEmpty(){
         return (N == 0);
     }
 
-    public void push(String item) {
+    public void push(Item item) {
         if (N == s.length) {
             resize(2 * s.length);
-            s[N++] = item;
         }
+            s[N++] = item;
     }
 
     public void resize(int capacity) {
-        String[] copy = new String[capacity];
+        Item[] copy = (Item[]) new Object[capacity];
         for (int i = 0; i < N; i++) {
             copy[i] = s[i];
         s = copy;
         }
     }
 
-    public String pop() {
-        String item = s[--N];
+    public Item pop() {
+        Item item = s[--N];
         s[N] = null;
         if (N > 0 && N == s.length/4) {
             resize(s.length/2);
