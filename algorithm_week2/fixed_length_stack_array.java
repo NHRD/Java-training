@@ -15,6 +15,9 @@ public class FixedCapacityStackOfStrings {
     }
 
     public String pop() { 
-        return s[--N];
+        String item = s[--N];
+        s[N] = null;
+        return item;
+        /*When the item is poped, put null to the location to open the memory.*/
     }
 }
