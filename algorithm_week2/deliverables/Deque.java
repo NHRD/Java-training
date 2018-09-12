@@ -1,7 +1,7 @@
 import java.util.Iterator;
-Import java.util.NoSuchElementException;
+import java.util.NoSuchElementException;
 
-Public class Deque<Item> implements Iterable<Item> {
+public class Deque<Item> implements Iterable<Item> {
 
     private Node first;
     private Node last;
@@ -92,7 +92,7 @@ Public class Deque<Item> implements Iterable<Item> {
         }
         
         public void remove() {
-            throw new java.lang.UnsupportedOperationException("remove() not supported.";)
+            throw new java.lang.UnsupportedOperationException("remove() not supported.");
         }
 
         public Item next() {
