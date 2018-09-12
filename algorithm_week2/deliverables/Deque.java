@@ -97,7 +97,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         public Item next() {
             if (current.next == null) {
-                throw new java.lang.NoSuchElementException("No next item exists.");
+                throw new NoSuchElementException("No next item exists.");
             }
             Item item = current.item;
             current = current.next;
@@ -115,7 +115,7 @@ public class Deque<Item> implements Iterable<Item> {
     private void removeEmptycheck(){
         //Client calls either removeFirst() or removeLast when the deque is empty. 
         if (isEmpty()) {
-            throw new java.util.NoSuchEementException("Can not remove. Queue is empty.");
+            throw new NoSuchElementException("Can not remove. Queue is empty.");
         }
     }
 }
