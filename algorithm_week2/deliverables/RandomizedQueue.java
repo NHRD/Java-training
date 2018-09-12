@@ -14,13 +14,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // return the number of items on the randomized queue
     }
     
-    public void enqueue(Item item)           
+    public void enqueue(Item item) {
+        nullcheck(item);
+    }        
     // add the item
     
-    public Item dequeue()                    
+    public Item dequeue() {
+        Emptycheck();
+    }                  
     // remove and return a random item
     
-    public Item sample()                     
+    public Item sample() {
+        Emptycheck();
+    }                 
     // return a random item (but do not remove it)
     
     public Iterator<Item> iterator()         
@@ -28,4 +34,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public static void main(String[] args)   
     // unit testing (optional)
+
+    private void nullcheck(Item item) {
+        //client calls either addFirst() or addLast() with a null argument. 
+        if (item == null) {
+            throw new java.lang.IllegalArgumentException("Null is prohibited.");
+        }
+    }
+    
+    private void Emptycheck(){
+        //Client calls either removeFirst() or removeLast when the deque is empty. 
+        if (isEmpty()) {
+            throw new NoSuchElementException("Can not remove. Queue is empty.");
+        }
  }
