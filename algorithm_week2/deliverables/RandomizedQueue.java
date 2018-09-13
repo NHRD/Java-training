@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int n = 0;//size of queue.
@@ -44,16 +47,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }                 
     // return a random item (but do not remove it)
     
-    public Iterator<Item> iterator()         
+    public Iterator<Item> iterator() {       
     // return an independent iterator over items in random order
         return new ListIterator();
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+        private int i = 0;
         
         public boolean hasNext() {
-            return current != null;
+            return i > 0;
         }
         
         public void remove() {
@@ -61,17 +64,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (current.next == null) {
+            if (i == 0) {
                 throw new NoSuchElementException("No next item exists.");
             }
-            Item item = current.item;
-            current = current.next;
-            return item;
+            return s[i++]
         }
     }
-    
-    public static void main(String[] args)   
-    // unit testing (optional)
 
     private void nullcheck(Item item) {
         //client calls either addFirst() or addLast() with a null argument. 
@@ -80,9 +78,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
     
-    private void Emptycheck(){
+    private void Emptycheck() {
         //Client calls either removeFirst() or removeLast when the deque is empty. 
         if (isEmpty()) {
             throw new NoSuchElementException("Can not remove. Queue is empty.");
         }
+    }
  }
