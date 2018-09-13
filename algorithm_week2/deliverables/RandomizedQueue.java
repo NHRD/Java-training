@@ -9,7 +9,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     public RandomizedQueue() {                
     // construct an empty randomized queue
-    s = (Item[]) new Object[1];
+    int defaultsiz = 0;
+    s = (Item[]) new Object[defaultsize];
     }
     
     public boolean isEmpty() {            
@@ -32,7 +33,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         Emptycheck();   
         int index = StdRandom.uniform(n);
-        Item item = items[index];
+        Item item = s[index];
         s[index] = s[n-1];
         s[n-1] = null;
         n--;
@@ -67,7 +68,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (i == 0) {
                 throw new NoSuchElementException("No next item exists.");
             }
-            return s[i++]
+            return s[i++];
         }
     }
 
@@ -82,6 +83,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         //Client calls either removeFirst() or removeLast when the deque is empty. 
         if (isEmpty()) {
             throw new NoSuchElementException("Can not remove. Queue is empty.");
+        }
+    }
+
+    public void resize(int capacity) {
+        Item[] copy = (Item[]) new String[capacity];
+        for (int i = 0; i < N; i++) {
+            copy[i] = s[i];
+        s = copy;
         }
     }
  }
