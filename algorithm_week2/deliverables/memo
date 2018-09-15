@@ -9,20 +9,20 @@ Spotbugs:     PASSED
 PMD:          PASSED
 Checkstyle:   PASSED
 
-Correctness:  20/43 tests passed
-Memory:       80/96 tests passed
-Timing:       165/193 tests passed
+Correctness:  21/43 tests passed
+Memory:       81/96 tests passed
+Timing:       163/193 tests passed
 
-Aggregate score: 63.34%
+Aggregate score: 64.63%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-2.7K Sep 15 03:19 Deque.java
- 457 Sep 15 03:19 Permutation.java
-2.2K Sep 15 03:19 RandomizedQueue.java
+2.9K Sep 15 03:32 Deque.java
+ 457 Sep 15 03:32 Permutation.java
+2.2K Sep 15 03:32 RandomizedQueue.java
 
 
 ********************************************************************************
@@ -138,23 +138,11 @@ Test 3: check random calls to addFirst(), removeLast(), and isEmpty()
   *    5 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0)
   *   50 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0)
   *  500 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0)
-  * 1000 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0)
-  *    5 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
-    - student   isEmpty() returned false
-    - reference isEmpty() returned true
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.isEmpty()         ==> true
-         deque.addFirst(1)
-         deque.removeLast()      ==> 1
-         deque.isEmpty()         ==> false
-
-  *   50 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
     java.lang.NullPointerException
 
-    Deque.removeLast(Deque.java:72)
+    Deque.removeLast(Deque.java:76)
     TestDeque.random(TestDeque.java:106)
-    TestDeque.test3(TestDeque.java:474)
+    TestDeque.test3(TestDeque.java:471)
     TestDeque.main(TestDeque.java:831)
 
     - sequence of operations was:
@@ -162,12 +150,32 @@ Test 3: check random calls to addFirst(), removeLast(), and isEmpty()
          deque.addFirst(0)
          deque.removeLast()      ==> 0
          deque.addFirst(2)
+         deque.addFirst(3)
+         deque.removeLast()
+
+  * 1000 random calls (0.8, 0.0, 0.0, 0.1, 0.1, 0.0)
+  *    5 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
+  *   50 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
+    java.lang.NullPointerException
+
+    Deque.removeLast(Deque.java:76)
+    TestDeque.random(TestDeque.java:106)
+    TestDeque.test3(TestDeque.java:474)
+    TestDeque.main(TestDeque.java:831)
+
+    - sequence of operations was:
+         Deque<Integer> deque = new Deque<Integer>()
+         deque.isEmpty()         ==> true
+         deque.isEmpty()         ==> true
+         deque.addFirst(2)
+         deque.removeLast()      ==> 2
+         deque.addFirst(4)
          deque.removeLast()
 
   *  500 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
     java.lang.NullPointerException
 
-    Deque.removeLast(Deque.java:72)
+    Deque.removeLast(Deque.java:76)
     TestDeque.random(TestDeque.java:106)
     TestDeque.test3(TestDeque.java:475)
     TestDeque.main(TestDeque.java:831)
@@ -175,25 +183,28 @@ Test 3: check random calls to addFirst(), removeLast(), and isEmpty()
     - sequence of operations was:
          Deque<Integer> deque = new Deque<Integer>()
          deque.isEmpty()         ==> true
-         deque.addFirst(1)
-         deque.removeLast()      ==> 1
-         deque.addFirst(3)
+         deque.isEmpty()         ==> true
+         deque.isEmpty()         ==> true
+         deque.isEmpty()         ==> true
+         deque.isEmpty()         ==> true
+         deque.addFirst(5)
+         deque.removeLast()      ==> 5
+         deque.addFirst(7)
          deque.removeLast()
 
   * 1000 random calls (0.1, 0.0, 0.0, 0.8, 0.1, 0.0)
     java.lang.NullPointerException
 
-    Deque.removeLast(Deque.java:72)
+    Deque.removeLast(Deque.java:76)
     TestDeque.random(TestDeque.java:106)
     TestDeque.test3(TestDeque.java:476)
     TestDeque.main(TestDeque.java:831)
 
     - sequence of operations was:
          Deque<Integer> deque = new Deque<Integer>()
-         deque.isEmpty()         ==> true
-         deque.addFirst(1)
-         deque.removeLast()      ==> 1
-         deque.addFirst(3)
+         deque.addFirst(0)
+         deque.removeLast()      ==> 0
+         deque.addFirst(2)
          deque.removeLast()
 
 ==> FAILED
@@ -211,13 +222,6 @@ Test 4: check random calls to addLast(), removeLast(), and isEmpty()
   *  500 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0)
     - student   isEmpty() returned false
     - reference isEmpty() returned true
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.removeLast()      ==> 0
-         deque.addLast(2)
-         deque.removeLast()      ==> 2
-         deque.isEmpty()         ==> false
 
   * 1000 random calls (0.0, 0.1, 0.0, 0.8, 0.1, 0.0)
     - student   isEmpty() returned false
@@ -227,6 +231,10 @@ Test 4: check random calls to addLast(), removeLast(), and isEmpty()
          deque.isEmpty()         ==> true
          deque.addLast(1)
          deque.removeLast()      ==> 1
+         deque.addLast(3)
+         deque.removeLast()      ==> 3
+         deque.addLast(5)
+         deque.removeLast()      ==> 5
          deque.isEmpty()         ==> false
 
 ==> FAILED
@@ -238,59 +246,9 @@ Test 5: check random calls to addLast(), removeFirst(), and isEmpty()
   * 1000 random calls (0.0, 0.8, 0.1, 0.0, 0.1, 0.0)
   *    5 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0)
   *   50 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0)
-    java.util.NoSuchElementException: Can not remove. Queue is empty.
-
-    Deque.removeEmptycheck(Deque.java:111)
-    Deque.removeFirst(Deque.java:63)
-    TestDeque.random(TestDeque.java:87)
-    TestDeque.test5(TestDeque.java:506)
-    TestDeque.main(TestDeque.java:833)
-
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.removeFirst()     ==> 0
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.addLast(6)
-         deque.removeFirst()
-
   *  500 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0)
-    java.util.NoSuchElementException: Can not remove. Queue is empty.
-
-    Deque.removeEmptycheck(Deque.java:111)
-    Deque.removeFirst(Deque.java:63)
-    TestDeque.random(TestDeque.java:87)
-    TestDeque.test5(TestDeque.java:507)
-    TestDeque.main(TestDeque.java:833)
-
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.isEmpty()         ==> false
-         deque.addLast(2)
-         deque.isEmpty()         ==> false
-         deque.removeFirst()     ==> 0
-         deque.isEmpty()         ==> false
-         deque.removeFirst()     ==> 2
-         deque.addLast(7)
-         deque.removeFirst()
-
   * 1000 random calls (0.0, 0.1, 0.8, 0.0, 0.1, 0.0)
-    - student   isEmpty() returned true
-    - reference isEmpty() returned false
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.removeFirst()     ==> 0
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.addLast(4)
-         deque.isEmpty()         ==> true
-
-==> FAILED
+==> passed
 
 Test 6: check random calls to addFirst(), addLast(), removeFirst(),
         removeLast(), isEmpty(), and size()
@@ -298,69 +256,19 @@ Test 6: check random calls to addFirst(), addLast(), removeFirst(),
   *   50 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1)
   *  500 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1)
   * 1000 random calls (0.3, 0.3, 0.1, 0.1, 0.1, 0.1)
-    java.lang.NullPointerException
-
-    Deque.removeLast(Deque.java:72)
-    TestDeque.random(TestDeque.java:106)
-    TestDeque.test6(TestDeque.java:522)
-    TestDeque.main(TestDeque.java:834)
-
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.size()            ==> 1
-         deque.size()            ==> 1
-         deque.isEmpty()         ==> false
-         deque.removeLast()      ==> 0
-         deque.addFirst(5)
-         deque.removeLast()
-
   *    5 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1)
+  *   50 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1)
     - student   isEmpty() returned false
     - reference isEmpty() returned true
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addLast(0)
-         deque.removeLast()      ==> 0
-         deque.isEmpty()         ==> false
-
-  *   50 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1)
-    java.lang.NullPointerException
-
-    Deque.removeLast(Deque.java:72)
-    TestDeque.random(TestDeque.java:106)
-    TestDeque.test6(TestDeque.java:524)
-    TestDeque.main(TestDeque.java:834)
-
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.addFirst(0)
-         deque.removeLast()      ==> 0
-         deque.size()            ==> 0
-         deque.addFirst(3)
-         deque.isEmpty()         ==> false
-         deque.addLast(5)
-         deque.removeLast()      ==> 5
-         deque.removeLast()
 
   *  500 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1)
-    - failed on operation 13 of 500
-    - student   removeLast() returned 7
-    - reference removeLast() returned 12
+    - failed on operation 12 of 500
+    - student   removeFirst() returned 11
+    - reference removeFirst() returned 9
 
   * 1000 random calls (0.1, 0.1, 0.3, 0.3, 0.1, 0.1)
-    - student   isEmpty() returned true
-    - reference isEmpty() returned false
-    - sequence of operations was:
-         Deque<Integer> deque = new Deque<Integer>()
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.isEmpty()         ==> true
-         deque.addLast(3)
-         deque.removeFirst()     ==> 3
-         deque.isEmpty()         ==> true
-         deque.addLast(6)
-         deque.isEmpty()         ==> true
+    - student   isEmpty() returned false
+    - reference isEmpty() returned true
 
 ==> FAILED
 
@@ -376,7 +284,7 @@ Test 9: check iterator() after n calls to addFirst()
   * n = 10
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -387,7 +295,7 @@ Test 9: check iterator() after n calls to addFirst()
   * n = 50
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -402,7 +310,7 @@ Test 10: check iterator() after each of m intermixed calls to
   * m = 20
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -417,7 +325,7 @@ Test 10: check iterator() after each of m intermixed calls to
   * m = 50
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -427,12 +335,12 @@ Test 10: check iterator() after each of m intermixed calls to
 
     - sequence of operations was:
          Deque deque<Integer> = new Deque<Integer>()
-         deque.addLast(1)
+         deque.addFirst(1)
 
   * m = 100
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -447,7 +355,7 @@ Test 10: check iterator() after each of m intermixed calls to
   * m = 1000
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     SafeIterable$SafeIterator.next(SafeIterable.java:61)
     UtilCOS.compareAsSequences(UtilCOS.java:779)
     UtilCOS.compareAsSequences(UtilCOS.java:772)
@@ -457,7 +365,7 @@ Test 10: check iterator() after each of m intermixed calls to
 
     - sequence of operations was:
          Deque deque<Integer> = new Deque<Integer>()
-         deque.addLast(1)
+         deque.addFirst(1)
 
 ==> FAILED
 
@@ -465,7 +373,7 @@ Test 11: create two nested iterators to same deque
   * n = 10
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     TestDeque.twoNestedIterators(TestDeque.java:324)
     TestDeque.test11(TestDeque.java:619)
     TestDeque.main(TestDeque.java:839)
@@ -475,7 +383,7 @@ Test 11: create two nested iterators to same deque
   * n = 50
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     TestDeque.twoNestedIterators(TestDeque.java:324)
     TestDeque.test11(TestDeque.java:620)
     TestDeque.main(TestDeque.java:839)
@@ -487,7 +395,7 @@ Test 11: create two nested iterators to same deque
 Test 12: create two parallel iterators to same deque
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     TestDeque.twoParallelIterators(TestDeque.java:403)
     TestDeque.test12(TestDeque.java:627)
     TestDeque.main(TestDeque.java:840)
@@ -496,7 +404,7 @@ Test 12: create two parallel iterators to same deque
 
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     TestDeque.twoParallelIterators(TestDeque.java:403)
     TestDeque.test12(TestDeque.java:628)
     TestDeque.main(TestDeque.java:840)
@@ -516,7 +424,7 @@ Test 15: check that remove() and next() throw the specified exceptions in iterat
 
     java.util.NoSuchElementException: No next item exists.
 
-    Deque$ListIterator.next(Deque.java:95)
+    Deque$ListIterator.next(Deque.java:103)
     TestDeque.test15(TestDeque.java:762)
     TestDeque.main(TestDeque.java:843)
 
@@ -526,7 +434,7 @@ Test 16: call iterator() when the deque is empty
 ==> passed
 
 
-Total: 7/16 tests passed!
+Total: 8/16 tests passed!
 
 
 ================================================================
@@ -548,28 +456,43 @@ Test 1: check random calls to enqueue() and size()
 Test 2: check random calls to enqueue() and dequeue()
   *    5 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
   *   50 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
+    - failed on operation 22 of 50
+    - dequeue() returned null
+
+  *  500 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
+    - failed on operation 9 of 500
+    - dequeue() returned null
+
+    - sequence of randomized queue operations was:
+         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
+         rq.enqueue(330)
+         rq.enqueue(450)
+         rq.enqueue(49)
+         rq.size()        ==> 3
+         rq.enqueue(61)
+         rq.enqueue(475)
+         rq.enqueue(358)
+         rq.isEmpty()     ==> false
+         rq.size()        ==> 6
+         rq.dequeue()     ==> null
+  * 1000 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
+    - failed on operation 22 of 1000
+    - dequeue() returned null
+
+  *    5 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
     java.lang.IllegalArgumentException: argument must be positive
 
     edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
     RandomizedQueue.dequeue(RandomizedQueue.java:31)
     TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test2(TestRandomizedQueue.java:745)
+    TestRandomizedQueue.test2(TestRandomizedQueue.java:748)
     TestRandomizedQueue.main(TestRandomizedQueue.java:1170)
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(22)
+         rq.enqueue(0)
          rq.dequeue()
 
-  *  500 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
-    - failed on operation 14 of 500
-    - dequeue() returned null
-
-  * 1000 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
-    - failed on operation 15 of 1000
-    - dequeue() returned null
-
-  *    5 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
   *   50 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
     java.lang.IllegalArgumentException: argument must be positive
 
@@ -581,12 +504,9 @@ Test 2: check random calls to enqueue() and dequeue()
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
+         rq.isEmpty()     ==> true
          rq.size()        ==> 0
-         rq.isEmpty()     ==> true
-         rq.isEmpty()     ==> true
-         rq.enqueue(24)
-         rq.enqueue(38)
-         rq.dequeue()     ==> 24
+         rq.enqueue(23)
          rq.dequeue()
 
   *  500 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
@@ -600,7 +520,7 @@ Test 2: check random calls to enqueue() and dequeue()
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(483)
+         rq.enqueue(336)
          rq.dequeue()
 
   * 1000 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
@@ -614,11 +534,9 @@ Test 2: check random calls to enqueue() and dequeue()
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.isEmpty()     ==> true
-         rq.enqueue(274)
-         rq.enqueue(644)
-         rq.size()        ==> 2
-         rq.dequeue()     ==> 274
+         rq.enqueue(191)
+         rq.enqueue(884)
+         rq.dequeue()     ==> 191
          rq.dequeue()
 
 ==> FAILED
@@ -626,45 +544,38 @@ Test 2: check random calls to enqueue() and dequeue()
 Test 3: check random calls to enqueue(), sample(), and size()
   *    5 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
   *   50 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 6 of 50
+    - failed on operation 7 of 50
     - sample() returned null
 
     - sequence of randomized queue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(19)
-         rq.enqueue(45)
+         rq.enqueue(18)
+         rq.enqueue(33)
          rq.enqueue(25)
-         rq.enqueue(19)
-         rq.enqueue(31)
-         rq.enqueue(3)
+         rq.enqueue(23)
+         rq.enqueue(42)
+         rq.enqueue(8)
+         rq.enqueue(17)
          rq.sample()      ==> null
   *  500 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 48 of 500
+    - failed on operation 19 of 500
     - sample() returned null
 
   * 1000 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 5 of 1000
+    - failed on operation 91 of 1000
     - sample() returned null
 
-    - sequence of randomized queue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.size()        ==> 0
-         rq.enqueue(831)
-         rq.enqueue(885)
-         rq.enqueue(79)
-         rq.enqueue(519)
-         rq.sample()      ==> null
   *    5 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
   *   50 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 18 of 50
+    - failed on operation 14 of 50
     - sample() returned null
 
   *  500 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 30 of 500
+    - failed on operation 16 of 500
     - sample() returned null
 
   * 1000 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 12 of 1000
+    - failed on operation 15 of 1000
     - sample() returned null
 
 ==> FAILED
@@ -672,39 +583,34 @@ Test 3: check random calls to enqueue(), sample(), and size()
 Test 4: check random calls to enqueue(), dequeue(), sample(), isEmpty(), and size()
   *    5 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
   *   50 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    - failed on operation 13 of 50
+    - failed on operation 18 of 50
     - dequeue() returned null
 
   *  500 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:774)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(493)
-         rq.dequeue()
+    - failed on operation 11 of 500
+    - sample() returned null
 
   * 1000 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
+    - failed on operation 12 of 1000
+    - dequeue() returned null
+
+  *    5 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
     java.lang.IllegalArgumentException: argument must be positive
 
     edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
     RandomizedQueue.dequeue(RandomizedQueue.java:31)
     TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:775)
+    TestRandomizedQueue.test4(TestRandomizedQueue.java:776)
     TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(675)
-         rq.sample()      ==> 675
+         rq.isEmpty()     ==> true
+         rq.size()        ==> 0
+         rq.size()        ==> 0
+         rq.enqueue(3)
          rq.dequeue()
 
-  *    5 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
   *   50 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
     java.lang.IllegalArgumentException: argument must be positive
 
@@ -716,16 +622,9 @@ Test 4: check random calls to enqueue(), dequeue(), sample(), isEmpty(), and siz
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(38)
-         rq.enqueue(14)
-         rq.dequeue()     ==> 38
+         rq.size()        ==> 0
+         rq.size()        ==> 0
          rq.enqueue(46)
-         rq.sample()      ==> 14
-         rq.dequeue()     ==> 14
-         rq.enqueue(8)
-         rq.dequeue()     ==> 46
-         rq.size()        ==> 1
-         rq.sample()      ==> 8
          rq.dequeue()
 
   *  500 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
@@ -739,9 +638,10 @@ Test 4: check random calls to enqueue(), dequeue(), sample(), isEmpty(), and siz
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(134)
-         rq.sample()      ==> 134
-         rq.sample()      ==> 134
+         rq.isEmpty()     ==> true
+         rq.isEmpty()     ==> true
+         rq.isEmpty()     ==> true
+         rq.enqueue(99)
          rq.dequeue()
 
   * 1000 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
@@ -755,15 +655,10 @@ Test 4: check random calls to enqueue(), dequeue(), sample(), isEmpty(), and siz
 
     - sequence of dequeue operations was:
          RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.size()        ==> 0
-         rq.size()        ==> 0
-         rq.isEmpty()     ==> true
-         rq.size()        ==> 0
          rq.isEmpty()     ==> true
          rq.isEmpty()     ==> true
-         rq.size()        ==> 0
          rq.isEmpty()     ==> true
-         rq.enqueue(332)
+         rq.enqueue(753)
          rq.dequeue()
 
 ==> FAILED
@@ -934,8 +829,13 @@ Test 14: check randomness of dequeue() by enqueueing n items, dequeueing n items
     TestRandomizedQueue.main(TestRandomizedQueue.java:1206)
 
   * n = 3, trials = 12000
-    - dequeue() returned null
-    - failed on operation 1 of 12000
+    java.lang.IllegalArgumentException: argument must be positive
+
+    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
+    RandomizedQueue.dequeue(RandomizedQueue.java:31)
+    TestRandomizedQueue.checkRandomnessOfDequeue(TestRandomizedQueue.java:568)
+    TestRandomizedQueue.test14(TestRandomizedQueue.java:993)
+    TestRandomizedQueue.main(TestRandomizedQueue.java:1206)
 
   * n = 4, trials = 12000
     - dequeue() returned null
@@ -1005,20 +905,20 @@ Test 1a: check formatting for sample inputs from assignment specification
   % java Permutation 3 < distinct.txt
   A
   H
-  D
-
-  % java Permutation 3 < distinct.txt
-  E
-  C
   F
 
+  % java Permutation 3 < distinct.txt
+  F
+  D
+  I
+
   % java Permutation 8 < duplicates.txt
-  BB
-  BB
+  CC
   AA
   BB
   CC
-  CC
+  BB
+  BB
   BB
   BB
 
@@ -1026,14 +926,14 @@ Test 1a: check formatting for sample inputs from assignment specification
 
 Test 1b: check formatting for other inputs
   % java Permutation 8 < mediumTale.txt
-  wisdom
-  was
-  the
   foolishness
+  age
   was
-  best
   was
-  the
+  times
+  of
+  was
+  worst
 
   % java Permutation 0 < distinct.txt
   [no output]
@@ -1140,15 +1040,15 @@ Test 4: Time main() with k = 5, for inputs containing n random strings
                     n  seconds
 ------------------------------
 => passed        1000     0.00
-=> passed        2000     0.00
+=> passed        2000     0.01
 => passed        4000     0.00
 => passed        8000     0.01
 => passed       16000     0.01
 => passed       32000     0.01
-=> passed       64000     0.03
+=> passed       64000     0.02
 => passed      128000     0.05
-=> passed      256000     0.10
-=> passed      512000     0.20
+=> passed      256000     0.23
+=> passed      512000     0.25
 ==> 10/10 tests passed
 
 
@@ -1159,13 +1059,13 @@ Test 5: Time main() with k = 1000, for inputs containing n random strings
 => passed        1000     0.00
 => passed        2000     0.00
 => passed        4000     0.00
-=> passed        8000     0.01
+=> passed        8000     0.00
 => passed       16000     0.01
 => passed       32000     0.01
-=> passed       64000     0.03
-=> passed      128000     0.06
-=> passed      256000     0.10
-=> passed      512000     0.20
+=> passed       64000     0.02
+=> passed      128000     0.05
+=> passed      256000     0.09
+=> passed      512000     0.18
 ==> 10/10 tests passed
 
 
@@ -1327,14 +1227,14 @@ Test 6a: Insert n strings; delete them one at a time, checking for
          and addLast() are (p1, p2), respectively. The probabilities of
          removeFirst() and removeLast() are (q1, q2), respectively
   * 100 random insertions (1.0, 0.0) and 100 random deletions (1.0, 0.0)
-    - loitering observed during 100 of 100 deletions
-    - maximum number of loitered objects at one time = 100
+    - loitering observed during 99 of 100 deletions
+    - maximum number of loitered objects at one time = 99
   * 100 random insertions (1.0, 0.0) and 100 random deletions (0.0, 1.0)
     - loitering observed during 100 of 100 deletions
     - maximum number of loitered objects at one time = 100
   * 100 random insertions (0.0, 1.0) and 100 random deletions (1.0, 0.0)
-    - loitering observed during 100 of 100 deletions
-    - maximum number of loitered objects at one time = 100
+    - loitering observed during 99 of 100 deletions
+    - maximum number of loitered objects at one time = 99
   * 100 random insertions (0.0, 1.0) and 100 random deletions (0.0, 1.0)
     - loitering observed during 100 of 100 deletions
     - maximum number of loitered objects at one time = 100
@@ -1348,61 +1248,61 @@ Test 6b: Perform random operations, checking for loitering after
          removeFirst(), and removeLast() are (p1, p2, p3, p4),
          respectively.
   * 100 random operations (0.8, 0.0, 0.2, 0.0)
-    - loitering detected after operation 5 of 100
-    - sequence of operations was:
-         deque.addFirst("GXGRIKWXCS")
-         deque.addFirst("KFTZVKPMRY")
-         deque.addFirst("LBOJXSJADB")
-         deque.addFirst("OTAUZBMAXM")
-         deque.removeFirst()     ==> OTAUZBMAXM
-    - loitered object(s):
-      OTAUZBMAXM
-
-  * 100 random operations (0.8, 0.0, 0.0, 0.2)
-    - loitering detected after operation 3 of 100
-    - sequence of operations was:
-         deque.addFirst("QBSAKNIQMZ")
-         deque.addFirst("UBXQHEBUIW")
-         deque.removeLast()      ==> QBSAKNIQMZ
-    - loitered object(s):
-      QBSAKNIQMZ
-
-  * 100 random operations (0.0, 0.8, 0.2, 0.0)
-    - loitering detected after operation 2 of 100
-    - sequence of operations was:
-         deque.addLast("ATSQSCNKDI")
-         deque.removeFirst()     ==> ATSQSCNKDI
-    - loitered object(s):
-      ATSQSCNKDI
-
-  * 100 random operations (0.0, 0.8, 0.0, 0.2)
-    - loitering detected after operation 5 of 100
-    - sequence of operations was:
-         deque.addLast("NWFUVXESIZ")
-         deque.addLast("BBZEIVDRZU")
-         deque.addLast("MOQTRCXSRB")
-         deque.addLast("UHBGMXBUPT")
-         deque.removeLast()      ==> UHBGMXBUPT
-    - loitered object(s):
-      UHBGMXBUPT
-
-  * 100 random operations (0.4, 0.4, 0.1, 0.1)
     - loitering detected after operation 4 of 100
     - sequence of operations was:
-         deque.addFirst("VIPMCMFICO")
-         deque.addFirst("MKLLAEBMSE")
-         deque.addLast("ZNTTRSDGJF")
-         deque.removeFirst()     ==> MKLLAEBMSE
+         deque.addFirst("NQUFAGEITU")
+         deque.addFirst("NHFHNMTPZP")
+         deque.addFirst("IGTEPOPPOU")
+         deque.removeFirst()     ==> IGTEPOPPOU
     - loitered object(s):
-      MKLLAEBMSE
+      IGTEPOPPOU
 
-  * 100 random operations (0.2, 0.2, 0.3, 0.3)
-    - loitering detected after operation 2 of 100
+  * 100 random operations (0.8, 0.0, 0.0, 0.2)
+    - loitering detected after operation 5 of 100
     - sequence of operations was:
-         deque.addLast("FMXQTFYZLE")
-         deque.removeFirst()     ==> FMXQTFYZLE
+         deque.addFirst("PWHIDVBPST")
+         deque.addFirst("WFMXKMEJJF")
+         deque.addFirst("IAMPLBLLWO")
+         deque.addFirst("RBFBDFXTAK")
+         deque.removeLast()      ==> PWHIDVBPST
     - loitered object(s):
-      FMXQTFYZLE
+      PWHIDVBPST
+
+  * 100 random operations (0.0, 0.8, 0.2, 0.0)
+    - loitering detected after operation 5 of 100
+    - sequence of operations was:
+         deque.addLast("ZDOCXFPDKA")
+         deque.addLast("RXUAIXAQJK")
+         deque.addLast("ZERXUFQGZH")
+         deque.addLast("XBBGDQGTRG")
+         deque.removeFirst()     ==> ZDOCXFPDKA
+    - loitered object(s):
+      ZDOCXFPDKA
+
+  * 100 random operations (0.0, 0.8, 0.0, 0.2)
+    - loitering detected after operation 8 of 100
+    - sequence of operations was:
+         deque.addLast("TCSZGOPPEK")
+         deque.addLast("UVWMTGNAXI")
+         deque.addLast("ZQBCQKDMVJ")
+         deque.addLast("MMUJFRMNYG")
+         deque.addLast("RMCKOVKLOO")
+         deque.addLast("VGGEWDIDMC")
+         deque.addLast("ZKIXEKKLZA")
+         deque.removeLast()      ==> ZKIXEKKLZA
+    - loitered object(s):
+      ZKIXEKKLZA
+
+  * 100 random operations (0.4, 0.4, 0.1, 0.1)
+    - loitering detected after operation 16 of 100
+  * 100 random operations (0.2, 0.2, 0.3, 0.3)
+    - loitering detected after operation 3 of 100
+    - sequence of operations was:
+         deque.addFirst("FGVTTSPXIL")
+         deque.addFirst("HJKPEAXAIY")
+         deque.removeLast()      ==> FGVTTSPXIL
+    - loitered object(s):
+      FGVTTSPXIL
 
 ==> FAILED
 
@@ -1411,14 +1311,9 @@ Test 7: Worst-case constant memory allocated or deallocated
   * 128 random operations
   * 256 random operations
   * 512 random operations
-    - failed on trial 109 of 512
-    - when current size of Deque was 41 objects;
-    - the call to addFirst()
-    - caused a change in memory of -144 bytes
-    - any change of more than 96 bytes fails the test
-==> FAILED
+==> passed
 
-Total: 15/28 tests passed!
+Total: 16/28 tests passed!
 
 ================================================================
 
@@ -1473,17 +1368,17 @@ Test 3a-3i: Total memory usage after inserting 2n-1 items, and then
                  n        bytes
 ----------------------------------------------------------
 => passed       33         1080         
-=> passed       65         2080         
+=> passed       65         2104         
 => passed      129         4152         
-=> passed      257         8248         
-=> passed      513        16440         
+=> passed      257         8224         
+=> passed      513        16416         
 => passed     1025        32824         
 => passed     2049        65592         
 => passed     4097       131128         
-=> passed     8193       262200         
+=> passed     8193       262176         
 ==> 9/9 tests passed
 
-Memory: 32.02 n + 15.06   (R^2 = 1.000)
+Memory: 31.96 n + 22.74   (R^2 = 1.000)
 
 
 Test 4a-4i: Total memory usage after inserting n items, deleting n items,
@@ -1549,17 +1444,15 @@ Test 7b: Perform random operations, checking for loitering after
          each operation. The probabilities of enqueue(), dequeue(),
          and sample() are (p1, p2, p3), respectively.
   * 200 random operations (0.8, 0.2, 0.0)
-    java.lang.IllegalArgumentException: argument must be positive
+    java.lang.NullPointerException: null passed as 'objectToSize' in getObjectSize
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:397)
+    sun.instrument.InstrumentationImpl.getObjectSize(InstrumentationImpl.java:188)
+    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOf0(MemoryUtil.java:178)
+    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOfAll(MemoryUtil.java:165)
+    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:424)
     MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:530)
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
 
-    - sequence of operations was:
-         rq.enqueue("CUAZZPXZRP")
-         rq.dequeue()
 
   * 200 random operations (0.2, 0.8, 0.0)
     java.lang.IllegalArgumentException: argument must be positive
@@ -1571,21 +1464,29 @@ Test 7b: Perform random operations, checking for loitering after
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
 
     - sequence of operations was:
-         rq.enqueue("IOJMFFBGQI")
+         rq.enqueue("IAIJECXIOZ")
          rq.dequeue()
 
   * 200 random operations (0.6, 0.2, 0.2)
-    java.lang.IllegalArgumentException: argument must be positive
+    java.lang.NullPointerException: null passed as 'objectToSize' in getObjectSize
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:397)
+    sun.instrument.InstrumentationImpl.getObjectSize(InstrumentationImpl.java:188)
+    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOf0(MemoryUtil.java:178)
+    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOfAll(MemoryUtil.java:165)
+    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:424)
     MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:532)
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
 
     - sequence of operations was:
-         rq.enqueue("SQUHUKBTGN")
-         rq.dequeue()
+         rq.enqueue("RXMBNNLNJO")
+         rq.sample()      ==> "RXMBNNLNJO"
+         rq.enqueue("XPCAEKGHLF")
+         rq.enqueue("WRTWQWZDXT")
+         rq.enqueue("FTDOLGFYOA")
+         rq.enqueue("ABTVVGSZVU")
+         rq.sample()      ==> "null"
+         rq.enqueue("PCAJPIRBHQ")
+         rq.dequeue()     ==> "null"
 
   * 200 random operations (0.2, 0.4, 0.4)
     java.lang.IllegalArgumentException: argument must be positive
@@ -1597,8 +1498,9 @@ Test 7b: Perform random operations, checking for loitering after
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
 
     - sequence of operations was:
-         rq.enqueue("SZIAAZKUUJ")
-         rq.sample()      ==> "SZIAAZKUUJ"
+         rq.enqueue("VRYAXOTTPX")
+         rq.sample()      ==> "VRYAXOTTPX"
+         rq.sample()      ==> "VRYAXOTTPX"
          rq.dequeue()
 
 ==> FAILED
@@ -1655,7 +1557,7 @@ Test 10: Total memory usage after inserting 4096 items, then successively
                  n        bytes
 ----------------------------------------------------------
 => passed     2049        65592         
-=> passed     1025        32800         
+=> passed     1025        32824         
 => passed      513        16416         
 => passed      257         8224         
 => passed      129         4128         
@@ -1665,11 +1567,11 @@ Test 10: Total memory usage after inserting 4096 items, then successively
 => passed        9          288         
 ==> 9/9 tests passed
 
-Memory: 32.00 n + 0.01   (R^2 = 1.000)
+Memory: 32.01 n - 0.28   (R^2 = 1.000)
 
 
 Min observed memory for RandomizedQueue: 8.00 n + 56.00   (R^2 = 1.000)
-Max observed memory for RandomizedQueue: 32.02 n + 15.06   (R^2 = 1.000)
+Max observed memory for RandomizedQueue: 32.01 n - 0.28   (R^2 = 1.000)
 
 Running 66 total tests.
 
@@ -1700,7 +1602,7 @@ Test 1a-1k: make n calls to addFirst() followed by n calls to removeFirst()
 => passed      128000     0.01
 => passed      256000     0.02
 => passed      512000     0.04
-=> passed     1024000     0.08
+=> passed     1024000     0.07
 ==> 11/11 tests passed
 
 
@@ -1710,7 +1612,109 @@ Test 2a-2k: make n calls to addLast() followed by n calls to removeLast()
 => passed        1024     0.00
 => passed        2048     0.00
 => passed        4096     0.00
-=> passed        8192
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.01
+=> passed      256000     0.01
+=> passed      512000     0.01
+=> passed     1024000     0.01
+==> 11/11 tests passed
+
+
+Test 3a-3k: make n calls to addFirst() followed by n calls to removeLast()
+                    n  seconds
+----------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.00
+=> passed      256000     0.00
+=> passed      512000     0.01
+=> passed     1024000     0.01
+==> 11/11 tests passed
+
+
+Test 4a-4k: make n calls to addLast() followed by n calls to removeFirst()
+                    n  seconds
+----------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.00
+=> passed      256000     0.00
+=> passed      512000     0.01
+=> passed     1024000     0.07
+==> 11/11 tests passed
+
+
+Test 5a-5g: make n random calls to addFirst(), removeFirst(), isEmpty(), and size()
+            with probabilities (0.7, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.01
+=> passed      128000     0.01
+=> passed      256000     0.02
+=> passed      512000     0.04
+=> passed     1024000     0.08
+=> passed     2048000     0.07
+==> 12/12 tests passed
+
+
+Test 6a-6g: make n random calls to addLast(), removeLast(), isEmpty(), and size(),
+            with probabilities (0.7, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.01
+=> passed      256000     0.01
+=> passed      512000     0.02
+=> passed     1024000     0.04
+=> passed     2048000     0.08
+==> 12/12 tests passed
+
+
+Test 7a-7g: make n random calls to addFirst(), addLast(), removeFirst(), removeLast(),
+            isEmpty(), and size() with probabilities (0.3, 0.3, 0.1, 0.1, 0.1, 0.1)
+
+                    n  seconds
+------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+    java.lang.NullPointerException
+
+    Deque.removeLast(Deque.java:76)
+    TimeDeque.timeRandomOperations(TimeDeque.java:107)
+    TimeDeque.timeRandomOperations(TimeDeque.java:192)
+    TimeDeque.test7(TimeDeque.java:277)
+    TimeDe
 
 ...
 
