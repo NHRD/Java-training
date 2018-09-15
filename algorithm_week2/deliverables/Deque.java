@@ -14,29 +14,27 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Deque() {
-        //construct an empty deque
         first = null;
         last = null;
     }
 
     public boolean isEmpty() {
-        //is the deque empty?
         return first == null;
     }
 
     public int size() {
-        //return the number of items on the deque.
         return n;
     }
 
     public void addFirst(Item item) {
-        //add the item to the front
         nullcheck(item);
         Node oldfirst = first;
         first = new Node();
         first.item = item;
-        if (isEmpty()) {
-            first = last;
+        if (oldfirst == null) {
+            first.previous = null;
+            first.next = null;
+            last = first;
         } else {
         first.next = oldfirst;
         oldfirst.previous = first;
@@ -45,13 +43,14 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public void addLast(Item item) {
-        //add the item to the end
         nullcheck(item);
         Node oldlast = last;
         last = new Node();
         last.item = item;
         last.next = null;
-        if (isEmpty()) {
+        if (oldlast == null) {
+            last.previous = null;
+            last.next = null;
             first = last;
         } else {
             oldlast.next = last;
@@ -61,7 +60,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeFirst() {
-        //remove and return the item from the first
         removeEmptycheck();
         Item item = first.item;
         first = first.next;
@@ -70,7 +68,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeLast() {
-        //remove and return the item from he end
         removeEmptycheck();
         Item item = last.item;
         last = last.previous;
@@ -79,7 +76,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        //return an iterator over items in order from front to end
         return new ListIterator();
     }
 
@@ -105,14 +101,12 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private void nullcheck(Item item) {
-        //client calls either addFirst() or addLast() with a null argument. 
         if (item == null) {
             throw new java.lang.IllegalArgumentException("Null is prohibited.");
         }
     }
     
-    private void removeEmptycheck(){
-        //Client calls either removeFirst() or removeLast when the deque is empty. 
+    private void removeEmptycheck() { 
         if (isEmpty()) {
             throw new NoSuchElementException("Can not remove. Queue is empty.");
         }
