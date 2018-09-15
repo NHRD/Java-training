@@ -44,8 +44,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public Item sample() {
         emptycheck();
-        int index = StdRandom.uniform(n - 1);
-        return s[index];
+        Item item = null;
+        if (n == 1) {
+            item = s[0];
+        } else {
+            int index = StdRandom.uniform(n - 1);
+            item = s[index];
+        }
+        return item;
     }                 
    
     public Iterator<Item> iterator() {       
