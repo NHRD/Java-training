@@ -9,7 +9,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 
     public RandomizedQueue() {                
-    s = (Item[]) new Object[1];
+    s = (Item[]) new Object[2];
     }
     
     public boolean isEmpty() {            
@@ -23,15 +23,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public void enqueue(Item item) {
         nullcheck(item);
         if (n == s.length) resize(2 * s.length);
-        s[n++] = item;
+        s[n] = item;
+        n++;
     }
 
     public Item dequeue() {
-        emptycheck();   
+        Item item = null;
+        emptycheck();
+        if (n == 1) {
+            item = s[0];
+        } else {
         int index = StdRandom.uniform(n - 1);
-        Item item = s[index];
-        s[index] = s[n-1];
-        s[n-1] = null;
+        item = s[index];
+        s[index] = s[n - 1];
+        }
         n--;
         if (n > 0 && n == s.length/4) resize(s.length/2);
         return item;
@@ -39,7 +44,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public Item sample() {
         emptycheck();
-        int index = StdRandom.uniform(n);
+        int index = StdRandom.uniform(n - 1);
         return s[index];
     }                 
    
@@ -48,7 +53,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class ListIterator implements Iterator<Item> {
-        private int i = 0;
+        private int i = n;
         
         public boolean hasNext() {
             return i < n - 1;
@@ -62,7 +67,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (i >= n - 1) {
                 throw new NoSuchElementException("No next item exists.");
             }
-            return s[++i];
+            return s[i++];
         }
     }
 
@@ -82,7 +87,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item[] copy = (Item[]) new Object[capacity];
         for (int i = 0; i < n; i++) {
             copy[i] = s[i];
-        s = copy;
         }
+        s = copy;
     }
- }
+}
