@@ -27,7 +27,9 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public void addFirst(Item item) {
-        nullcheck(item);
+        if (item == null) {
+            throw new java.lang.IllegalArgumentException("Null is prohibited.");
+        }
         Node oldfirst = first;
         first = new Node();
         first.item = item;
@@ -43,7 +45,9 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public void addLast(Item item) {
-        nullcheck(item);
+        if (item == null) {
+            throw new java.lang.IllegalArgumentException("Null is prohibited.");
+        }
         Node oldlast = last;
         last = new Node();
         last.item = item;
@@ -109,12 +113,6 @@ public class Deque<Item> implements Iterable<Item> {
             Item item = current.item;
             current = current.next;
             return item;
-        }
-    }
-
-    private void nullcheck(Item item) {
-        if (item == null) {
-            throw new java.lang.IllegalArgumentException("Null is prohibited.");
         }
     }
     

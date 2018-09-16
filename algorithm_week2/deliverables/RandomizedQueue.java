@@ -56,14 +56,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }                 
    
     public Iterator<Item> iterator() {       
-        return new ListIterator();
+        return new ArrayIterator();
     }
 
-    private class ListIterator implements Iterator<Item> {
-        private int i = n;
+    private class ArrayIterator implements Iterator<Item> {
+        private int i = 0;
         
         public boolean hasNext() {
-            return i < n - 1;
+            return i < n;
         }
         
         public void remove() {
@@ -71,7 +71,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (i >= n - 1) {
+            if (!hasNext()) {
                 throw new NoSuchElementException("No next item exists.");
             }
             return s[i++];
