@@ -39,7 +39,7 @@ public class Deque<Item> implements Iterable<Item> {
         oldfirst.previous = first;
         first.next = oldfirst;
         }
-        n++;
+        ++n;
     }
 
     public void addLast(Item item) {
@@ -55,7 +55,7 @@ public class Deque<Item> implements Iterable<Item> {
             oldlast.next = last;
             last.previous = oldlast;
         }
-        n++;
+        ++n;
     }
 
     public Item removeFirst() {

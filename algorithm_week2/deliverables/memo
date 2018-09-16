@@ -1,3 +1,5 @@
+See the Assessment Guide for information on how to interpret this report.
+
 ASSESSMENT SUMMARY
 
 Compilation:  PASSED (0 errors, 2 warnings)
@@ -7,20 +9,20 @@ Spotbugs:     PASSED
 PMD:          PASSED
 Checkstyle:   PASSED
 
-Correctness:  23/43 tests passed
-Memory:       81/96 tests passed
-Timing:       181/193 tests passed
+Correctness:  28/43 tests passed
+Memory:       89/105 tests passed
+Timing:       193/193 tests passed
 
-Aggregate score: 69.29%
+Aggregate score: 77.55%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-2.9K Sep 15 12:49 Deque.java
- 457 Sep 15 12:49 Permutation.java
-2.2K Sep 15 12:49 RandomizedQueue.java
+2.9K Sep 16 01:17 Deque.java
+ 457 Sep 16 01:17 Permutation.java
+2.4K Sep 16 01:17 RandomizedQueue.java
 
 
 ********************************************************************************
@@ -34,13 +36,13 @@ The following files were submitted:
 % javac RandomizedQueue.java
 *-----------------------------------------------------------
 RandomizedQueue.java:12: warning: [unchecked] unchecked cast
-    s = (Item[]) new Object[1];
+    s = (Item[]) new Object[2];
                  ^
   required: Item[]
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:82: warning: [unchecked] unchecked cast
+RandomizedQueue.java:93: warning: [unchecked] unchecked cast
         Item[] copy = (Item[]) new Object[capacity];
                                ^
   required: Item[]
@@ -304,239 +306,35 @@ Test 1: check random calls to enqueue() and size()
 Test 2: check random calls to enqueue() and dequeue()
   *    5 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
   *   50 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
-    - failed on operation 12 of 50
-    - dequeue() returned null
-
   *  500 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
-    - failed on operation 61 of 500
-    - dequeue() returned null
-
   * 1000 random calls (0.7, 0.1, 0.0, 0.1, 0.1)
-    - failed on operation 20 of 1000
-    - dequeue() returned null
-
   *    5 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test2(TestRandomizedQueue.java:748)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1170)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.isEmpty()     ==> true
-         rq.enqueue(1)
-         rq.dequeue()
-
   *   50 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test2(TestRandomizedQueue.java:749)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1170)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(5)
-         rq.isEmpty()     ==> false
-         rq.dequeue()
-
   *  500 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test2(TestRandomizedQueue.java:750)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1170)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(218)
-         rq.enqueue(435)
-         rq.dequeue()     ==> 218
-         rq.dequeue()
-
   * 1000 random calls (0.1, 0.7, 0.0, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test2(TestRandomizedQueue.java:751)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1170)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.isEmpty()     ==> true
-         rq.size()        ==> 0
-         rq.enqueue(952)
-         rq.dequeue()
-
-==> FAILED
+==> passed
 
 Test 3: check random calls to enqueue(), sample(), and size()
   *    5 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
   *   50 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 9 of 50
-    - sample() returned null
-
-    - sequence of randomized queue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(34)
-         rq.sample()      ==> 34
-         rq.sample()      ==> 34
-         rq.enqueue(47)
-         rq.enqueue(0)
-         rq.enqueue(9)
-         rq.enqueue(36)
-         rq.enqueue(38)
-         rq.enqueue(32)
-         rq.sample()      ==> null
   *  500 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 17 of 500
-    - sample() returned null
-
   * 1000 random calls (0.8, 0.0, 0.1, 0.0, 0.1)
-    - failed on operation 25 of 1000
-    - sample() returned null
-
   *    5 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
   *   50 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 18 of 50
-    - sample() returned null
-
   *  500 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 35 of 500
-    - sample() returned null
-
   * 1000 random calls (0.1, 0.0, 0.8, 0.0, 0.1)
-    - failed on operation 29 of 1000
-    - sample() returned null
-
-==> FAILED
+==> passed
 
 Test 4: check random calls to enqueue(), dequeue(), sample(), isEmpty(), and size()
   *    5 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:772)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.isEmpty()     ==> true
-         rq.enqueue(3)
-         rq.dequeue()
-
   *   50 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    - failed on operation 6 of 50
-    - dequeue() returned null
-
-    - sequence of randomized queue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(36)
-         rq.enqueue(13)
-         rq.isEmpty()     ==> false
-         rq.enqueue(27)
-         rq.enqueue(22)
-         rq.enqueue(42)
-         rq.dequeue()     ==> null
   *  500 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    - failed on operation 9 of 500
-    - dequeue() returned null
-
-    - sequence of randomized queue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.size()        ==> 0
-         rq.enqueue(37)
-         rq.enqueue(14)
-         rq.enqueue(156)
-         rq.isEmpty()     ==> false
-         rq.enqueue(248)
-         rq.enqueue(172)
-         rq.size()        ==> 5
-         rq.enqueue(240)
-         rq.dequeue()     ==> null
   * 1000 random calls (0.6, 0.1, 0.1, 0.1, 0.1)
-    - failed on operation 4 of 1000
-    - dequeue() returned null
-
-    - sequence of randomized queue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(491)
-         rq.enqueue(67)
-         rq.enqueue(17)
-         rq.size()        ==> 3
-         rq.dequeue()     ==> null
   *    5 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:776)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.size()        ==> 0
-         rq.enqueue(1)
-         rq.dequeue()
-
   *   50 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:777)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.size()        ==> 0
-         rq.enqueue(14)
-         rq.dequeue()
-
   *  500 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:778)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(143)
-         rq.dequeue()
-
   * 1000 random calls (0.1, 0.6, 0.1, 0.1, 0.1)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.random(TestRandomizedQueue.java:115)
-    TestRandomizedQueue.test4(TestRandomizedQueue.java:779)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1176)
-
-    - sequence of dequeue operations was:
-         RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>()
-         rq.enqueue(498)
-         rq.enqueue(673)
-         rq.dequeue()     ==> 498
-         rq.dequeue()
-
-==> FAILED
+==> passed
 
 Test 5: call dequeue() and sample() from an empty randomized queue
   * dequeue()
@@ -545,33 +343,23 @@ Test 5: call dequeue() and sample() from an empty randomized queue
 
 Test 6: create multiple randomized queue objects at the same time
   * n = 10
-    - failed on dequeue() operation 0 of 10
-    - dequeue() returned null
-
   * n = 100
-    - failed on dequeue() operation 0 of 100
-    - dequeue() returned null
-
-==> FAILED
+==> passed
 
 Test 7: check that iterator() returns correct items after a sequence
         of n enqueue() operations
   * n = 10
-    - number of non-null entries in student   solution: 2
-    - number of non-null entries in reference solution: 10
-    - number of null     entries in student   solution: 7
-    - number of null     entries in reference solution: 0
-    - 8 missing entries in student solution, including:
-      '8'
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 10
+    - 10 missing entries in student solution, including:
+      '10'
 
 
   * n = 50
-    - number of non-null entries in student   solution: 18
-    - number of non-null entries in reference solution: 50
-    - number of null     entries in student   solution: 31
-    - number of null     entries in reference solution: 0
-    - 32 missing entries in student solution, including:
-      '32'
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 50
+    - 50 missing entries in student solution, including:
+      '50'
 
 
 ==> FAILED
@@ -579,39 +367,27 @@ Test 7: check that iterator() returns correct items after a sequence
 Test 8: check that iterator() returns correct items after sequence
         of m enqueue() and dequeue() operations
   * m = 10
-    java.lang.IllegalArgumentException: argument must be positive
+    - number of entries in student   solution: 5
+    - number of entries in reference solution: 9
+    - 4 missing entries in student solution, including:
+      '10'
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.checkIteratorAfterEnqueueDequeue(TestRandomizedQueue.java:872)
-    TestRandomizedQueue.test8(TestRandomizedQueue.java:902)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1188)
 
   * m = 1000
-    java.lang.IllegalArgumentException: argument must be positive
+    - number of entries in student   solution: 519
+    - number of entries in reference solution: 543
+    - 24 missing entries in student solution, including:
+      '999'
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.checkIteratorAfterEnqueueDequeue(TestRandomizedQueue.java:872)
-    TestRandomizedQueue.test8(TestRandomizedQueue.java:903)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1188)
 
 ==> FAILED
 
 Test 9: create two nested iterators over the same randomized queue
   * n = 10
-    java.lang.NullPointerException
-
-    TestRandomizedQueue.checkTwoNestedIterators(TestRandomizedQueue.java:317)
-    TestRandomizedQueue.test9(TestRandomizedQueue.java:910)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1191)
+    - outer iterator returned fewer than 10 items
 
   * n = 50
-    java.lang.NullPointerException
-
-    TestRandomizedQueue.checkTwoNestedIterators(TestRandomizedQueue.java:317)
-    TestRandomizedQueue.test9(TestRandomizedQueue.java:911)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1191)
+    - outer iterator returned fewer than 50 items
 
 ==> FAILED
 
@@ -629,96 +405,157 @@ Test 10: create two parallel iterators over the same randomized queue
 ==> FAILED
 
 Test 11: create two iterators over different randomized queues
-    - number of non-null entries in student   solution: 2
-    - number of non-null entries in reference solution: 10
-    - number of null     entries in student   solution: 7
-    - number of null     entries in reference solution: 0
-    - 8 missing entries in student solution, including:
-      '7'
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 10
+    - 10 missing entries in student solution, including:
+      '9'
 
-    - number of non-null entries in student   solution: 2
-    - number of non-null entries in reference solution: 10
-    - number of null     entries in student   solution: 7
-    - number of null     entries in reference solution: 0
-    - 8 missing entries in student solution, including:
-      '7'
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 10
+    - 10 missing entries in student solution, including:
+      '9'
 
 
 ==> FAILED
 
 Test 12: create RandomizedQueue objects of different parameterized types
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.test12(TestRandomizedQueue.java:962)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1200)
-
-==> FAILED
+==> passed
 
 Test 13: check randomness of sample() by enqueueing n items, repeatedly calling
          sample(), and counting the frequency of each item
   * n = 3, trials = 12000
-    java.lang.IllegalArgumentException: calls get() with null key
 
-    edu.princeton.cs.algs4.ST.get(ST.java:74)
-    TestRandomizedQueue.checkRandomnessOfSample(TestRandomizedQueue.java:506)
-    TestRandomizedQueue.test13(TestRandomizedQueue.java:980)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1203)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+                A      6043    4000.0       4986.76
+                B      5957    4000.0       4745.02
+                C         0    4000.0          0.00
+        -------------------------------------------
+                      12000   12000.0       9731.78
+    
+    G-statistic = 9731.78 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 5, trials = 12000
-    java.lang.IllegalArgumentException: calls get() with null key
 
-    edu.princeton.cs.algs4.ST.get(ST.java:74)
-    TestRandomizedQueue.checkRandomnessOfSample(TestRandomizedQueue.java:506)
-    TestRandomizedQueue.test13(TestRandomizedQueue.java:981)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1203)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+                A      3025    2400.0       1400.23
+                B      3021    2400.0       1390.38
+                C      3073    2400.0       1519.20
+                D      2881    2400.0       1052.54
+                E         0    2400.0          0.00
+        -------------------------------------------
+                      12000   12000.0       5362.35
+    
+    G-statistic = 5362.35 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 8, trials = 12000
-    java.lang.IllegalArgumentException: calls get() with null key
 
-    edu.princeton.cs.algs4.ST.get(ST.java:74)
-    TestRandomizedQueue.checkRandomnessOfSample(TestRandomizedQueue.java:506)
-    TestRandomizedQueue.test13(TestRandomizedQueue.java:982)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1203)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+                A      1728    1500.0        489.02
+                B      1658    1500.0        332.09
+                C      1719    1500.0        468.52
+                D      1699    1500.0        423.30
+                E      1673    1500.0        365.23
+                F      1802    1500.0        661.09
+                G      1721    1500.0        473.07
+                H         0    1500.0          0.00
+        -------------------------------------------
+                      12000   12000.0       3212.32
+    
+    G-statistic = 3212.32 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 10, trials = 12000
-    java.lang.IllegalArgumentException: calls get() with null key
 
-    edu.princeton.cs.algs4.ST.get(ST.java:74)
-    TestRandomizedQueue.checkRandomnessOfSample(TestRandomizedQueue.java:506)
-    TestRandomizedQueue.test13(TestRandomizedQueue.java:983)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1203)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+                A      1387    1200.0        401.74
+                B      1394    1200.0        417.80
+                C      1311    1200.0        231.96
+                D      1337    1200.0        289.08
+                E      1280    1200.0        165.22
+                F      1299    1200.0        205.95
+                G      1248    1200.0         97.89
+                H      1349    1200.0        315.78
+                I      1395    1200.0        420.10
+                J         0    1200.0          0.00
+        -------------------------------------------
+                      12000   12000.0       2545.52
+    
+    G-statistic = 2545.52 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
 ==> FAILED
 
 Test 14: check randomness of dequeue() by enqueueing n items, dequeueing n items,
          and seeing whether each of the n! permutations is equally likely
   * n = 2, trials = 12000
-    java.lang.IllegalArgumentException: argument must be positive
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.checkRandomnessOfDequeue(TestRandomizedQueue.java:568)
-    TestRandomizedQueue.test14(TestRandomizedQueue.java:992)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1206)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+               AB     12000    6000.0      16635.53
+               BA         0    6000.0          0.00
+        -------------------------------------------
+                      12000   12000.0      16635.53
+    
+    G-statistic = 16635.53 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 3, trials = 12000
-    java.lang.IllegalArgumentException: argument must be positive
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TestRandomizedQueue.checkRandomnessOfDequeue(TestRandomizedQueue.java:568)
-    TestRandomizedQueue.test14(TestRandomizedQueue.java:993)
-    TestRandomizedQueue.main(TestRandomizedQueue.java:1206)
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+              ABC         0    2000.0          0.00
+              ACB      6039    2000.0      13347.29
+              BAC      5961    2000.0      13019.91
+              BCA         0    2000.0          0.00
+              CAB         0    2000.0          0.00
+              CBA         0    2000.0          0.00
+        -------------------------------------------
+                      12000   12000.0      26367.20
+    
+    G-statistic = 26367.20 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 4, trials = 12000
-    - dequeue() returned null
-    - failed on operation 1 of 12000
+
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+             ABCD         0     500.0          0.00
+             ABDC      2005     500.0       5569.05
+             ACBD         0     500.0          0.00
+             ACDB         0     500.0          0.00
+             ADBC         0     500.0          0.00
+             ADCB      2066     500.0       5862.32
+             BACD      1943     500.0       5274.78
+             BADC         0     500.0          0.00
+             BCAD         0     500.0          0.00
+             BCDA         0     500.0          0.00
+             BDAC      1981     500.0       5454.68
+             BDCA         0     500.0          0.00
+             CABD         0     500.0          0.00
+             CADB      2048     500.0       5775.40
+             CBAD      1957     500.0       5340.89
+             CBDA         0     500.0          0.00
+             CDAB         0     500.0          0.00
+             CDBA         0     500.0          0.00
+             DABC         0     500.0          0.00
+             DACB         0     500.0          0.00
+             DBAC         0     500.0          0.00
+             DBCA         0     500.0          0.00
+             DCAB         0     500.0          0.00
+             DCBA         0     500.0          0.00
+        -------------------------------------------
+                      12000   12000.0      33277.13
+    
+    G-statistic = 33277.13 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
   * n = 5, trials = 12000
-    - dequeue() returned null
-    - failed on operation 1 of 12000
 
 ==> FAILED
 
@@ -727,19 +564,22 @@ Test 15: check randomness of iterator() by enqueueing n items, iterating over th
   * n = 2, trials = 12000
     - iterator() returns the wrong number of items
     - number of items added to randomized queue = 2
-    - number of items iterator returns          = 1
+    - number of items iterator returns          = 0
 
   * n = 3, trials = 12000
-    - next() returned null
-    - failed on operation 1 of 12000
+    - iterator() returns the wrong number of items
+    - number of items added to randomized queue = 3
+    - number of items iterator returns          = 0
 
   * n = 4, trials = 12000
-    - next() returned null
-    - failed on operation 1 of 12000
+    - iterator() returns the wrong number of items
+    - number of items added to randomized queue = 4
+    - number of items iterator returns          = 0
 
   * n = 5, trials = 12000
-    - next() returned null
-    - failed on operation 1 of 12000
+    - iterator() returns the wrong number of items
+    - number of items added to randomized queue = 5
+    - number of items iterator returns          = 0
 
 ==> FAILED
 
@@ -751,8 +591,8 @@ Test 17: check that remove() and next() throw the specified exceptions in iterat
 
     java.util.NoSuchElementException: No next item exists.
 
-    RandomizedQueue$ListIterator.next(RandomizedQueue.java:63)
-    TestRandomizedQueue.test17(TestRandomizedQueue.java:1099)
+    RandomizedQueue$ListIterator.next(RandomizedQueue.java:74)
+    TestRandomizedQueue.test17(TestRandomizedQueue.java:1098)
     TestRandomizedQueue.main(TestRandomizedQueue.java:1215)
 
 ==> FAILED
@@ -761,7 +601,7 @@ Test 18: call iterator() when randomized queue is empty
 ==> passed
 
 
-Total: 4/18 tests passed!
+Total: 9/18 tests passed!
 
 
 ================================================================
@@ -779,36 +619,36 @@ Running 9 total tests.
 Test 1a: check formatting for sample inputs from assignment specification
   % java Permutation 3 < distinct.txt
   H
-  I
   D
+  E
 
   % java Permutation 3 < distinct.txt
-  G
-  B
+  A
   H
+  D
 
   % java Permutation 8 < duplicates.txt
   BB
   BB
-  CC
-  CC
-  BB
-  BB
   BB
   AA
+  CC
+  BB
+  CC
+  BB
 
 ==> passed
 
 Test 1b: check formatting for other inputs
   % java Permutation 8 < mediumTale.txt
+  it
   of
-  worst
-  age
-  foolishness
-  best
   times
-  of
+  foolishness
+  it
   was
+  was
+  of
 
   % java Permutation 0 < distinct.txt
   [no output]
@@ -915,15 +755,15 @@ Test 4: Time main() with k = 5, for inputs containing n random strings
                     n  seconds
 ------------------------------
 => passed        1000     0.00
-=> passed        2000     0.00
+=> passed        2000     0.01
 => passed        4000     0.00
 => passed        8000     0.01
 => passed       16000     0.01
 => passed       32000     0.01
 => passed       64000     0.02
 => passed      128000     0.05
-=> passed      256000     0.23
-=> passed      512000     0.24
+=> passed      256000     0.25
+=> passed      512000     0.25
 ==> 10/10 tests passed
 
 
@@ -939,7 +779,7 @@ Test 5: Time main() with k = 1000, for inputs containing n random strings
 => passed       32000     0.01
 => passed       64000     0.02
 => passed      128000     0.05
-=> passed      256000     0.09
+=> passed      256000     0.10
 => passed      512000     0.18
 ==> 10/10 tests passed
 
@@ -1123,55 +963,72 @@ Test 6b: Perform random operations, checking for loitering after
          removeFirst(), and removeLast() are (p1, p2, p3, p4),
          respectively.
   * 100 random operations (0.8, 0.0, 0.2, 0.0)
-    - loitering detected after operation 7 of 100
-    - sequence of operations was:
-         deque.addFirst("SQQXUCEZWV")
-         deque.removeFirst()     ==> SQQXUCEZWV
-         deque.addFirst("BSNUVSPIYU")
-         deque.addFirst("JWWMQMGKNI")
-         deque.addFirst("ZLGZJGZGHC")
-         deque.addFirst("STXMHYFTDI")
-         deque.removeFirst()     ==> STXMHYFTDI
-    - loitered object(s):
-      STXMHYFTDI
-
-  * 100 random operations (0.8, 0.0, 0.0, 0.2)
     - loitering detected after operation 4 of 100
     - sequence of operations was:
-         deque.addFirst("QRLXFHDEZW")
-         deque.addFirst("VTFGEHJQIT")
-         deque.addFirst("EJTCHPTMRJ")
-         deque.removeLast()      ==> QRLXFHDEZW
+         deque.addFirst("BHYMOPBUEV")
+         deque.addFirst("LIGEHIYHHQ")
+         deque.addFirst("BVKZMOMXLV")
+         deque.removeFirst()     ==> BVKZMOMXLV
     - loitered object(s):
-      QRLXFHDEZW
+      BVKZMOMXLV
+
+  * 100 random operations (0.8, 0.0, 0.0, 0.2)
+    - loitering detected after operation 5 of 100
+    - sequence of operations was:
+         deque.addFirst("JMSBYRVGAS")
+         deque.addFirst("MYASROPIQK")
+         deque.addFirst("REUSJRZEGF")
+         deque.addFirst("BWNSTFSHEE")
+         deque.removeLast()      ==> JMSBYRVGAS
+    - loitered object(s):
+      JMSBYRVGAS
 
   * 100 random operations (0.0, 0.8, 0.2, 0.0)
-    - loitering detected after operation 18 of 100
+    - loitering detected after operation 7 of 100
+    - sequence of operations was:
+         deque.addLast("UHXGBWREPW")
+         deque.addLast("WGUIVANEQC")
+         deque.addLast("ZCMVHUVAXA")
+         deque.addLast("XZMQQIFSFN")
+         deque.addLast("JOLKEMYXXP")
+         deque.addLast("LYDCRXWHIF")
+         deque.removeFirst()     ==> UHXGBWREPW
+    - loitered object(s):
+      UHXGBWREPW
+
   * 100 random operations (0.0, 0.8, 0.0, 0.2)
-    - loitering detected after operation 14 of 100
+    - loitering detected after operation 4 of 100
+    - sequence of operations was:
+         deque.addLast("IUVFFSDYBO")
+         deque.addLast("YJPDJMPYJG")
+         deque.addLast("DVWXPJZINM")
+         deque.removeLast()      ==> DVWXPJZINM
+    - loitered object(s):
+      DVWXPJZINM
+
   * 100 random operations (0.4, 0.4, 0.1, 0.1)
     - loitering detected after operation 9 of 100
     - sequence of operations was:
-         deque.addLast("HAKQZJWFVS")
-         deque.addFirst("NXAETPYCOJ")
-         deque.addFirst("LBIWINLJVM")
-         deque.addFirst("CSNHAUWDKX")
-         deque.addLast("UMOAQMRMOK")
-         deque.addLast("MPIMGYLMLU")
-         deque.addFirst("ALMSKMZNKU")
-         deque.addLast("RFZKRUHOHS")
-         deque.removeLast()      ==> RFZKRUHOHS
+         deque.addLast("HARNGRHDDT")
+         deque.addFirst("CHVTKCFSEG")
+         deque.addLast("EHVDGVVMES")
+         deque.addLast("KSFADZJHVU")
+         deque.addFirst("NIXVGWRLCS")
+         deque.addFirst("OIBWRBNVSB")
+         deque.addFirst("ZQCODTDIDK")
+         deque.addLast("TUXRCZAPZH")
+         deque.removeLast()      ==> TUXRCZAPZH
     - loitered object(s):
-      RFZKRUHOHS
+      TUXRCZAPZH
 
   * 100 random operations (0.2, 0.2, 0.3, 0.3)
     - loitering detected after operation 3 of 100
     - sequence of operations was:
-         deque.addFirst("RZPKZHSPCB")
-         deque.addFirst("WOBQSOTOMU")
-         deque.removeFirst()     ==> WOBQSOTOMU
+         deque.addFirst("RSTTIMMHGF")
+         deque.addLast("BVHSIANRLH")
+         deque.removeFirst()     ==> RSTTIMMHGF
     - loitered object(s):
-      WOBQSOTOMU
+      RSTTIMMHGF
 
 ==> FAILED
 
@@ -1180,9 +1037,14 @@ Test 7: Worst-case constant memory allocated or deallocated
   * 128 random operations
   * 256 random operations
   * 512 random operations
-==> passed
+    - failed on trial 14 of 512
+    - when current size of Deque was 2 objects;
+    - the call to addLast()
+    - caused a change in memory of -144 bytes
+    - any change of more than 96 bytes fails the test
+==> FAILED
 
-Total: 16/28 tests passed!
+Total: 15/28 tests passed!
 
 ================================================================
 
@@ -1237,17 +1099,17 @@ Test 3a-3i: Total memory usage after inserting 2n-1 items, and then
                  n        bytes
 ----------------------------------------------------------
 => passed       33         1080         
-=> passed       65         2080         
+=> passed       65         2104         
 => passed      129         4152         
 => passed      257         8248         
 => passed      513        16440         
 => passed     1025        32824         
-=> passed     2049        65568         
+=> passed     2049        65592         
 => passed     4097       131128         
 => passed     8193       262200         
 ==> 9/9 tests passed
 
-Memory: 32.05 n + 12.81   (R^2 = 1.000)
+Memory: 32.00 n + 24.00   (R^2 = 1.000)
 
 
 Test 4a-4i: Total memory usage after inserting n items, deleting n items,
@@ -1255,30 +1117,37 @@ Test 4a-4i: Total memory usage after inserting n items, deleting n items,
 
                  n        bytes
 ----------------------------------------------------------
-    java.lang.IllegalArgumentException: argument must be positive
+=> passed       32          312         
+=> passed       64          568         
+=> passed      128         1080         
+=> passed      256         2104         
+=> passed      512         4152         
+=> passed     1024         8248         
+=> passed     2048        16440         
+=> passed     4096        32824         
+=> passed     8192        65592         
+==> 9/9 tests passed
 
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    MemoryOfRandomizedQueue.test4(MemoryOfRandomizedQueue.java:251)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:737)
+Memory: 8.00 n + 56.00   (R^2 = 1.000)
+
 
 Test 5a-5i: Total memory usage after inserting n items,
             and then deleting all but one item.
 
                  n        bytes
 ----------------------------------------------------------
-=> passed       32           48         
-=> passed       64           48         
-=> passed      128           48         
-=> passed      256           48         
-=> passed      512           48         
-=> passed     1024           48         
-=> passed     2048           48         
-=> passed     4096           48         
-=> passed     8192           48         
+=> passed       32           72         
+=> passed       64           72         
+=> passed      128           72         
+=> passed      256           72         
+=> passed      512           72         
+=> passed     1024           72         
+=> passed     2048           72         
+=> passed     4096           72         
+=> passed     8192           72         
 ==> 9/9 tests passed
 
-Memory: 48.00   (R^2 = 1.000)
+Memory: 72.00   (R^2 = 1.000)
 
 
 Test 6a-6d: Total memory usage of iterator after inserting n items.
@@ -1301,73 +1170,61 @@ Memory: 32.00   (R^2 = 1.000)
 
 Test 7a: Insert 100 strings; delete them one at a time, checking
          for loitering after each deletion.
-    java.lang.NullPointerException: null passed as 'objectToSize' in getObjectSize
+    - loitering observed during 68 of 100 deletions
+    - maximum number of loitered objects at one time = 26
 
-    sun.instrument.InstrumentationImpl.getObjectSize(InstrumentationImpl.java:188)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOf0(MemoryUtil.java:178)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOfAll(MemoryUtil.java:165)
-    MemoryOfRandomizedQueue.test7a(MemoryOfRandomizedQueue.java:493)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:740)
+==> FAILED
 
 Test 7b: Perform random operations, checking for loitering after
          each operation. The probabilities of enqueue(), dequeue(),
          and sample() are (p1, p2, p3), respectively.
   * 200 random operations (0.8, 0.2, 0.0)
-    java.lang.NullPointerException: null passed as 'objectToSize' in getObjectSize
-
-    sun.instrument.InstrumentationImpl.getObjectSize(InstrumentationImpl.java:188)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOf0(MemoryUtil.java:178)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOfAll(MemoryUtil.java:165)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:424)
-    MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:530)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
-
+    - loitering detected after operation 4 of 200
     - sequence of operations was:
-         rq.enqueue("QCRBOQNBUV")
-         rq.enqueue("IUZXEKGMNE")
-         rq.enqueue("ZYBZWKPYHT")
-         rq.enqueue("MFDNBPONHT")
-         rq.dequeue()     ==> "QCRBOQNBUV"
-         rq.enqueue("WZECUOJVMR")
-         rq.enqueue("DYVOYPUPUZ")
-         rq.enqueue("XMJUAMRWAZ")
-         rq.enqueue("NVLJVAPNLU")
-         rq.dequeue()     ==> "XMJUAMRWAZ"
-         rq.dequeue()     ==> "null"
+         rq.enqueue("ONCTQVLBQC")
+         rq.enqueue("NMQDFICPMA")
+         rq.dequeue()     ==> "ONCTQVLBQC"
+         rq.dequeue()     ==> "NMQDFICPMA"
+    - loitered object(s):
+      NMQDFICPMA
 
   * 200 random operations (0.2, 0.8, 0.0)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:397)
-    MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:531)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
-
+    - loitering detected after operation 2 of 200
     - sequence of operations was:
-         rq.enqueue("PQEHTBUKJW")
-         rq.dequeue()
+         rq.enqueue("JZGKPIINSO")
+         rq.dequeue()     ==> "JZGKPIINSO"
+    - loitered object(s):
+      JZGKPIINSO
 
   * 200 random operations (0.6, 0.2, 0.2)
-    java.lang.NullPointerException: null passed as 'objectToSize' in getObjectSize
-
-    sun.instrument.InstrumentationImpl.getObjectSize(InstrumentationImpl.java:188)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOf0(MemoryUtil.java:178)
-    com.javamex.classmexer.MemoryUtil.deepMemoryUsageOfAll(MemoryUtil.java:165)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:424)
-    MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:532)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
-
+    - loitering detected after operation 7 of 200
+    - sequence of operations was:
+         rq.enqueue("BXIIJMBAEQ")
+         rq.sample()      ==> "BXIIJMBAEQ"
+         rq.enqueue("VQWDJPWUKD")
+         rq.sample()      ==> "BXIIJMBAEQ"
+         rq.dequeue()     ==> "BXIIJMBAEQ"
+         rq.sample()      ==> "VQWDJPWUKD"
+         rq.dequeue()     ==> "VQWDJPWUKD"
+    - loitered object(s):
+      VQWDJPWUKD
 
   * 200 random operations (0.2, 0.4, 0.4)
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    MemoryOfRandomizedQueue.loiter(MemoryOfRandomizedQueue.java:397)
-    MemoryOfRandomizedQueue.test7b(MemoryOfRandomizedQueue.java:533)
-    MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:741)
-
+    - loitering detected after operation 11 of 200
+    - sequence of operations was:
+         rq.enqueue("FQDYGWYHNJ")
+         rq.sample()      ==> "FQDYGWYHNJ"
+         rq.sample()      ==> "FQDYGWYHNJ"
+         rq.sample()      ==> "FQDYGWYHNJ"
+         rq.enqueue("LTJIRUNBSK")
+         rq.dequeue()     ==> "FQDYGWYHNJ"
+         rq.sample()      ==> "LTJIRUNBSK"
+         rq.sample()      ==> "LTJIRUNBSK"
+         rq.sample()      ==> "LTJIRUNBSK"
+         rq.sample()      ==> "LTJIRUNBSK"
+         rq.dequeue()     ==> "LTJIRUNBSK"
+    - loitered object(s):
+      LTJIRUNBSK
 
 ==> FAILED
 
@@ -1375,22 +1232,25 @@ Test 8: Insert T items into queue; then iterate over queue and check
         that worst-case constant memory is allocated or deallocated
         per iterator operation.
   * T = 64
-    java.lang.NullPointerException
+    java.util.NoSuchElementException: No next item exists.
 
+    RandomizedQueue$ListIterator.next(RandomizedQueue.java:74)
     MemoryOfRandomizedQueue.constant(MemoryOfRandomizedQueue.java:558)
     MemoryOfRandomizedQueue.test8(MemoryOfRandomizedQueue.java:592)
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:742)
 
   * T = 128
-    java.lang.NullPointerException
+    java.util.NoSuchElementException: No next item exists.
 
+    RandomizedQueue$ListIterator.next(RandomizedQueue.java:74)
     MemoryOfRandomizedQueue.constant(MemoryOfRandomizedQueue.java:558)
     MemoryOfRandomizedQueue.test8(MemoryOfRandomizedQueue.java:593)
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:742)
 
   * T = 256
-    java.lang.NullPointerException
+    java.util.NoSuchElementException: No next item exists.
 
+    RandomizedQueue$ListIterator.next(RandomizedQueue.java:74)
     MemoryOfRandomizedQueue.constant(MemoryOfRandomizedQueue.java:558)
     MemoryOfRandomizedQueue.test8(MemoryOfRandomizedQueue.java:594)
     MemoryOfRandomizedQueue.main(MemoryOfRandomizedQueue.java:742)
@@ -1422,26 +1282,26 @@ Test 10: Total memory usage after inserting 4096 items, then successively
 
                  n        bytes
 ----------------------------------------------------------
-=> passed     2049        65568         
-=> passed     1025        32800         
-=> passed      513        16416         
-=> passed      257         8224         
-=> passed      129         4128         
-=> passed       65         2080         
-=> passed       33         1056         
-=> passed       17          544         
-=> passed        9          288         
+=> passed     2049        65592         
+=> passed     1025        32824         
+=> passed      513        16440         
+=> passed      257         8248         
+=> passed      129         4152         
+=> passed       65         2104         
+=> passed       33         1080         
+=> passed       17          568         
+=> passed        9          312         
 ==> 9/9 tests passed
 
-Memory: 32.00 n + 0.00   (R^2 = 1.000)
+Memory: 32.00 n + 24.00   (R^2 = 1.000)
 
 
 Min observed memory for RandomizedQueue: 8.00 n + 56.00   (R^2 = 1.000)
-Max observed memory for RandomizedQueue: 32.05 n + 12.81   (R^2 = 1.000)
+Max observed memory for RandomizedQueue: 32.00 n + 24.00   (R^2 = 1.000)
 
-Running 66 total tests.
+Running 75 total tests.
 
-Total: 63/66 tests passed!
+Total: 72/75 tests passed!
 
 ================================================================
 
@@ -1481,9 +1341,9 @@ Test 2a-2k: make n calls to addLast() followed by n calls to removeLast()
 => passed        8192     0.00
 => passed       16384     0.00
 => passed       32768     0.00
-=> passed       65536     0.01
+=> passed       65536     0.00
 => passed      128000     0.01
-=> passed      256000     0.01
+=> passed      256000     0.02
 => passed      512000     0.01
 => passed     1024000     0.02
 ==> 11/11 tests passed
@@ -1538,7 +1398,7 @@ Test 5a-5g: make n random calls to addFirst(), removeFirst(), isEmpty(), and siz
 => passed      128000     0.01
 => passed      256000     0.02
 => passed      512000     0.04
-=> passed     1024000     0.09
+=> passed     1024000     0.08
 => passed     2048000     0.07
 ==> 12/12 tests passed
 
@@ -1559,7 +1419,7 @@ Test 6a-6g: make n random calls to addLast(), removeLast(), isEmpty(), and size(
 => passed      256000     0.01
 => passed      512000     0.02
 => passed     1024000     0.04
-=> passed     2048000     0.08
+=> passed     2048000     0.07
 ==> 12/12 tests passed
 
 
@@ -1575,7 +1435,7 @@ Test 7a-7g: make n random calls to addFirst(), addLast(), removeFirst(), removeL
 => passed       16384     0.00
 => passed       32768     0.00
 => passed       65536     0.00
-=> passed      128000     0.01
+=> passed      128000     0.00
 => passed      256000     0.01
 => passed      512000     0.02
 => passed     1024000     0.04
@@ -1598,7 +1458,7 @@ Test 8a-8g: make n calls to addFirst(); iterate over the n items by calling
 => passed      128000     0.00
 => passed      256000     0.00
 => passed      512000     0.01
-=> passed     1024000     0.02
+=> passed     1024000     0.01
 => passed     2048000     0.08
 ==> 12/12 tests passed
 
@@ -1635,36 +1495,9 @@ Running 67 total tests.
 Test 1: make n calls to enqueue() followed by n calls to dequeue();
         count calls to StdRandom
   * n = 10
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TimeRandomizedQueue.countCallsToStdRandomEnqueueDequeue(TimeRandomizedQueue.java:26)
-    TimeRandomizedQueue.test1(TimeRandomizedQueue.java:335)
-    TimeRandomizedQueue.main(TimeRandomizedQueue.java:519)
-
-
   * n = 100
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TimeRandomizedQueue.countCallsToStdRandomEnqueueDequeue(TimeRandomizedQueue.java:26)
-    TimeRandomizedQueue.test1(TimeRandomizedQueue.java:336)
-    TimeRandomizedQueue.main(TimeRandomizedQueue.java:519)
-
-
   * n = 1000
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TimeRandomizedQueue.countCallsToStdRandomEnqueueDequeue(TimeRandomizedQueue.java:26)
-    TimeRandomizedQueue.test1(TimeRandomizedQueue.java:337)
-    TimeRandomizedQueue.main(TimeRandomizedQueue.java:519)
-
-
-==> FAILED
+==> passed
 
 Test 2: make n calls to enqueue() follwed by n calls to sample();
         count calls to StdRandom
@@ -1684,17 +1517,18 @@ Test 4a-k: make n calls to enqueue() followed by n calls to dequeue()
 
                     n  seconds
 ----------------------------------
-    java.lang.IllegalArgumentException: argument must be positive
-
-    edu.princeton.cs.algs4.StdRandom.uniform(StdRandom.java:203)
-    RandomizedQueue.dequeue(RandomizedQueue.java:31)
-    TimeRandomizedQueue.timeEnqueueDequeue(TimeRandomizedQueue.java:257)
-    TimeRandomizedQueue.test4(TimeRandomizedQueue.java:371)
-    TimeRandomizedQueue.main(TimeRandomizedQueue.java:528)
-
-=> FAILED        1024   [ Test did not complete due to an exception. ]
-
-==> 0/11 tests passed
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.01
+=> passed      256000     0.02
+=> passed      512000     0.03
+=> passed     1024000     0.07
+==> 11/11 tests passed
 
 
 Test 5a-k: make n calls to enqueue() followed by n random calls to
@@ -1710,15 +1544,90 @@ Test 5a-k: make n calls to enqueue() followed by n random calls to
 => passed       16384     0.00
 => passed       32768     0.00
 => passed       65536     0.01
-=> passed      128000     0.02
+=> passed      128000     0.01
 => passed      256000     0.03
 => passed      512000     0.05
 => passed     1024000     0.11
-==> 11/11 tests passe
+==> 11/11 tests passed
 
-...
 
-WARNING: the grading output was truncated due to excessive length.
-Typically, this is because you have a method that has an unanticipated side effect
-(such as printing to standard output or throwing an exception). A large amount of output
-can also arise from failing many tests.
+Test 6a-k: make n calls to enqueue() followed by n random calls to
+           enqueue(), sample(), dequeue(), isEmpty(), and size()
+           with probabilities (0.6, 0.1, 0.1, 0.1, 0.1)
+
+                    n  seconds
+----------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.01
+=> passed      128000     0.01
+=> passed      256000     0.01
+=> passed      512000     0.03
+=> passed     1024000     0.07
+==> 11/11 tests passed
+
+
+Test 7a-k: make n calls to enqueue() followed by n random calls to
+           enqueue(), sample(), dequeue(), isEmpty(), and size()
+           with probabilities (0.1, 0.1, 0.6, 0.1, 0.1)
+
+                    n  seconds
+----------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.01
+=> passed      256000     0.02
+=> passed      512000     0.05
+=> passed     1024000     0.11
+==> 11/11 tests passed
+
+
+Test 8a-k: make n calls to enqueue() followed by n calls each to
+           next() and hasNext().
+
+                    n  seconds
+----------------------------------
+=> passed        1024     0.00
+=> passed        2048     0.00
+=> passed        4096     0.00
+=> passed        8192     0.00
+=> passed       16384     0.00
+=> passed       32768     0.00
+=> passed       65536     0.00
+=> passed      128000     0.00
+=> passed      256000     0.00
+=> passed      512000     0.00
+=> passed     1024000     0.01
+==> 11/11 tests passed
+
+
+Test 9a-i: make n calls to enqueue(); then call dequeue() twice,
+           followed by enqueue() twice and repeat n times.
+
+                    n  seconds
+----------------------------------
+=> passed        1025     0.00
+=> passed        2049     0.00
+=> passed        4097     0.00
+=> passed        8193     0.00
+=> passed       16385     0.00
+=> passed       32769     0.01
+=> passed       65537     0.02
+=> passed      128001     0.02
+=> passed      256001     0.04
+==> 9/9 tests passed
+
+
+Total: 67/67 tests passed!
+
+
+================================================================
