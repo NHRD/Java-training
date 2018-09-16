@@ -28,8 +28,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public Item dequeue() {
-        Item item = null;
         emptycheck();
+        Item item = null;
         if (n == 1) {
             item = s[0];
         } else {

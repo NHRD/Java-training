@@ -36,8 +36,8 @@ public class Deque<Item> implements Iterable<Item> {
             first.next = null;
             last = first;
         } else {
-        oldfirst.previous = first;
-        first.next = oldfirst;
+            oldfirst.previous = first;
+            first.next = oldfirst;
         }
         ++n;
     }
@@ -67,6 +67,7 @@ public class Deque<Item> implements Iterable<Item> {
             last = first;
         } else {
             first = first.next;
+            first.previous = null;
         }
         return item;
     }
@@ -80,6 +81,7 @@ public class Deque<Item> implements Iterable<Item> {
             first = last;
         } else {
             last = last.previous;
+            last.next = null;
         }
         return item;
     }
