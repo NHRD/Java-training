@@ -48,6 +48,8 @@ public class Point implements Comparable<Point> {
     }
 
     public Comparator<Point> slopeOrder() {
-        if         
+        public int compare(Point this, Point that) {
+            
+        }
     }
 }
