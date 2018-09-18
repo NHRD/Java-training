@@ -13,7 +13,7 @@ public class Point implements Comparable<Point> {
     }
 
     public void drawTo(Point that) {
-        StdDraw.line(this.x, this.y that.x that.y);
+        StdDraw.line(this.x, this.y, that.x, that.y);
     }
 
     public String toString() {
@@ -34,12 +34,20 @@ public class Point implements Comparable<Point> {
     }
 
     public double slopeTo(Point that) {
+        if (this.y == that.y && this.x == that.y) {
+            return Double.NEGATIVE_INFINITY;
+        }
+        if (this.y == that.y) {
+            return Double.POSITIVE_INFINITY;
+        }
+        if (this.y == that.y) {
+            return +0.0;
+        }
         double slope = (that.y - this.y) / (that.y - this.y);
         return slope;
     }
 
     public Comparator<Point> slopeOrder() {
-        
         if         
     }
 }
