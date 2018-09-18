@@ -21,7 +21,16 @@ public class Point implements Comparable<Point> {
     }   
 
     public int compareTo(Point that) {
-        return ;
+        if (this.y < that.y) {
+            return -1;
+        }
+        if (this.y == that.y && this.x < that.x) {
+            return -1;
+        }
+        if (this.y == that.y && this.x == that.x) {
+            return 0;
+        }
+        return 1;
     }
 
     public double slopeTo(Point that) {
@@ -30,6 +39,7 @@ public class Point implements Comparable<Point> {
     }
 
     public Comparator<Point> slopeOrder() {
-
+        
+        if         
     }
 }
