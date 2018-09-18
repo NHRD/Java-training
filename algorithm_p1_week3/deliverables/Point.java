@@ -25,7 +25,8 @@ public class Point implements Comparable<Point> {
     }
 
     public double slopeTo(Point that) {
-
+        double slope = (that.y - this.y) / (that.y - this.y);
+        return slope;
     }
 
     public Comparator<Point> slopeOrder() {
