@@ -53,14 +53,20 @@ public class Point implements Comparable<Point> {
             double dy1 = slopeTo(q1);
             double dy2 = slopeTo(q2);
 
-            if (dy1 == 0 && dy2 ==0) {
+            if (dy1 == dy2) {
                 return Double.NEGATIVE_INFINITY;
             }
-            else if (dy1 >= 0 && dy2 < 0) {
+            else if (dy1 == 0 && dy2 ==0) {
+                return Double.POSITIVE_INFINITY;
+            }
+            else if (dy1 == 1 && dy2 == 1) {
+                return +0.0;
+            }
+            else if (dy2 > dy1){
                 return -1;
             }
-            else if (dy2 >= 0 && dy1 < 0) {
-                return +1;
+            else {
+                return 1;
             }
         }
     }
