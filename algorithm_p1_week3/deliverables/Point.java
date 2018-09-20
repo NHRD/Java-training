@@ -50,8 +50,8 @@ public class Point implements Comparable<Point> {
     public Comparator<Point> slopeOrder() {
         public int compare(Point q1, Point q2) {
 
-            double dy1 = compareTo(q1);
-            double dy2 = compareTo(q2);
+            double dy1 = slopeTo(q1);
+            double dy2 = slopeTo(q2);
 
             if (dy1 == 0 && dy2 ==0) {
 
