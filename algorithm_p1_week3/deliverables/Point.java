@@ -48,8 +48,21 @@ public class Point implements Comparable<Point> {
     }
 
     public Comparator<Point> slopeOrder() {
-        public int compare(Point this, Point that) {
-            
+        public int compare(Point q1, Point q2) {
+
+            double dy1 = compareTo(q1);
+            double dy2 = compareTo(q2);
+
+            if (dy1 == 0 && dy2 ==0) {
+
+            }
+            else if (dy1 >= 0 && dy2 < 0) {
+                return -1;
+            }
+            else if (dy2 >= 0 && dy1 < 0) {
+                return +1;
+            }
+            else return 
         }
     }
 }
