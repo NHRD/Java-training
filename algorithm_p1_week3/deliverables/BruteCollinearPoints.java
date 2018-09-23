@@ -8,7 +8,6 @@ public class BruteCollinearPoints {
     }   
 
     public LineSegment[] segments() {
-        
-        
+          
     }               
  }
