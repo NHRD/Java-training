@@ -1,6 +1,7 @@
 public class BruteCollinearPoints {
 
     private int segNum = 0;
+    private LineSegment[] segment;
 
     public BruteCollinearPoints(Point[] points) {
         Point slope = new Point();
