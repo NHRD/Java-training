@@ -1,30 +1,30 @@
 public class BruteCollinearPoints {
 
     private int segNum = 0;
-    private LineSegment[] segmentIDs;
+    private LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
         Point slope = new Point();
-        segmentIDs = (LineSegment[]) new Object[1];
+        segments = (LineSegment[]) new Object[1];
+        if (checkDuplicatePoints == true) {
+            throw new java.lang.IllegalArgumentException("duplicate point error.");
+        }
         int n = points.length;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    for (int l = 0; l < n; l++) {
-                       if (i == j || i == k || i == l || j == k || j == l || k == l) {
-                           continue;
-                       }
-                       Point p = points[i];
-                       Point q = points[j];
-                       Point r = points[k];
-                       Point s = points[l];
-                       boundarycheck(p, q, r, s);
-                       if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
+            for (int j = i + 1; j < n; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    for (int l = k + 1; l < n; l++) {
+                        Point p = points[i];
+                        Point q = points[j];
+                        Point r = points[k];
+                        Point s = points[l];
+                        boundarycheck(p, q, r, s, points);
+                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
                             Point[] slopepoints = new Point[] {p, q, r, s};
                             Arrays.sort(slopepoints);
-                            segmentIDs[segNum] = new LineSegment[] {slopepoints[0], slopepoints[3]};
-                            segNum++;
-                        if (segmentIDs.length == segNum) {
+                            segment = (LineSegent[]) new Object[] {slopepoints[0], slopepoints[3]};
+                            segments[segNum] = segment
+                        if (segments.length == segNum) {
                             resize(segNum * 2);
                         }
                        }
@@ -39,7 +39,7 @@ public class BruteCollinearPoints {
     }   
 
     public LineSegment[] segments() {
-          return segmentIDs;
+        return segments;
     }
     
     private void boundarycheck(Point p, Point q, Point r, Point s) {
@@ -54,5 +54,23 @@ public class BruteCollinearPoints {
             copy[i] = segmentIDs[i];
         }
         segmentIDs = copy;
+    }
+    
+    private checkDuplicatePoints(Point[] points) {
+        if (points.length > 0) {
+            Point[] pointsCopy = new Point[points.length];
+            System.arraycopy(points, 0, pointsCopy, 0, points.length);
+            Arrays.sort(pointsCopy);
+            Point currentPoint = pointsCopy[0];
+            for (int i = 1; i < pointsCopy.length; i++) {
+                if (pointsCopy[i].compareTo(currentPoint) == 0) {
+                    throw new java.lang.IllegalArgumentException("duplicate point error.");
+                } else {
+                    currentPoint = pointsCopy[i];
+                }
+            }
+        } else {
+            throw new java.lang.IllegalArgumentException("null error.");
+        }
     }
  }
