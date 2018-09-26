@@ -24,10 +24,12 @@ public class FastCollinearPoints {
                 }
                 if ((l - k) > 2) {
                     segments[segNum] = new LineSegment[] {points[i], segSlope[l]};
-                } else {
-                    k = l;
+                    segNum++;
+                } 
+                if (segments.length == segNum) {
+                    resize(segNum * 2);
+                k = l;
                 }
-            }
             }
         }
     }
