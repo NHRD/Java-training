@@ -12,14 +12,22 @@ public class FastCollinearPoints {
                 Point q = points[j];
                 if (q == p) {
                     continue;
-                }
-                else {
+                } else {
                     segSlope[j] = q;
                 }
             Arrays.sort(segSlope);
             int k = 0;
             int l = 0;
-            while (k <= segSlope.length && l <= segSlope.length)
+            while (k <= segSlope.length && l <= segSlope.length) {
+                while (segSlope[k] == segSlope[l]) {
+                    l++;
+                }
+                if ((l - k) > 2) {
+                    segments[segNum] = new LineSegment[] {points[i], segSlope[l]};
+                } else {
+                    k = l;
+                }
+            }
             }
         }
     }
