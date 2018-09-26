@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class FastCollinearPoints {
     
     private LineSegment[] segments;
@@ -6,18 +8,22 @@ public class FastCollinearPoints {
     
     public FastCollinearPoints(Point[] points) {
         segments = new LineSegment[1];
+        int k = 0;
+        int l = 0;
         for (int i = 0; i < points.length; i++) {
             Point p = points[i];
+            boundarycheck(p);
+            int m = 0;
             for (int j = 0; j < points.length - 1; j++) {
                 Point q = points[j];
+                boundarycheck(q);
                 if (q == p) {
                     continue;
                 } else {
-                    segSlope[j] = q;
+                    segSlope[m] = q;
+                    m++;
                 }
             Arrays.sort(segSlope);
-            int k = 0;
-            int l = 0;
             while (k <= segSlope.length && l <= segSlope.length) {
                 while (segSlope[k] == segSlope[l]) {
                     l++;
@@ -42,8 +48,8 @@ public class FastCollinearPoints {
         return segments;
     }
 
-    private void boundarycheck(Point p, Point q, Point r, Point s) {
-        if (p == null || q == null || r == null || s == null) {
+    private void boundarycheck(Point p) {
+        if (p == null) {
             throw new java.lang.IllegalArgumentException("null error.");
         }
     }
@@ -54,23 +60,5 @@ public class FastCollinearPoints {
             copy[i] = segmentIDs[i];
         }
         segmentIDs = copy;
-    }
-    
-    private checkDuplicatePoints(Point[] points) {
-        if (points.length > 0) {
-            Point[] pointsCopy = new Point[points.length];
-            System.arraycopy(points, 0, pointsCopy, 0, points.length);
-            Arrays.sort(pointsCopy);
-            Point currentPoint = pointsCopy[0];
-            for (int i = 1; i < pointsCopy.length; i++) {
-                if (pointsCopy[i].compareTo(currentPoint) == 0) {
-                    throw new java.lang.IllegalArgumentException("duplicate point error.");
-                } else {
-                    currentPoint = pointsCopy[i];
-                }
-            }
-        } else {
-            throw new java.lang.IllegalArgumentException("null error.");
-        }
     }
  }
