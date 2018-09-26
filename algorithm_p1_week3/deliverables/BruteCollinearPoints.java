@@ -7,7 +7,7 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
         segments = new LineSegment[1];
-        if (checkDuplicatePoints == true) {
+        if (checkDuplicatePoints() == true) {
             throw new java.lang.IllegalArgumentException("duplicate point error.");
         }
         int n = points.length;
@@ -23,8 +23,9 @@ public class BruteCollinearPoints {
                         if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
                             Point[] slopepoints = new Point[] {p, q, r, s};
                             Arrays.sort(slopepoints);
-                            segment = new LineSegment[] {slopepoints[0], slopepoints[3]};
-                            segments[segNum] = segment
+                            LineSegment newSegment = new LineSegment(slopepoints[0], slopepoints[3]);
+                            segments[segNum] = newSegment;
+                            segNum++;
                         if (segments.length == segNum) {
                             resize(segNum * 2);
                         }
@@ -57,7 +58,7 @@ public class BruteCollinearPoints {
         segmentIDs = copy;
     }
     
-    private checkDuplicatePoints(Point[] points) {
+    private void checkDuplicatePoints(Point[] points) {
         if (points.length > 0) {
             Point[] pointsCopy = new Point[points.length];
             System.arraycopy(points, 0, pointsCopy, 0, points.length);

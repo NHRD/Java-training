@@ -42,13 +42,15 @@ public class Point implements Comparable<Point> {
         }
         if (this.y == 0 && that.y == 0) {
             return +0.0;
+        } 
+        else {
+            double slope = (that.y - this.y) / (that.y - this.y);
+            return slope;
         }
-        double slope = (that.y - this.y) / (that.y - this.y);
-        return slope;
     }
 
     public Comparator<Point> slopeOrder() {
-        public int compare(Point q1, Point q2) {
+        public int compare (Point q1, Point q2) {
 
             double dy1 = slopeTo(q1);
             double dy2 = slopeTo(q2);
@@ -70,4 +72,5 @@ public class Point implements Comparable<Point> {
             }
         }
     }
+    
 }

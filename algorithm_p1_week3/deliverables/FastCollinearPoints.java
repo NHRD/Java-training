@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class FastCollinearPoints {
     
     private LineSegment[] segments;
-    private LineSegment[] segSlope;
+    private Point[] segSlope;
     private int segNum = 0;
     
     public FastCollinearPoints(Point[] points) {
@@ -23,13 +23,15 @@ public class FastCollinearPoints {
                     segSlope[m] = q;
                     m++;
                 }
+            }
             Arrays.sort(segSlope);
             while (k <= segSlope.length && l <= segSlope.length) {
                 while (segSlope[k] == segSlope[l]) {
                     l++;
                 }
                 if ((l - k) > 2) {
-                    segments[segNum] = new LineSegment[] {points[i], segSlope[l]};
+                    LineSegment newSegment = new LineSegment(points[i], segSlope[l]);
+                    segments[segNum] = newSegment;
                     segNum++;
                 } 
                 if (segments.length == segNum) {
