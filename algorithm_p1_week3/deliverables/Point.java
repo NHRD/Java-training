@@ -3,6 +3,9 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
 
+    private int x;
+    private int y;
+
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
@@ -50,23 +53,17 @@ public class Point implements Comparable<Point> {
     }
 
     public Comparator<Point> slopeOrder() {
-        return new slopeorder();
+        return new SlopeOrder();
     }
 
-    private static class slopeorder implements Comparator<Point> {
-        private int compare (Point q1, Point q2) {
+    private class SlopeOrder implements Comparator<Point> {
+        public int compare(Point q1, Point q2) {
 
             double dy1 = slopeTo(q1);
             double dy2 = slopeTo(q2);
 
-            if (q1.x == q2.x && q1.y == q2.y) {
-                return Double.NEGATIVE_INFINITY;
-            }
-            else if (q1.x == 0 && q2.x ==0) {
-                return Double.POSITIVE_INFINITY;
-            }
-            else if (q1.y == 0 && q2.y == 0) {
-                return +0.0;
+            if (dy1 == dy2) {
+                return 0;
             }
             else if (dy2 > dy1){
                 return -1;
