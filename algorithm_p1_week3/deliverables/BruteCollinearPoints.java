@@ -7,9 +7,7 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
         segments = new LineSegment[1];
-        if (checkDuplicatePoints() == true) {
-            throw new java.lang.IllegalArgumentException("duplicate point error.");
-        }
+        checkDuplicatePoints(points);
         int n = points.length;
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -53,9 +51,9 @@ public class BruteCollinearPoints {
     private void resize(int size) {
         LineSegment[] copy = (LineSegment[]) new Object[size];
         for (int i = 0; i < segNum; i++) {
-            copy[i] = segmentIDs[i];
+            copy[i] = segments[i];
         }
-        segmentIDs = copy;
+        segments = copy;
     }
     
     private void checkDuplicatePoints(Point[] points) {

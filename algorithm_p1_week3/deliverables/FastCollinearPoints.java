@@ -59,8 +59,8 @@ public class FastCollinearPoints {
     private void resize(int size) {
         LineSegment[] copy = (LineSegment[]) new Object[size];
         for (int i = 0; i < segNum; i++) {
-            copy[i] = segmentIDs[i];
+            copy[i] = segments[i];
         }
-        segmentIDs = copy;
+        segments = copy;
     }
  }
