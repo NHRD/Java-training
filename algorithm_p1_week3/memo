@@ -1,118 +1,1457 @@
-Programming Assignment 3: Pattern Recognition
+See the Assessment Guide for information on how to interpret this report.
 
-Write a program to recognize line patterns in a given set of points. 
-Computer vision involves analyzing patterns in visual images and reconstructing the real-world objects that produced them. The process is often broken up into two phases: feature detection and pattern recognition. Feature detection involves selecting important features of the image; pattern recognition involves discovering patterns in the features. We will investigate a particularly clean pattern recognition problem involving points and line segments. This kind of pattern recognition arises in many other applications such as statistical data analysis. 
-The problem. Given a set of n distinct points in the plane, find every (maximal) line segment that connects a subset of 4 or more of the points. 
+ASSESSMENT SUMMARY
 
- 
-Point data type. Create an immutable data type Point that represents a point in the plane by implementing the following API: 
-public class Point implements Comparable<Point> {
-   public Point(int x, int y)                         // constructs the point (x, y)
+Compilation:  PASSED
+API:          PASSED
 
-   public   void draw()                               // draws this point
-   public   void drawTo(Point that)                   // draws the line segment from this point to that point
-   public String toString()                           // string representation
+Spotbugs:     FAILED (9 warnings)
+PMD:          FAILED (6 warnings)
+Checkstyle:   FAILED (0 errors, 3 warnings)
 
-   public               int compareTo(Point that)     // compare two points by y-coordinates, breaking ties by x-coordinates
-   public            double slopeTo(Point that)       // the slope between this point and that point
-   public Comparator<Point> slopeOrder()              // compare two points by slopes they make with this point
-}
-To get started, use the data type Point.java, which implements the constructor and the draw(), drawTo(), and toString() methods. Your job is to add the following components. 
+Correctness:  2/41 tests passed
+Memory:       1/1 tests passed
+Timing:       5/41 tests passed
 
-The compareTo() method should compare points by their y-coordinates, breaking ties by their x-coordinates. Formally, the invoking point (x0, y0) is less than the argument point (x1, y1) if and only if either y0 < y1 or if y0 = y1 and x0 < x1. 
+Aggregate score: 25.37%
+[Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
-The slopeTo() method should return the slope between the invoking point (x0, y0) and the argument point (x1, y1), which is given by the formula (y1 − y0) / (x1 − x0). Treat the slope of a horizontal line segment as positive zero; treat the slope of a vertical line segment as positive infinity; treat the slope of a degenerate line segment (between a point and itself) as negative infinity. 
+ASSESSMENT DETAILS
 
-The slopeOrder() method should return a comparator that compares its two argument points by the slopes they make with the invoking point (x0, y0). Formally, the point (x1, y1) is less than the point (x2, y2) if and only if the slope (y1 − y0) / (x1 − x0) is less than the slope (y2 − y0) / (x2 − x0). Treat horizontal, vertical, and degenerate line segments as in the slopeTo() method. 
+The following files were submitted:
+----------------------------------
+2.7K Sep 29 11:01 BruteCollinearPoints.java
+1.9K Sep 29 11:01 FastCollinearPoints.java
+1.8K Sep 29 11:01 Point.java
 
-Do not override the equals() or hashCode() methods. 
-Corner cases. To avoid potential complications with integer overflow or floating-point precision, you may assume that the constructor arguments x and y are each between 0 and 32,767. 
-Line segment data type. To represent line segments in the plane, use the data type LineSegment.java, which has the following API: 
-public class LineSegment {
-   public LineSegment(Point p, Point q)        // constructs the line segment between points p and q
-   public   void draw()                        // draws this line segment
-   public String toString()                    // string representation
-}
-Brute force. Write a program BruteCollinearPoints.java that examines 4 points at a time and checks whether they all lie on the same line segment, returning all such line segments. To check whether the 4 points p, q, r, and s are collinear, check whether the three slopes between p and q, between p and r, and between p and s are all equal. 
-public class BruteCollinearPoints {
-   public BruteCollinearPoints(Point[] points)    // finds all line segments containing 4 points
-   public           int numberOfSegments()        // the number of line segments
-   public LineSegment[] segments()                // the line segments
-}
-The method segments() should include each line segment containing 4 points exactly once. If 4 points appear on a line segment in the order p→q→r→s, then you should include either the line segment p→s or s→p (but not both) and you should not include subsegments such as p→r or q→r. For simplicity, we will not supply any input to BruteCollinearPoints that has 5 or more collinear points. 
-Corner cases. Throw a java.lang.IllegalArgumentException if the argument to the constructor is null, if any point in the array is null, or if the argument to the constructor contains a repeated point. 
-Performance requirement. The order of growth of the running time of your program should be n4 in the worst case and it should use space proportional to n plus the number of line segments returned. 
-A faster, sorting-based solution. Remarkably, it is possible to solve the problem much faster than the brute-force solution described above. Given a point p, the following method determines whether p participates in a set of 4 or more collinear points. 
-Think of p as the origin. 
 
-For each other point q, determine the slope it makes with p. 
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
 
-Sort the points according to the slopes they makes with p. 
 
-Check if any 3 (or more) adjacent points in the sorted order have equal slopes with respect to p. If so, these points, together with p, are collinear. 
-Applying this method for each of the n points in turn yields an efficient algorithm to the problem. The algorithm solves the problem because points that have equal slopes with respect to p are collinear, and sorting brings such points together. The algorithm is fast because the bottleneck operation is sorting. 
+% javac Point.java
+*-----------------------------------------------------------
 
- 
-Write a program FastCollinearPoints.java that implements this algorithm. 
-public class FastCollinearPoints {
-   public FastCollinearPoints(Point[] points)     // finds all line segments containing 4 or more points
-   public           int numberOfSegments()        // the number of line segments
-   public LineSegment[] segments()                // the line segments
-}
-The method segments() should include each maximal line segment containing 4 (or more) points exactly once. For example, if 5 points appear on a line segment in the order p→q→r→s→t, then do not include the subsegments p→s or q→t. 
-Corner cases. Throw a java.lang.IllegalArgumentException if the argument to the constructor is null, if any point in the array is null, or if the argument to the constructor contains a repeated point. 
-Performance requirement. The order of growth of the running time of your program should be n2 log n in the worst case and it should use space proportional to n plus the number of line segments returned. FastCollinearPoints should work properly even if the input has 5 or more collinear points. 
-Sample client. This client program takes the name of an input file as a command-line argument; read the input file (in the format specified below); prints to standard output the line segments that your program discovers, one per line; and draws to standard draw the line segments. 
-public static void main(String[] args) {
+% javac BruteCollinearPoints.java
+*-----------------------------------------------------------
 
-    // read the n points from a file
-    In in = new In(args[0]);
-    int n = in.readInt();
-    Point[] points = new Point[n];
-    for (int i = 0; i < n; i++) {
-        int x = in.readInt();
-        int y = in.readInt();
-        points[i] = new Point(x, y);
-    }
+% javac FastCollinearPoints.java
+*-----------------------------------------------------------
 
-    // draw the points
-    StdDraw.enableDoubleBuffering();
-    StdDraw.setXscale(0, 32768);
-    StdDraw.setYscale(0, 32768);
-    for (Point p : points) {
-        p.draw();
-    }
-    StdDraw.show();
 
-    // print and draw the line segments
-    FastCollinearPoints collinear = new FastCollinearPoints(points);
-    for (LineSegment segment : collinear.segments()) {
-        StdOut.println(segment);
-        segment.draw();
-    }
-    StdDraw.show();
-}
-Input format. We supply several sample input files (suitable for use with the test client above) in the following format: An integer n, followed by n pairs of integers (x, y), each between 0 and 32,767. Below are two examples. 
-% more input6.txt       % more input8.txt
-6                       8
-19000  10000             10000      0
-18000  10000                 0  10000
-32000  10000              3000   7000
-21000  10000              7000   3000
- 1234   5678             20000  21000
-14000  10000              3000   4000
-                         14000  15000
-                          6000   7000
-% java-algs4 BruteCollinearPoints input8.txt
-(10000, 0) -> (0, 10000) 
-(3000, 4000) -> (20000, 21000) 
+================================================================
 
-% java-algs4 FastCollinearPoints input8.txt
-(3000, 4000) -> (20000, 21000) 
-(0, 10000) -> (10000, 0)
 
-% java-algs4 FastCollinearPoints input6.txt
-(14000, 10000) -> (32000, 10000) 
-Deliverables. Submit only the files BruteCollinearPoints.java, FastCollinearPoints.java, and Point.java. We will supply LineSegment.java and algs4.jar. You may not call any library functions other those in java.lang, java.util, and algs4.jar. You may use library functions in java.util only if they have already been introduced in the course. For example, you may use Arrays.sort(), but not java.util.HashSet. 
-This assignment was developed by Kevin Wayne. 
-Copyright © 2005. 
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Point:
+
+BruteCollinearPoints:
+
+FastCollinearPoints:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS                                       
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At Point.java:[line 65]
+M D ICAST_IDIV_CAST_TO_DOUBLE ICAST: Casts the result of an integral division operation to type 'double'. Did you mean to cast one (or both) of the operands to type 'double' before performing the division?  At Point.java:[line 50]
+M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'BruteCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At BruteCollinearPoints.java:[line 42]
+L D FE_FLOATING_POINT_EQUALITY FE: Tests for exact floating-point equality. Because floating-point calculations may involve rounding, the calculated values may be imprecise.  At BruteCollinearPoints.java:[line 21]
+H C BC_IMPOSSIBLE_DOWNCAST BC: Impossible downcast from type 'Object[]' to 'LineSegment[]'.  At BruteCollinearPoints.java:[line 52]
+M V EI_EXPOSE_REP EI: Returns a reference to the mutable object stored in the instance variable 'segments', which exposes the internal representation of the class 'FastCollinearPoints'. Instead, create a defensive copy of the object referenced by 'segments' and return the copy.  At FastCollinearPoints.java:[line 50]
+H C BC_IMPOSSIBLE_DOWNCAST BC: Impossible downcast from type 'Object[]' to 'LineSegment[]'.  At FastCollinearPoints.java:[line 60]
+M C UWF_UNWRITTEN_FIELD UwF: The instance (or static) variable 'segSlope' is never initialized; all reads of it will return the default value (0 or null). Check for errors (should it have been initialized?), or remove if useless.  At FastCollinearPoints.java:[line 23]
+M C NP_UNWRITTEN_FIELD NP: Dereferences the instance (or static) variable 'segSlope', which appears to be null.  At FastCollinearPoints.java:[line 28]
+Warnings generated: 9
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+BruteCollinearPoints.java:5: The private instance (or static) variable 'segNum' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+BruteCollinearPoints.java:42: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
+FastCollinearPoints.java:7: The private instance (or static) variable 'segNum' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+FastCollinearPoints.java:50: Returning 'segments' may expose an internal array. If so, return a defensive copy. [MethodReturnsInternalArray]
+Point.java:6: The private instance (or static) variable 'x' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+Point.java:7: The private instance (or static) variable 'y' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PMD ends with 6 warnings.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+[WARN] BruteCollinearPoints.java:15:30: Do not use the letter 'l' as a local variable name. It is hard to distinguish from the number '1'. [LocalVariableName]
+[WARN] FastCollinearPoints.java:12:13: Do not use the letter 'l' as a local variable name. It is hard to distinguish from the number '1'. [LocalVariableName]
+[WARN] Point.java:68:32: '{' is not preceded with whitespace. [WhitespaceAround]
+Checkstyle ends with 0 errors and 3 warnings.
+
+% custom checkstyle checks for Point.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for BruteCollinearPoints.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for FastCollinearPoints.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Point
+*-----------------------------------------------------------
+Running 3 total tests.
+
+Test 1: p.slopeTo(q)
+  * positive infinite slope, where p and q have coordinates in [0, 500)
+     Failed on trial 1 of 100000
+     p             = (281, 141)
+     q             = (281, 350)
+     p.slopeTo(q)  = 1.0
+  * positive infinite slope, where p and q have coordinates in [0, 32768)
+     Failed on trial 1 of 100000
+     p             = (22113, 17864)
+     q             = (22113, 3560)
+     p.slopeTo(q)  = 1.0
+  * negative infinite slope, where p and q have coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.negInfSlopeTo(TestPoint.java:366)
+    TestPoint.test1(TestPoint.java:854)
+    TestPoint.main(TestPoint.java:913)
+
+  * negative infinite slope, where p and q have coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.negInfSlopeTo(TestPoint.java:366)
+    TestPoint.test1(TestPoint.java:855)
+    TestPoint.main(TestPoint.java:913)
+
+  * positive zero     slope, where p and q have coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.negativeZeroSlopeTo(TestPoint.java:521)
+    TestPoint.test1(TestPoint.java:856)
+    TestPoint.main(TestPoint.java:913)
+
+  * positive zero     slope, where p and q have coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.negativeZeroSlopeTo(TestPoint.java:521)
+    TestPoint.test1(TestPoint.java:857)
+    TestPoint.main(TestPoint.java:913)
+
+  * symmetric for random points p and q with coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.symmetricSlopeTo(TestPoint.java:423)
+    TestPoint.test1(TestPoint.java:858)
+    TestPoint.main(TestPoint.java:913)
+
+  * symmetric for random points p and q with coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.symmetricSlopeTo(TestPoint.java:423)
+    TestPoint.test1(TestPoint.java:859)
+    TestPoint.main(TestPoint.java:913)
+
+  * transitive for random points p, q, and r with coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.transitiveSlopeTo(TestPoint.java:456)
+    TestPoint.test1(TestPoint.java:860)
+    TestPoint.main(TestPoint.java:913)
+
+  * transitive for random points p, q, and r with coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.transitiveSlopeTo(TestPoint.java:456)
+    TestPoint.test1(TestPoint.java:861)
+    TestPoint.main(TestPoint.java:913)
+
+  * slopeTo(), where p and q have coordinates in [0, 500)
+     Failed on trial 1 of 100000
+     p                        = (32, 302)
+     q                        = (151, 497)
+     student   p.slopeTo(q) = 1.0
+     reference p.slopeTo(q) = 1.638655462184874
+  * slopeTo(), where p and q have coordinates in [0, 32768)
+     Failed on trial 1 of 100000
+     p                        = (2694, 28639)
+     q                        = (11175, 4353)
+     student   p.slopeTo(q) = 1.0
+     reference p.slopeTo(q) = -2.86357740832449
+  * slopeTo(), where p and q have coordinates in [0, 10)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    TestPoint.slopeTo(TestPoint.java:158)
+    TestPoint.test1(TestPoint.java:864)
+    TestPoint.main(TestPoint.java:913)
+
+  * throw a java.lang.NullPointerException if argument is null
+==> FAILED
+
+Test 2: p.compareTo(q)
+  * reflexive, where p and q have coordinates in [0, 500)
+  * reflexive, where p and q have coordinates in [0, 32768)
+  * antisymmetric, where p and q have coordinates in [0, 500)
+  * antisymmetric, where p and q have coordinates in [0, 32768)
+  * transitive, where p, q, and r have coordinates in [0, 500)
+  * transitive, where p, q, and r have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 500)
+  * sign of compareTo(), where p and q have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 10)
+  * throw java.lang.NullPointerException exception if argument is null
+==> passed
+
+Test 3: p.slopeOrder().compare(q, r)
+  * reflexive, where p and q have coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:62)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.reflexiveCompare(TestPoint.java:665)
+    TestPoint.test3(TestPoint.java:893)
+    TestPoint.main(TestPoint.java:915)
+
+  * reflexive, where p and q have coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:62)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.reflexiveCompare(TestPoint.java:665)
+    TestPoint.test3(TestPoint.java:894)
+    TestPoint.main(TestPoint.java:915)
+
+  * antisymmetric, where p, q, and r have coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:62)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.antisymmetricCompare(TestPoint.java:698)
+    TestPoint.test3(TestPoint.java:895)
+    TestPoint.main(TestPoint.java:915)
+
+  * antisymmetric, where p, q, and r have coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:63)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.antisymmetricCompare(TestPoint.java:698)
+    TestPoint.test3(TestPoint.java:896)
+    TestPoint.main(TestPoint.java:915)
+
+  * transitive, where p, q, r, and s have coordinates in [0, 500)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:62)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.transitiveCompare(TestPoint.java:736)
+    TestPoint.test3(TestPoint.java:897)
+    TestPoint.main(TestPoint.java:915)
+
+  * transitive, where p, q, r, and s have coordinates in [0, 32768)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:63)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.transitiveCompare(TestPoint.java:737)
+    TestPoint.test3(TestPoint.java:898)
+    TestPoint.main(TestPoint.java:915)
+
+  * sign of compare(), where p, q, and r have coordinates in [0, 500)
+     Failed on trial 1 of 100000
+     p                         = (21, 339)
+     q                         = (419, 63)
+     r                         = (0, 492)
+     student   p.compare(q, r) = 0
+     reference p.compare(q, r) = 1
+     reference p.slopeTo(q)    = -0.6934673366834171
+     reference p.slopeTo(r)    = -7.285714285714286
+  * sign of compare(), where p, q, and r have coordinates in [0, 32768)
+     Failed on trial 1 of 100000
+     p                         = (23931, 3684)
+     q                         = (19127, 20501)
+     r                         = (5870, 16422)
+     student   p.compare(q, r) = 0
+     reference p.compare(q, r) = -1
+     reference p.slopeTo(q)    = -3.500624479600333
+     reference p.slopeTo(r)    = -0.7052765627595371
+  * sign of compare(), where p, q, and r have coordinates in [0, 10)
+    java.lang.ArithmeticException: / by zero
+
+    Point.slopeTo(Point.java:50)
+    Point$SlopeOrder.compare(Point.java:63)
+    Point$SlopeOrder.compare(Point.java:59)
+    TestPoint.compare(TestPoint.java:304)
+    TestPoint.compare(TestPoint.java:340)
+    TestPoint.test3(TestPoint.java:901)
+    TestPoint.main(TestPoint.java:915)
+
+     Failed on trial 1 of 100000
+     p                         = (0, 6)
+     q                         = (8, 7)
+     r                         = (7, 5)
+     student   p.compare(q, r) = 0
+     reference p.compare(q, r) = 1
+     reference p.slopeTo(q)    = 0.125
+     reference p.slopeTo(r)    = -0.14285714285714285
+  * throw java.lang.NullPointerException if either argument is null
+==> FAILED
+
+
+Total: 1/3 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference Point and LineSegment)
+********************************************************************************
+
+Testing correctness of BruteCollinearPoints
+*-----------------------------------------------------------
+Running 17 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - no 5 (or more) points are collinear
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:155)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:717)
+
+  * filename = equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:156)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:717)
+
+  * filename = input40.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:157)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:717)
+
+  * filename = input48.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:158)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:717)
+
+==> FAILED
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test2a(TestBruteCollinearPoints.java:164)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:720)
+
+  * filename = horizontal25.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test2a(TestBruteCollinearPoints.java:165)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:720)
+
+==> FAILED
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:177)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:219)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:723)
+
+    - failed on trial 1 of 500
+     4
+      8428  3236
+      5734  3236
+     10998  3236
+     14655  3236
+
+  *  5 random horizontal line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:177)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:220)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:723)
+
+    - failed on trial 1 of 250
+     20
+     14732 11490
+      1011  9346
+     12413 17037
+     19526 16774
+     20018 17037
+     10501 15824
+      8312 15824
+      1942 11490
+     17751 15824
+     13704  9346
+      2606 17037
+     12623 16774
+     16063 16774
+      3189  9346
+      3587 15824
+     13574 16774
+     11895 17037
+      9217 11490
+      7732  9346
+      4710 11490
+
+  * 10 random horizontal line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:177)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:221)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:723)
+
+    - failed on trial 1 of 50
+
+  * 15 random horizontal line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:177)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:222)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:723)
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test3a(TestBruteCollinearPoints.java:228)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:726)
+
+  * filename = vertical25.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test3a(TestBruteCollinearPoints.java:229)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:726)
+
+==> FAILED
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:201)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:235)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:729)
+
+    - failed on trial 1 of 500
+     4
+      1695 12689
+      1695  3153
+      1695  4578
+      1695  7229
+
+  *  5 random vertical line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:201)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:236)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:729)
+
+    - failed on trial 1 of 250
+     20
+     16707 15383
+      6902 11688
+      6902  8786
+      9836 11192
+     13868  4220
+     18052 18819
+     16707 16910
+      9836  1591
+     18052  1844
+     18052  6582
+     13868  4025
+     16707 20688
+     13868 20702
+     13868 12807
+      6902 20929
+      9836 16593
+      9836 16617
+     16707  1592
+      6902 16182
+     18052 16865
+
+  * 10 random vertical line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:201)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:237)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:729)
+
+    - failed on trial 1 of 50
+
+  * 15 random vertical line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:201)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:238)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:729)
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 4a: points from a file with no line segments
+  * filename = random23.txt
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test4a(TestBruteCollinearPoints.java:244)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:732)
+
+  * filename = random38.txt
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test4a(TestBruteCollinearPoints.java:245)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:732)
+
+==> FAILED
+
+Test 4b: random points with no line segments
+  *  5 random points
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.no4CollinearPoints(TestBruteCollinearPoints.java:256)
+    TestBruteCollinearPoints.test4b(TestBruteCollinearPoints.java:274)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:735)
+
+    - failed on trial 1 of 500
+     5
+      6637  1820
+      1937 14121
+     15303   383
+     12595 20270
+     11307  8077
+
+  * 10 random points
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.no4CollinearPoints(TestBruteCollinearPoints.java:256)
+    TestBruteCollinearPoints.test4b(TestBruteCollinearPoints.java:275)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:735)
+
+    - failed on trial 1 of 250
+     10
+     12284 12214
+     20711 20059
+     12934  3979
+      8691  8922
+     28469 30741
+      4136  1712
+      3368  4467
+      9713 21632
+      9193 24672
+     16430 30844
+
+  * 20 random points
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.no4CollinearPoints(TestBruteCollinearPoints.java:256)
+    TestBruteCollinearPoints.test4b(TestBruteCollinearPoints.java:276)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:735)
+
+    - failed on trial 1 of 100
+     20
+      1747 19771
+     19256 24846
+     20937  8586
+     17542 15376
+     29359 12126
+     16872  3630
+     20358  2116
+      5144 27491
+     21761  5181
+     28426  4403
+     14548 29018
+      2852 19821
+      7751 28332
+     17175 31975
+      8223 26247
+      7677 23540
+     10072 29647
+      3648 11560
+     31242 20474
+     27090 28339
+
+  * 50 random points
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.no4CollinearPoints(TestBruteCollinearPoints.java:256)
+    TestBruteCollinearPoints.test4b(TestBruteCollinearPoints.java:277)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:735)
+
+    - failed on trial 1 of 10
+
+==> FAILED
+
+Test 5: points from a file with fewer than 4 points
+  * filename = input1.txt
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test5(TestBruteCollinearPoints.java:283)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:738)
+
+  * filename = input2.txt
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test5(TestBruteCollinearPoints.java:284)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:738)
+
+  * filename = input3.txt
+    java.lang.NullPointerException: segment 0 is null
+
+    TestBruteCollinearPoints.toLineSegments226(TestBruteCollinearPoints.java:48)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:109)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test5(TestBruteCollinearPoints.java:285)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:738)
+
+==> FAILED
+
+Test 6: check for dependence on either compareTo() or compare()
+        returning { -1, +1, 0 } instead of { negative integer,
+        positive integer, zero }
+  * filename = equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test6(TestBruteCollinearPoints.java:294)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:741)
+
+  * filename = input40.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test6(TestBruteCollinearPoints.java:295)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:741)
+
+  * filename = input48.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test6(TestBruteCollinearPoints.java:296)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:741)
+
+==> FAILED
+
+Test 7: check for fragile dependence on return value of toString()
+  * filename = equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test7(TestBruteCollinearPoints.java:304)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:744)
+
+  * filename = input40.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test7(TestBruteCollinearPoints.java:305)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:744)
+
+  * filename = input48.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:150)
+    TestBruteCollinearPoints.test7(TestBruteCollinearPoints.java:306)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:744)
+
+
+It is bad style to write code that depends on the particular format of
+the output from the toString() method, especially if your reason for
+doing so is to circumvent the public API (which intentionally does not
+provide access to the x- and y-coordinates).
+
+==> FAILED
+
+Test 8: random line segments, none vertical or horizontal
+  *  1 random line segment
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:328)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:346)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:747)
+
+    - failed on trial 1 of 500
+     4
+      3993  8988
+      5325 10372
+      8655 13832
+      1329  6220
+
+  *  5 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:328)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:347)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:747)
+
+    - failed on trial 1 of 250
+     20
+     11090  8373
+      8201 11564
+     10453 13190
+      9844  4925
+      8085 10974
+       321  8156
+      6605  9589
+     14366 12909
+     13926  9957
+      9658  4439
+     12881  2946
+     12141 13268
+      2213  5073
+      3827  5673
+      5246 10286
+     10898  7679
+      9348  3629
+      1573  4880
+      8669  7473
+     12826  2577
+
+  * 10 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:328)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:348)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:747)
+
+    - failed on trial 1 of 100
+
+  * 15 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:328)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:349)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:747)
+
+    - failed on trial 1 of 50
+
+==> FAILED
+
+Test 9: random line segments
+  *  1 random line segment
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:361)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:379)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:750)
+
+    - failed on trial 1 of 500
+     4
+     11841 12680
+      8796  9374
+      9881 10552
+     11456 12262
+
+  *  5 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:361)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:380)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:750)
+
+    - failed on trial 1 of 250
+     20
+      8572  7365
+      4898  3229
+      8142  7174
+      3754  2241
+     11514  6440
+     10197  7365
+      5332 13527
+      4837 12702
+     11619 10252
+     12568  6440
+     12107 10684
+     10327  7365
+      2082   797
+      4942 12877
+      5107 13152
+      4370  2773
+      9911  8740
+      9344  6440
+     11700  6440
+     12667  7365
+
+  * 10 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:361)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:381)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:750)
+
+    - failed on trial 1 of 100
+
+  * 15 random line segments
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:361)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:382)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:750)
+
+    - failed on trial 1 of 50
+
+==> FAILED
+
+Test 10: check that data type is immutable by testing whether each method
+         returns the same value, regardless of any intervening operations
+  * input8.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:429)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:516)
+    TestBruteCollinearPoints.test10(TestBruteCollinearPoints.java:531)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:753)
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+
+    - failed on trial 1 of 100
+
+  * equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:429)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:516)
+    TestBruteCollinearPoints.test10(TestBruteCollinearPoints.java:532)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:753)
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 11: check that data type does not mutate the constructor argument
+  * input8.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testMutateConstructorArgument(TestBruteCollinearPoints.java:545)
+    TestBruteCollinearPoints.test11(TestBruteCollinearPoints.java:565)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:756)
+
+  * equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testMutateConstructorArgument(TestBruteCollinearPoints.java:545)
+    TestBruteCollinearPoints.test11(TestBruteCollinearPoints.java:566)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:756)
+
+==> FAILED
+
+Test 12: numberOfSegments() is consistent with segments()
+  * filename = input8.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:604)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = equidistant.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:605)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = input40.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:606)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = input48.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:607)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = horizontal5.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:608)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = vertical5.txt
+    java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to [LLineSegment;
+
+    BruteCollinearPoints.resize(BruteCollinearPoints.java:52)
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:28)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:573)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:599)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:609)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:759)
+
+  * filename = random23.txt
+    - segments() and numberOfSegments() are inconsistent
+    - numberOfSegments()                     = 0
+    - length of array returned by segments() = 1
+
+==> FAILED
+
+Test 13: throws an exception if either the constructor argument is null
+         or any entry in array is null
+  * argument is null
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     0
+
+  * Point[] of length 10, number of null entries = 1
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     10
+     29968  1045
+       805 12701
+      6496 29381
+     null
+      7135 23932
+     17418 25797
+     24159 23266
+     30933 25790
+     30946 29339
+     23095  4077
+
+  * Point[] of length 10, number of null entries = 10
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     10
+     null
+     null
+     null
+     null
+     null
+     null
+     null
+     null
+     null
+     null
+
+  * Point[] of length 4, number of null entries = 1
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     4
+     16569  3320
+      9957 30348
+     null
+      4269 17930
+
+  * Point[] of length 3, number of null entries = 1
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     3
+     17150  8011
+     31821 10574
+     null
+
+  * Point[] of length 2, number of null entries = 1
+    - constructor throws wrong exception
+    - constructor throws a java.lang.NullPointerException
+    - constructor should throw a java.lang.IllegalArgumentException
+     2
+     22685 18992
+     null
+
+  * Point[] of length 1, number of null entries = 1
+    - constructor fails to throw an exception
+     1
+     null
+
+==> FAILED
+
+Test 14: check that the constructor throws an exception if duplicate points
+  * 50 points
+  * 25 points
+  * 5 points
+  * 4 points
+  * 3 points
+  * 2 points
+==> passed
+
+
+Total: 1/17 tests passed!
+
+
+================================================================
+Testing correctness of FastCollinearPoints
+*-----------------------------------------------------------
+Running 21 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test1(TestFastCollinearPoints.java:156)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:778)
+
+  * filename = equidistant.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test1(TestFastCollinearPoints.java:157)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:778)
+
+  * filename = input40.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test1(TestFastCollinearPoints.java:158)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:778)
+
+  * filename = input48.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test1(TestFastCollinearPoints.java:159)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:778)
+
+  * filename = input299.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test1(TestFastCollinearPoints.java:160)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:778)
+
+==> FAILED
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test2a(TestFastCollinearPoints.java:166)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:781)
+
+  * filename = horizontal25.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test2a(TestFastCollinearPoints.java:167)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:781)
+
+  * filename = horizontal50.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test2a(TestFastCollinearPoints.java:168)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:781)
+
+  * filename = horizontal75.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test2a(TestFastCollinearPoints.java:169)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:781)
+
+  * filename = horizontal100.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test2a(TestFastCollinearPoints.java:170)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:781)
+
+==> FAILED
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.horizontalSegments(TestFastCollinearPoints.java:182)
+    TestFastCollinearPoints.test2b(TestFastCollinearPoints.java:224)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:784)
+
+    - failed on trial 1 of 500
+     4
+     13110  3564
+      1243  3564
+     11970  3564
+     19035  3564
+
+  *  5 random horizontal line segments
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.horizontalSegments(TestFastCollinearPoints.java:182)
+    TestFastCollinearPoints.test2b(TestFastCollinearPoints.java:225)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:784)
+
+    - failed on trial 1 of 250
+     20
+      2077 20232
+     11219 15670
+      7790  3064
+     18101  3064
+     18537 12627
+     15133 20232
+      5076 12627
+     11919 12627
+      8790 20232
+     17200  9966
+     16399 15670
+     18548  9966
+     10372 15670
+      9333 15670
+     20124  9966
+     19575 20232
+     12180 12627
+     11725  9966
+      9648  3064
+      5197  3064
+
+  * 10 random horizontal line segments
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.horizontalSegments(TestFastCollinearPoints.java:182)
+    TestFastCollinearPoints.test2b(TestFastCollinearPoints.java:226)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:784)
+
+    - failed on trial 1 of 50
+
+  * 15 random horizontal line segments
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.horizontalSegments(TestFastCollinearPoints.java:182)
+    TestFastCollinearPoints.test2b(TestFastCollinearPoints.java:227)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:784)
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test3a(TestFastCollinearPoints.java:233)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:787)
+
+  * filename = vertical25.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test3a(TestFastCollinearPoints.java:234)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:787)
+
+  * filename = vertical50.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test3a(TestFastCollinearPoints.java:235)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:787)
+
+  * filename = vertical75.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test3a(TestFastCollinearPoints.java:236)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:787)
+
+  * filename = vertical100.txt
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.file(TestFastCollinearPoints.java:151)
+    TestFastCollinearPoints.test3a(TestFastCollinearPoints.java:237)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:787)
+
+==> FAILED
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.verticalSegments(TestFastCollinearPoints.java:206)
+    TestFastCollinearPoints.test3b(TestFastCollinearPoints.java:243)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:790)
+
+    - failed on trial 1 of 500
+     4
+     17754  1414
+     17754  5206
+     17754 17580
+     17754  7447
+
+  *  5 random vertical line segments
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.verticalSegments(TestFastCollinearPoints.java:206)
+    TestFastCollinearPoints.test3b(TestFastCollinearPoints.java:244)
+    TestFastCollinearPoints.main(TestFastCollinearPoints.java:790)
+
+    - failed on trial 1 of 250
+     20
+     20448 12167
+     18718  7188
+      5194  6422
+      5194  4666
+     20448 14999
+     13601 14442
+     20448 16843
+     18718  9066
+     14588 14702
+     20448 14321
+     13601 20363
+      5194  6900
+     13601 14960
+     14588 19373
+     18718  2064
+     14588 18841
+     13601 15747
+      5194  3682
+     14588 18631
+     18718  6965
+
+  * 10 random vertical line segments
+    java.lang.NullPointerException
+
+    FastCollinearPoints.<init>(FastCollinearPoints.java:23)
+    TestFastCollinearPoints.testSegments(TestFastCollinearPoints.java:107)
+    TestFastCollinearPoints.verticalSegments(TestFastCollinearPoints.java:206)
+    TestFastCollinearPoints.test3b(TestFastCollinearPoints.java:245)
+    TestFa
+
+...
+
+WARNING: the grading output was truncated due to excessive length.
+Typically, this is because you have a method that has an unanticipated side effect
+(such as printing to standard output or throwing an exception). A large amount of output
+can also arise from failing many tests.
