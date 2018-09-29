@@ -7,16 +7,15 @@ public class FastCollinearPoints {
     private int segNum = 0;
     
     public FastCollinearPoints(Point[] points) {
+        boundarycheck(points);
         segments = new LineSegment[1];
         int k = 0;
         int l = 0;
         for (int i = 0; i < points.length; i++) {
             Point p = points[i];
-            boundarycheck(p);
             int m = 0;
             for (int j = 0; j < points.length - 1; j++) {
                 Point q = points[j];
-                boundarycheck(q);
                 if (q == p) {
                     continue;
                 } else {
@@ -50,9 +49,20 @@ public class FastCollinearPoints {
         return segments;
     }
 
-    private void boundarycheck(Point p) {
-        if (p == null) {
-            throw new java.lang.IllegalArgumentException("null error.");
+    private void boundarycheck(Point[] points) {
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        int current = 0;
+        while(current < points.length) {
+            for (int i = current; i < pointsCopy.length; i++) {
+                if (pointsCopy[i] == null) {
+                    throw new java.lang.IllegalArgumentException("Null error.");
+                }
+                else if (points[current] == pointsCopy[i]) {
+                    throw new java.lang.IllegalArgumentException("Duplicate error.");
+                }
+            }
+            current++;
         }
     }
 

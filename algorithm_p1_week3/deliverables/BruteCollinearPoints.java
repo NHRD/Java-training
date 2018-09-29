@@ -6,8 +6,8 @@ public class BruteCollinearPoints {
     private LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
+        boundarycheck(points);
         segments = new LineSegment[1];
-        checkDuplicatePoints(points);
         int n = points.length;
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -17,8 +17,7 @@ public class BruteCollinearPoints {
                         Point q = points[j];
                         Point r = points[k];
                         Point s = points[l];
-                        boundarycheck(p, q, r, s);
-                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
+                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(q) == p.slopeTo(s)) {
                             Point[] slopepoints = new Point[] {p, q, r, s};
                             Arrays.sort(slopepoints);
                             LineSegment newSegment = new LineSegment(slopepoints[0], slopepoints[3]);
@@ -42,9 +41,20 @@ public class BruteCollinearPoints {
         return segments;
     }
     
-    private void boundarycheck(Point p, Point q, Point r, Point s) {
-        if (p == null || q == null || r == null || s == null) {
-            throw new java.lang.IllegalArgumentException("null error.");
+    private void boundarycheck(Point[] points) {
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        int current = 0;
+        while(current < points.length) {
+            for (int i = current; i < pointsCopy.length; i++) {
+                if (pointsCopy[i] == null) {
+                    throw new java.lang.IllegalArgumentException("Null error.");
+                }
+                else if (points[current] == pointsCopy[i]) {
+                    throw new java.lang.IllegalArgumentException("Duplicate error.");
+                }
+            }
+            current++;
         }
     }
 
@@ -55,22 +65,5 @@ public class BruteCollinearPoints {
         }
         segments = copy;
     }
-    
-    private void checkDuplicatePoints(Point[] points) {
-        if (points.length > 0) {
-            Point[] pointsCopy = new Point[points.length];
-            System.arraycopy(points, 0, pointsCopy, 0, points.length);
-            Arrays.sort(pointsCopy);
-            Point currentPoint = pointsCopy[0];
-            for (int i = 1; i < pointsCopy.length; i++) {
-                if (pointsCopy[i].compareTo(currentPoint) == 0) {
-                    throw new java.lang.IllegalArgumentException("duplicate point error.");
-                } else {
-                    currentPoint = pointsCopy[i];
-                }
-            }
-        } else {
-            throw new java.lang.IllegalArgumentException("null error.");
-        }
-    }
+   
  }
