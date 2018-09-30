@@ -67,7 +67,7 @@ public class Point implements Comparable<Point> {
             if (dy1 == dy2) {
                 return 0;
             }
-            else if (dy2 > dy1){
+            else if (dy2 > dy1) {
                 return -1;
             }
             else {

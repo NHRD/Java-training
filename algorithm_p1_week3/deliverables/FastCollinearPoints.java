@@ -53,8 +53,8 @@ public class FastCollinearPoints {
         Point[] pointsCopy = new Point[points.length];
         System.arraycopy(points, 0, pointsCopy, 0, points.length);
         int current = 0;
-        while(current < points.length) {
-            for (int i = current; i < pointsCopy.length; i++) {
+        while (current < points.length) {
+            for (int i = current + 1; i < pointsCopy.length; i++) {
                 if (pointsCopy[i] == null) {
                     throw new java.lang.IllegalArgumentException("Null error.");
                 }
