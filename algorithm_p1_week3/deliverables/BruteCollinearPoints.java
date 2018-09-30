@@ -63,10 +63,16 @@ public class BruteCollinearPoints {
     }
     
     private void nullcheck(Point[] points) {
-        for (int i = 0; i < points.length; i++) {
-            if (points[i] == null) {
-                throw new java.lang.IllegalArgumentException("Null error.");
+        if (points == null) {
+            throw new NullPointerException("The Point array cannot be null.");
+        } 
+        else {
+            for (Point p : points) {
+                if (p == null) {
+                    throw new NullPointerException("One of the points is null.");
+                }
             }
         }
     }
+    
 }
