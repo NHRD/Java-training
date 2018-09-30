@@ -47,16 +47,18 @@ public class BruteCollinearPoints {
     }
     
     private void boundarycheck(Point[] points) {
-        Point[] pointsCopy = new Point[points.length];
-        System.arraycopy(points, 0, pointsCopy, 0, points.length);
-        int current = 0;
-        while (current < points.length) {
-            for (int i = current + 1; i < pointsCopy.length; i++) {
-                if (points[current] == pointsCopy[i]) {
-                    throw new java.lang.IllegalArgumentException("Duplicate error.");
+        if (points.length > 0) {
+            Point[] pointsCopy = new Point[points.length];
+            System.arraycopy(points, 0, pointsCopy, 0, points.length);
+            Arrays.sort(pointsCopy);
+            Point currentPoint = pointsCopy[0];
+            for (int i = 1; i < pointsCopy.length; i++) {
+                if (pointsCopy[i].compareTo(currentPoint) == 0) {
+                    throw new IllegalArgumentException("Cannot have duplicate points.");
+                } else {
+                    currentPoint = pointsCopy[i];
                 }
             }
-            current++;
         }
     }
     
