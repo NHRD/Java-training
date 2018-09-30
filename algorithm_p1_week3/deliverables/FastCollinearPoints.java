@@ -75,13 +75,11 @@ public class FastCollinearPoints {
     
     private void nullcheck(Point[] points) {
         if (points == null) {
-            throw new NullPointerException("The Point array cannot be null.");
+            throw new IllegalArgumentException("The Point array cannot be null.");
         } 
-        else {
-            for (Point p : points) {
-                if (p == null) {
-                    throw new NullPointerException("One of the points is null.");
-                }
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException("One of the points is null.");
             }
         }
     }
