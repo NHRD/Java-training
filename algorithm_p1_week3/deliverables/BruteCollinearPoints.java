@@ -8,7 +8,7 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
         boundarycheck(points);
-        segments = new LineSegment[1];
+        newSegment = new Object[points.length];
         int n = points.length;
         for (int i = 0; i < n - 3; i++) {
             for (int j = i + 1; j < n - 2; j++) {
@@ -23,9 +23,9 @@ public class BruteCollinearPoints {
                             Arrays.sort(slopepoints, 0, slopepoints.length);
                             newSegment[segNum] = new LineSegment(slopepoints[0], slopepoints[3]);
                             segNum++;
-                            if (segments.length == segNum) {
-                                resize(segNum * 2);
                         }
+                        else {
+                           continue;
                        }
                     }
                 }
