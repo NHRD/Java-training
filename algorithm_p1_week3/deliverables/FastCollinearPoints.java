@@ -23,7 +23,7 @@ public class FastCollinearPoints {
                     m++;
                 }
             }
-            Arrays.sort(segSlope);
+            Arrays.sort(segSlope, 0, segSlope.length, p.slopeOrder());
             while (k <= segSlope.length && l <= segSlope.length) {
                 while (segSlope[k] == segSlope[l]) {
                     l++;

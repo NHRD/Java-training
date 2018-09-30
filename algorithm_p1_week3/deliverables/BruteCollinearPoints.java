@@ -10,21 +10,21 @@ public class BruteCollinearPoints {
         boundarycheck(points);
         segments = new LineSegment[1];
         int n = points.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                for (int k = j + 1; k < n; k++) {
+        for (int i = 0; i < n - 3; i++) {
+            for (int j = i + 1; j < n - 2; j++) {
+                for (int k = j + 1; k < n - 1; k++) {
                     for (int l = k + 1; l < n; l++) {
                         Point p = points[i];
                         Point q = points[j];
                         Point r = points[k];
                         Point s = points[l];
-                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(q) == p.slopeTo(s)) {
+                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
                             Point[] slopepoints = new Point[] {p, q, r, s};
-                            Arrays.sort(slopepoints);
+                            Arrays.sort(slopepoints, 0, slopepoints.length);
                             newSegment[segNum] = new LineSegment(slopepoints[0], slopepoints[3]);
                             segNum++;
-                        if (segments.length == segNum) {
-                            resize(segNum * 2);
+                            if (segments.length == segNum) {
+                                resize(segNum * 2);
                         }
                        }
                     }
