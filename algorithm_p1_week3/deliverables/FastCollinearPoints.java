@@ -14,7 +14,6 @@ public class FastCollinearPoints {
         segSlope = new Point[points.length];
         int k = 0;
         int l = 1;
-        int m = 0;
         /*for (int i = 0; i < points.length; i++) {
             Point p = points[i];
             for (int j = 0; j < points.length; j++) {
@@ -24,9 +23,13 @@ public class FastCollinearPoints {
                     m++;
                 }
             }*/
-            Point p = points[0];
-            Point[] segSlope = new Point[points.length - 1];
-            System.arraycopy(points, 1, segSlope, 0, points.length - 1);
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        Arrays.sort(pointsCopy);
+        for (int i = 0; i < points.length - 3; i++) {
+            Point p = pointsCopy[i];
+            Point[] segSlope = new Point[pointsCopy.length - i - 1];
+            System.arraycopy(pointsCopy, i + 1, segSlope, 0, pointsCopy.length - i - 1);
             Arrays.sort(segSlope, 0, segSlope.length, p.slopeOrder());
             while (k < segSlope.length && l < segSlope.length) {
                 while (segSlope[k] == segSlope[l]) {
@@ -40,7 +43,7 @@ public class FastCollinearPoints {
                 l = k + 1;
             }
         }
-    /*}
+    }
 
     public int numberOfSegments() {
         return segNum;
