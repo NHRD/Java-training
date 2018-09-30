@@ -7,6 +7,7 @@ public class BruteCollinearPoints {
     private LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
+        nullcheck(points);
         boundarycheck(points);
         newSegment = new Object[points.length];
         int n = points.length;
@@ -18,7 +19,7 @@ public class BruteCollinearPoints {
                         Point q = points[j];
                         Point r = points[k];
                         Point s = points[l];
-                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
+                         if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s)) {
                             Point[] slopepoints = new Point[] {p, q, r, s};
                             Arrays.sort(slopepoints, 0, slopepoints.length);
                             newSegment[segNum] = new LineSegment(slopepoints[0], slopepoints[3]);
@@ -51,23 +52,19 @@ public class BruteCollinearPoints {
         int current = 0;
         while (current < points.length) {
             for (int i = current + 1; i < pointsCopy.length; i++) {
-                if (pointsCopy[i] == null) {
-                    throw new java.lang.IllegalArgumentException("Null error.");
-                }
-                else if (points[current] == pointsCopy[i]) {
+                if (points[current] == pointsCopy[i]) {
                     throw new java.lang.IllegalArgumentException("Duplicate error.");
                 }
             }
             current++;
         }
     }
-
-    private void resize(int size) {
-        LineSegment[] copy = (LineSegment[]) new Object[size];
-        for (int i = 0; i < segNum; i++) {
-            copy[i] = segments[i];
+    
+    private void nullcheck(Point[] points) {
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new java.lang.IllegalArgumentException("Null error.");
+            }
         }
-        segments = copy;
     }
-   
- }
+}
